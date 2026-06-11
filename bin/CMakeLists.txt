@@ -21,6 +21,7 @@ target_link_libraries(triton-opt PRIVATE
   ${dialect_libs}
   ${conversion_libs}
   ${triton_libs}
+  TritonCV12Split
   # BiShengIR dialects
   BiShengIRAnnotationDialect
   BiShengIRHACCDialect

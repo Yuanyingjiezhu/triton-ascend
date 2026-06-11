@@ -163,6 +163,7 @@ def ttir_to_linalg(mod, metadata, opt, *, named_ops=False):
             auto_blockify_size = 1
         pm = ir.pass_manager(mod.context)
         pm.enable_debug()
+        ascend.passes.ttir.add_triton_cv12_split(pm)
         ascend.passes.ttir.add_auto_blockify(
             pm,
             auto_blockify_size
@@ -961,7 +962,7 @@ class NPUOptions:
     enable_vf_fusion: bool = None
     # todo: this code will be removed in version 530.
     add_auto_scheduling: bool = False
-    enable_dynamic_cv_pipeline: bool = True if is_compile_on_910_95 else False
+    enable_dynamic_cv_pipeline: bool = False if is_compile_on_910_95 else False
     hfusion_enable_multiple_consumer_fusion: bool = False
     has_auto_blockify_blacklist_op: Optional[bool] = None
     intra_cache_num: int = None

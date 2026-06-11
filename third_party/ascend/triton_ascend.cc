@@ -25,6 +25,7 @@
 #include "ascend/include/DynamicCVPipeline/Common/BufferCountManager.h"
 // todo: this code will be removed in version 530.
 #include "ascend/include/TritonAffinityOpt/Passes.h"
+#include "ascend/include/TritonCV12Split/Passes.h"
 
 #include "triton/Dialect/Triton/IR/Dialect.h"
 #include "ir.h" // TritonOpBuilder
@@ -375,6 +376,10 @@ void init_triton_ascend_passes_ttir(py::module &&m) {
       opts.compileOn91095 = compileOn91095;
       pm.addPass(mlir::triton::createAddDynamicCVPipelinePass(opts));
     });
+
+  m.def("add_triton_cv12_split", [](mlir::PassManager &pm) {
+    pm.addPass(mlir::triton::createTritonCV12SplitPass());
+  });
 
   // todo: this code will be removed in version 530.
   m.def("add_dag_sync", [](mlir::PassManager &pm) {
