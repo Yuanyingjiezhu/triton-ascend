@@ -56,6 +56,12 @@ BubbleUpExtract<ExtractOpTy>::matchAndRewrite(ExtractOpTy op,
   auto parentOp = tensorValue.getDefiningOp();
   auto loc = op.getLoc();
 
+  if constexpr (std::is_same_v<ExtractOpTy, tensor::ExtractSliceOp>) {
+    if (op->template hasAttrOfType<UnitAttr>("should_kept_slice")) {
+      return failure();
+    }
+  }
+
   if (!parentOp || (!enableAggressiveMode && !parentOp->hasOneUse())) {
     return failure();
   }
@@ -377,12 +383,24 @@ void BubbleUpExtract<tensor::ExtractSliceOp>::bubbleUpOperation(
     tensor::ExtractSliceOp op, triton::MakeRangeOp parentOp, Location loc,
     PatternRewriter &rewriter) const {
   auto resultType = cast<RankedTensorType>(parentOp.getResult().getType());
+  int32_t start = parentOp.getStart();
   auto idxOfr = op.getMixedOffsets()[0];
   Value idx = getValueOrCreateConstantIndexOp(rewriter, op.getLoc(), idxOfr);
   idx = rewriter.create<arith::IndexCastOp>(op.getLoc(),
                                             resultType.getElementType(), idx);
-  rewriter.replaceOpWithNewOp<triton::SplatOp>(op, op.getResult().getType(),
-                                               idx);
+  if (start != 0) {
+    Value startVal = rewriter.create<arith::ConstantOp>(
+        op.getLoc(), rewriter.getIntegerAttr(resultType.getElementType(), start));
+    idx = rewriter.create<arith::AddIOp>(op.getLoc(), idx, startVal);
+  }
+  auto rangeOp = rewriter.create<triton::MakeRangeOp>(
+      op.getLoc(), RankedTensorType::get(
+          cast<RankedTensorType>(op.getResult().getType()).getShape(),
+          resultType.getElementType()),
+      0, cast<RankedTensorType>(op.getResult().getType()).getShape()[0]);
+  auto splatOp = rewriter.create<triton::SplatOp>(
+      op.getLoc(), op.getResult().getType(), idx);
+  rewriter.replaceOpWithNewOp<arith::AddIOp>(op, rangeOp, splatOp);
 }
 
 template <typename ExtractOpTy>

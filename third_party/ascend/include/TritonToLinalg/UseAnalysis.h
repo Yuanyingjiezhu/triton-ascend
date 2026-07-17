@@ -94,7 +94,10 @@ struct UseInfo : public dataflow::AbstractSparseLattice {
 
 class UseAnalysis : public dataflow::SparseBackwardDataFlowAnalysis<UseInfo> {
 public:
-  using SparseBackwardDataFlowAnalysis::SparseBackwardDataFlowAnalysis;
+  UseAnalysis(DataFlowSolver &solver, SymbolTableCollection &symbolTable,
+              bool atomicRMWPtrAsMetaUse = false)
+      : SparseBackwardDataFlowAnalysis(solver, symbolTable),
+        atomicRMWPtrAsMetaUse(atomicRMWPtrAsMetaUse) {}
 
 #if LLVM_VERSION_MAJOR >= 20
   LogicalResult visitOperation(Operation *op, ArrayRef<UseInfo *> operands,
@@ -113,6 +116,8 @@ public:
   }
 
 private:
+  bool atomicRMWPtrAsMetaUse = false;
+
   void propagateUse(UseInfo *lattice, const UseType &type) {
     auto changed = lattice->meetUseType(type);
     propagateIfChanged(lattice, changed);

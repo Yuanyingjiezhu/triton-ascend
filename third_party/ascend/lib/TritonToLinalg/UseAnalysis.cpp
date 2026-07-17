@@ -28,6 +28,7 @@
 
 #include "mlir/Analysis/DataFlow/ConstantPropagationAnalysis.h"
 #include "mlir/Analysis/DataFlow/DeadCodeAnalysis.h"
+#include "mlir/Dialect/Bufferization/IR/Bufferization.h"
 
 #include "llvm/ADT/TypeSwitch.h"
 #include "llvm/Support/Debug.h"
@@ -113,7 +114,9 @@ void triton::UseAnalysis::visitOperation(Operation *op,
       })
       // Consider triton::AtomicRMWOp as store operation
       .Case<triton::AtomicRMWOp>([&](auto atomicOp) {
-        propagateUse(operands[0], UseType::MixUse);
+        propagateUse(operands[0],
+                     atomicRMWPtrAsMetaUse ? UseType::MetaUse
+                                           : UseType::MixUse);
         propagateUse(operands[1], UseType::DataUse);
         auto value = atomicOp.getVal();
         auto mask = atomicOp.getMask();
@@ -160,6 +163,10 @@ void triton::UseAnalysis::visitOperation(Operation *op,
           propagateUse(operand, UseType::DataUse);
         }
       })
+      .Case<bufferization::MaterializeInDestinationOp>(
+          [&](auto materializeOp) {
+            propagateUse(operands[0], UseType::DataUse);
+          })
       .Case<hivm::FixpipeOp>([&](auto fixpipeOp) {
         propagateUse(operands[0], UseType::DataUse);
       })
