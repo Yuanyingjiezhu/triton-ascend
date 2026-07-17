@@ -870,7 +870,7 @@ struct DotSlicePattern : public OpRewritePattern<triton::DotOp> {
             }
 
             Operation *defOp = operand.getDefiningOp();
-            if (defOp && (isa<mlir::triton::LoadOp>(defOp) || isa<arith::ConstantOp>(defOp) || comesFromDot(operand)))
+            if (defOp && (isa<mlir::triton::LoadOp>(defOp) || isa<arith::ConstantOp>(defOp)))
             {
                 newOperands.push_back(operand);
                 continue;
@@ -886,8 +886,7 @@ struct DotSlicePattern : public OpRewritePattern<triton::DotOp> {
                         auto initArgIdx = argIdx - numInductionVars;
                         Value initValue = forOp.getInits()[initArgIdx];
                         Operation *initDefOp = initValue.getDefiningOp();
-                        if (initDefOp && (isa<mlir::triton::LoadOp>(initDefOp) || isa<arith::ConstantOp>(initDefOp) ||
-                                          comesFromDot(initValue)))
+                        if (initDefOp && (isa<mlir::triton::LoadOp>(initDefOp) || isa<arith::ConstantOp>(initDefOp)))
                         {
                             newOperands.push_back(operand);
                             continue;
@@ -897,8 +896,7 @@ struct DotSlicePattern : public OpRewritePattern<triton::DotOp> {
                     auto argIdx = blockArg.getArgNumber();
                     Value initValue = whileOp.getBeforeArguments()[argIdx];
                     Operation *initDefOp = initValue.getDefiningOp();
-                    if (initDefOp && (isa<mlir::triton::LoadOp>(initDefOp) || isa<arith::ConstantOp>(initDefOp) ||
-                                      comesFromDot(initValue)))
+                    if (initDefOp && (isa<mlir::triton::LoadOp>(initDefOp) || isa<arith::ConstantOp>(initDefOp)))
                     {
                         newOperands.push_back(operand);
                         continue;
@@ -911,8 +909,7 @@ struct DotSlicePattern : public OpRewritePattern<triton::DotOp> {
                 auto transSrc = transOp.getSrc();
                 auto transSrcDefOp = transSrc.getDefiningOp();
                 if (transSrcDefOp &&
-                    (isa<mlir::triton::LoadOp>(transSrcDefOp) || isa<arith::ConstantOp>(transSrcDefOp) ||
-                     comesFromDot(transSrc))) {
+                    (isa<mlir::triton::LoadOp>(transSrcDefOp) || isa<arith::ConstantOp>(transSrcDefOp))) {
                     newOperands.push_back(operand);
                     continue;
                 }
