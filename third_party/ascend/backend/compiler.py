@@ -177,6 +177,7 @@ def ttir_to_linalg(mod, metadata, opt, *, named_ops=False):
             auto_blockify_size = 1
         pm = ir.pass_manager(mod.context)
         pm.enable_debug()
+        ascend.passes.ttir.add_triton_cv12_split(pm)
         ascend.passes.ttir.add_auto_blockify(
             pm,
             auto_blockify_size
@@ -972,7 +973,7 @@ class NPUOptions:
     disable_auto_inject_block_sync: bool = None
     enable_mixed_cv: bool = None
     enable_vf_fusion: bool = None
-    enable_dynamic_cv_pipeline: bool = True if is_compile_on_910_95 else False
+    enable_dynamic_cv_pipeline: bool = False if is_compile_on_910_95 else False
     # Gates the cube-loader penetration + cube-for block merge feature. Off by
     # default so existing scenarios are unaffected; opt in per kernel to fuse a
     # matmul's loader for-loop into the matmul's cube compute block.

@@ -24,6 +24,7 @@
 #include "ascend/include/DynamicCVPipeline/Passes.h"
 #include "ascend/include/DynamicCVPipeline/Common/BufferCountManager.h"
 #include "ascend/include/DynamicCVPipeline/Common/Utils.h"
+#include "ascend/include/TritonCV12Split/Passes.h"
 
 #include "triton/Dialect/Triton/IR/Dialect.h"
 #include "ir.h" // TritonOpBuilder
@@ -376,6 +377,10 @@ void init_triton_ascend_passes_ttir(py::module &&m) {
       opts.compileOn91095 = compileOn91095;
       pm.addPass(mlir::triton::createAddDynamicCVPipelinePass(opts));
     });
+  
+  m.def("add_triton_cv12_split", [](mlir::PassManager &pm) {
+    pm.addPass(mlir::triton::createTritonCV12SplitPass());
+  });
 
   m.def("set_buffer_count", [](mlir::ModuleOp &module, const std::string& type, int count) {
     mlir::triton::BufferCountManager mgr(module);

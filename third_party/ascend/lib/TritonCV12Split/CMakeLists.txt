@@ -1,0 +1,34 @@
+add_triton_library(TritonCV12Split
+  BubbleUpExtractSlicePass.cpp
+  CSEPattern.cpp
+  EliminateSlicePattern.cpp
+  BubbleUpPattern.cpp
+  RemoveUseTagsPass.cpp
+  RewriteCommunicationSlicePass.cpp
+  SeparateMetaDataUsePass.cpp
+  NormalizeI1ReducePass.cpp
+  NormalizeDotPass.cpp
+  StartSlicePass.cpp
+  TritonCV12SplitPass.cpp
+
+  DEPENDS
+  TritonCV12SplitPassIncGen
+
+  LINK_LIBS
+  BiShengIRHIVMDialect
+  BiShengIRMemRefExtDialect
+  MLIRAffineDialect
+  MLIRAnalysis
+  MLIRArithDialect
+  MLIRBufferizationDialect
+  MLIRIR
+  MLIRMemRefDialect
+  MLIRPass
+  MLIRSCFDialect
+  MLIRSupport
+  MLIRTensorDialect
+  MLIRTransforms
+  MLIRTritonNPUUtils
+  TritonToLinalg
+  TritonIR
+)

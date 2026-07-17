@@ -1,4 +1,5 @@
 #pragma once
+#include "ascend/include/TritonCV12Split/Passes.h"
 #include "ascend/include/DynamicCVPipeline/ComputeBlockOptPass.h"
 #include "ascend/include/DynamicCVPipeline/SplitDataflow/RefineArgsBlockId.h"
 #include "ascend/include/DynamicCVPipeline/Passes.h"
@@ -119,6 +120,16 @@ inline void registerTritonDialects(mlir::DialectRegistry &registry) {
   mlir::triton::registerRefineArgsBlockIdPasses();
   mlir::triton::registerAsyncLoadHoistingPasses();
   mlir::triton::registerAddMultiBufferToGMLoadPasses();
+
+  // TritonCV12Split passes
+  mlir::triton::registerBubbleUpExtractSlicePass();
+  mlir::triton::registerRemoveUseTagsPass();
+  mlir::triton::registerRewriteCommunicationSlicePass();
+  mlir::triton::registerSeparateMetaDataUsePass();
+  mlir::triton::registerNormalizeI1ReducePass();
+  mlir::triton::registerNormalizeDotPass();
+  mlir::triton::registerStartSlicePass();
+  mlir::triton::registerTritonCV12SplitPasses();
 
 
   // TODO: register Triton & TritonGPU passes

@@ -528,7 +528,8 @@ class CMakeBuild(build_ext):
                 cmake_args += ["-A", "x64"]
         else:
             cmake_args += ["-DCMAKE_BUILD_TYPE=" + cfg]
-            max_jobs = os.getenv("MAX_JOBS", str(2 * os.cpu_count()))
+            # max_jobs = os.getenv("MAX_JOBS", str(2 * os.cpu_count()))
+            max_jobs = os.getenv("MAX_JOBS", "16")
             build_args += ['-j' + max_jobs]
 
         if check_env_flag("TRITON_BUILD_WITH_CLANG_LLD"):
