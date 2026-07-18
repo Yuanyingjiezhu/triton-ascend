@@ -500,7 +500,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc142 = loc(callsite(#loc125 at #loc106))
 #loc143 = loc(callsite(#loc125 at #loc108))
 
-
 // -----
 // Source: gaoyou/0701/chunk_o/fwd_h_input.mlir
 // CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
@@ -745,7 +744,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc65 = loc(callsite(#loc52 at #loc51))
 #loc66 = loc(callsite(#loc50 at #loc55))
 #loc67 = loc(callsite(#loc52 at #loc55))
-
 
 // -----
 // Source: gaoyou/0701/chunk_o/fwd_o_input.mlir
@@ -1013,7 +1011,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc72 = loc(callsite(#loc40 at #loc39))
 #loc73 = loc(callsite(#loc38 at #loc46))
 #loc74 = loc(callsite(#loc40 at #loc46))
-
 
 // -----
 // Source: gaoyou/0701/delta_rule_bwd_dhu/input.mlir
@@ -1340,7 +1337,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc93 = loc(callsite(#loc53 at #loc55))
 #loc94 = loc(callsite(#loc53 at #loc65))
 
-
 // -----
 // Source: gaoyou/0701/delta_rule_fwd_h/input.mlir
 // CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
@@ -1664,7 +1660,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc93 = loc(fused[#loc34, #loc35])
 #loc94 = loc(callsite(#loc68 at #loc69))
 #loc95 = loc(callsite(#loc68 at #loc73))
-
 
 // -----
 // Source: gaoyou/0701/dllm/bwd_kv_ul_input.mlir
@@ -2132,7 +2127,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc144 = loc(callsite(#loc95 at #loc24))
 #loc145 = loc(callsite(#loc96 at #loc24))
 #loc146 = loc(callsite(#loc97 at #loc24))
-
 
 // -----
 // Source: gaoyou/0701/dllm/bwd_kv_ur_input.mlir
@@ -2926,7 +2920,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc233 = loc(callsite(#loc26 at #loc28))
 #loc234 = loc(callsite(#loc110 at #loc28))
 
-
 // -----
 // Source: gaoyou/0701/dllm/bwd_q_u_input.mlir
 // CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
@@ -3677,7 +3670,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc214 = loc(callsite(#loc100 at #loc24))
 #loc215 = loc(callsite(#loc21 at #loc24))
 #loc216 = loc(callsite(#loc101 at #loc24))
-
 
 // -----
 // Source: gaoyou/0701/dllm/fwd_u_input.mlir
@@ -4701,7 +4693,7 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 //         %98 = tt.addptr %97, %22 : tensor<32x128x!tt.ptr<bf16>>, tensor<32x128xi32>
 //         %99 = tt.load %93, %75, %cst_8 : tensor<32x128x!tt.ptr<bf16>>
 //         %100 = tt.trans %99 {order = array<i32: 1, 0>} : tensor<32x128xbf16> -> tensor<128x32xbf16>
-//         %101 = tt.dot %76, %100, %cst_3 {triton_cv12.normalized_dot} : tensor<32x128xbf16> * tensor<128x32xbf16> -> tensor<32x32xf32>
+//         %101 = tt.dot %76, %100, %cst_3 {triton_cv12.standardized_dot} : tensor<32x128xbf16> * tensor<128x32xbf16> -> tensor<32x32xf32>
 //         %102 = arith.mulf %101, %23 : tensor<32x32xf32>
 //         %103 = tt.load %98, %75, %cst_8 : tensor<32x128x!tt.ptr<bf16>>
 //         %104 = arith.uitofp %85 : tensor<32x32xi1> to tensor<32x32xf32>
@@ -4732,7 +4724,7 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 //         %121 = arith.mulf %120, %cst : tensor<32x1xf32>
 //         %122 = tt.broadcast %121 : tensor<32x1xf32> -> tensor<32x128xf32>
 //         %123 = arith.truncf %114 : tensor<32x32xf32> to tensor<32x32xbf16>
-//         %124 = tt.dot %123, %103, %cst_11 {triton_cv12.normalized_dot} : tensor<32x32xbf16> * tensor<32x128xbf16> -> tensor<32x128xf32>
+//         %124 = tt.dot %123, %103, %cst_11 {triton_cv12.standardized_dot} : tensor<32x32xbf16> * tensor<32x128xbf16> -> tensor<32x128xf32>
 //         %125 = arith.addf %124, %122 {triton_cv12.add_from_dot} : tensor<32x128xf32>
 //         %126 = arith.addi %45, %54 : i32
 //         %127 = tt.splat %126 : i32 -> tensor<32xi32>
@@ -4749,7 +4741,7 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 //         %138 = tt.broadcast %137 : tensor<32x1xi1> -> tensor<32x128xi1>
 //         %139 = tt.load %133, %138, %cst_8 : tensor<32x128x!tt.ptr<bf16>>
 //         %140 = tt.trans %139 {order = array<i32: 1, 0>} : tensor<32x128xbf16> -> tensor<128x32xbf16>
-//         %141 = tt.dot %76, %140, %cst_3 {triton_cv12.normalized_dot} : tensor<32x128xbf16> * tensor<128x32xbf16> -> tensor<32x32xf32>
+//         %141 = tt.dot %76, %140, %cst_3 {triton_cv12.standardized_dot} : tensor<32x128xbf16> * tensor<128x32xbf16> -> tensor<32x32xf32>
 //         %142 = arith.mulf %141, %23 : tensor<32x32xf32>
 //         %143 = tt.load %136, %138, %cst_8 : tensor<32x128x!tt.ptr<bf16>>
 //         %144 = arith.addf %142, %106 : tensor<32x32xf32>
@@ -4777,7 +4769,7 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 //         %158 = tt.broadcast %157 : tensor<32x1xf32> -> tensor<32x128xf32>
 //         %159 = arith.mulf %158, %125 : tensor<32x128xf32>
 //         %160 = arith.truncf %151 : tensor<32x32xf32> to tensor<32x32xbf16>
-//         %161 = tt.dot %160, %143, %cst_11 {triton_cv12.normalized_dot} : tensor<32x32xbf16> * tensor<32x128xbf16> -> tensor<32x128xf32>
+//         %161 = tt.dot %160, %143, %cst_11 {triton_cv12.standardized_dot} : tensor<32x32xbf16> * tensor<32x128xbf16> -> tensor<32x128xf32>
 //         %162 = arith.addf %161, %159 {triton_cv12.add_from_dot} : tensor<32x128xf32>
 //         %163 = arith.divsi %54, %c128_i32 : i32
 //         %164 = arith.muli %163, %c128_i32 : i32
@@ -4799,7 +4791,7 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 //           %188 = tt.broadcast %187 : tensor<32x1xi1> -> tensor<32x128xi1>
 //           %189 = tt.load %183, %188, %cst_8 : tensor<32x128x!tt.ptr<bf16>>
 //           %190 = tt.trans %189 {order = array<i32: 1, 0>} : tensor<32x128xbf16> -> tensor<128x32xbf16>
-//           %191 = tt.dot %76, %190, %cst_3 {triton_cv12.normalized_dot} : tensor<32x128xbf16> * tensor<128x32xbf16> -> tensor<32x32xf32>
+//           %191 = tt.dot %76, %190, %cst_3 {triton_cv12.standardized_dot} : tensor<32x128xbf16> * tensor<128x32xbf16> -> tensor<32x32xf32>
 //           %192 = arith.mulf %191, %23 : tensor<32x32xf32>
 //           %193 = tt.load %186, %188, %cst_8 : tensor<32x128x!tt.ptr<bf16>>
 //           %194 = "tt.reduce"(%192) <{axis = 1 : i32}> ({
@@ -4825,7 +4817,7 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 //           %206 = tt.broadcast %205 : tensor<32x1xf32> -> tensor<32x128xf32>
 //           %207 = arith.mulf %206, %arg17 : tensor<32x128xf32>
 //           %208 = arith.truncf %199 : tensor<32x32xf32> to tensor<32x32xbf16>
-//           %209 = tt.dot %208, %193, %cst_11 {triton_cv12.normalized_dot} : tensor<32x32xbf16> * tensor<32x128xbf16> -> tensor<32x128xf32>
+//           %209 = tt.dot %208, %193, %cst_11 {triton_cv12.standardized_dot} : tensor<32x32xbf16> * tensor<32x128xbf16> -> tensor<32x128xf32>
 //           %210 = arith.addf %209, %207 {triton_cv12.add_from_dot} : tensor<32x128xf32>
 //           scf.yield %210, %195, %204 : tensor<32x128xf32>, tensor<32xf32>, tensor<32xf32>
 //         }
@@ -4848,7 +4840,7 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 //           %188 = tt.broadcast %187 : tensor<128x1xi1> -> tensor<128x128xi1>
 //           %189 = tt.load %183, %188, %cst_1 : tensor<128x128x!tt.ptr<bf16>>
 //           %190 = tt.trans %189 {order = array<i32: 1, 0>} : tensor<128x128xbf16> -> tensor<128x128xbf16>
-//           %191 = tt.dot %76, %190, %cst_11 {triton_cv12.normalized_dot} : tensor<32x128xbf16> * tensor<128x128xbf16> -> tensor<32x128xf32>
+//           %191 = tt.dot %76, %190, %cst_11 {triton_cv12.standardized_dot} : tensor<32x128xbf16> * tensor<128x128xbf16> -> tensor<32x128xf32>
 //           %192 = arith.mulf %191, %27 : tensor<32x128xf32>
 //           %193 = tt.load %186, %188, %cst_1 : tensor<128x128x!tt.ptr<bf16>>
 //           %194 = "tt.reduce"(%192) <{axis = 1 : i32}> ({
@@ -4874,7 +4866,7 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 //           %206 = tt.broadcast %205 : tensor<32x1xf32> -> tensor<32x128xf32>
 //           %207 = arith.mulf %206, %arg17 : tensor<32x128xf32>
 //           %208 = arith.truncf %199 : tensor<32x128xf32> to tensor<32x128xbf16>
-//           %209 = tt.dot %208, %193, %cst_11 {triton_cv12.normalized_dot} : tensor<32x128xbf16> * tensor<128x128xbf16> -> tensor<32x128xf32>
+//           %209 = tt.dot %208, %193, %cst_11 {triton_cv12.standardized_dot} : tensor<32x128xbf16> * tensor<128x128xbf16> -> tensor<32x128xf32>
 //           %210 = arith.addf %209, %207 {triton_cv12.add_from_dot} : tensor<32x128xf32>
 //           scf.yield %210, %195, %204 : tensor<32x128xf32>, tensor<32xf32>, tensor<32xf32>
 //         }
@@ -4891,7 +4883,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 //     tt.return
 //   }
 // }
-
 
 // -----
 // Source: gaoyou/0701/dv_local/input.mlir
@@ -5103,7 +5094,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc50 = loc("/home/z00959232/Q2TritonKernel/src/kernels/fla/ops/common/chunk_o.py":536:27)
 #loc51 = loc("/home/z00959232/Q2TritonKernel/src/kernels/fla/ops/common/chunk_o.py":497:4)
 #loc52 = loc(callsite(#loc40 at #loc41))
-
 
 // -----
 // Source: gaoyou/0701/fa_bwd/input_false.mlir
@@ -5469,7 +5459,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc106 = loc(callsite(#loc70 at #loc8))
 #loc107 = loc(callsite(#loc71 at #loc8))
 #loc108 = loc(callsite(#loc72 at #loc8))
-
 
 // -----
 // Source: gaoyou/0701/fa_bwd/input_true.mlir
@@ -6026,7 +6015,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc157 = loc(callsite(#loc76 at #loc10))
 #loc158 = loc(callsite(#loc77 at #loc10))
 
-
 // -----
 // Source: gaoyou/0701/fa_bwd_fp8/input.mlir
 // CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
@@ -6511,7 +6499,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc145 = loc(callsite(#loc142 at #loc58))
 #loc147 = loc(callsite(#loc144 at #loc90))
 #loc148 = loc(callsite(#loc147 at #loc58))
-
 
 // -----
 // Source: gaoyou/0701/fa_bwd_fp8_Q2/input.mlir
@@ -7000,7 +6987,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc147 = loc(callsite(#loc144 at #loc90))
 #loc148 = loc(callsite(#loc147 at #loc58))
 
-
 // -----
 // Source: gaoyou/0701/fa_fwd/input_false.mlir
 // CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
@@ -7303,7 +7289,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc101 = loc(callsite(#loc85 at #loc46))
 #loc102 = loc(callsite(#loc98 at #loc31))
 #loc103 = loc(callsite(#loc101 at #loc31))
-
 
 // -----
 // Source: gaoyou/0701/fa_fwd/input_true.mlir
@@ -7767,7 +7752,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc162 = loc(callsite(#loc157 at #loc63))
 #loc163 = loc(callsite(#loc154 at #loc63))
 
-
 // -----
 // Source: gaoyou/0701/fa_fwd_fp8/input_false.mlir
 // CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
@@ -8126,7 +8110,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc122 = loc(callsite(#loc106 at #loc60))
 #loc123 = loc(callsite(#loc119 at #loc37))
 #loc124 = loc(callsite(#loc122 at #loc37))
-
 
 // -----
 // Source: gaoyou/0701/fa_fwd_fp8/input_true.mlir
@@ -8677,7 +8660,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc191 = loc(callsite(#loc186 at #loc9))
 #loc192 = loc(callsite(#loc183 at #loc9))
 
-
 // -----
 // Source: gaoyou/0701/fa_fwd_fp8_Q2/input_false.mlir
 // CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
@@ -9036,7 +9018,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc122 = loc(callsite(#loc106 at #loc60))
 #loc123 = loc(callsite(#loc119 at #loc37))
 #loc124 = loc(callsite(#loc122 at #loc37))
-
 
 // -----
 // Source: gaoyou/0701/fa_fwd_fp8_Q2/input_true.mlir
@@ -9587,218 +9568,1578 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc191 = loc(callsite(#loc186 at #loc9))
 #loc192 = loc(callsite(#loc183 at #loc9))
 
+// -----
+// Source: gaoyou/0701/gqa_pack_fwd/input.mlir
+// CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
+// CHECK-NEXT:   tt.func public @_gqa_pack_fwd_kernel(%arg0: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg2: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg3: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg4: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg5: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg6: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg7: i32, %arg8: i32, %arg9: i32 {tt.divisibility = 16 : i32}, %arg10: i32 {tt.divisibility = 16 : i32}, %arg11: i32 {tt.divisibility = 16 : i32}, %arg12: i32 {tt.divisibility = 16 : i32}, %arg13: i32 {tt.divisibility = 16 : i32}, %arg14: i32 {tt.divisibility = 16 : i32}, %arg15: i32 {tt.divisibility = 16 : i32}, %arg16: i32 {tt.divisibility = 16 : i32}, %arg17: i32 {tt.divisibility = 16 : i32}, %arg18: i32 {tt.divisibility = 16 : i32}, %arg19: i32 {tt.divisibility = 16 : i32}, %arg20: i32 {tt.divisibility = 16 : i32}, %arg21: i32 {tt.divisibility = 16 : i32}, %arg22: i32 {tt.divisibility = 16 : i32}, %arg23: i32 {tt.divisibility = 16 : i32}, %arg24: i32 {tt.divisibility = 16 : i32}, %arg25: i32 {tt.divisibility = 16 : i32}, %arg26: i32 {tt.divisibility = 16 : i32}, %arg27: i32 {tt.divisibility = 16 : i32}, %arg28: i32 {tt.divisibility = 16 : i32}, %arg29: i32) attributes {noinline = false} {
+// CHECK-NEXT:     %cst = arith.constant dense<0xFF800000> : tensor<16xf32>
+// CHECK-NEXT:     %c5_i32 = arith.constant 5 : i32
+// CHECK-NEXT:     %cst_0 = arith.constant dense<0.000000e+00> : tensor<1x64xf32>
+// CHECK-NEXT:     %cst_1 = arith.constant dense<-1.000000e+06> : tensor<1x64xf32>
+// CHECK-NEXT:     %cst_2 = arith.constant dense<0.000000e+00> : tensor<64x64xbf16>
+// CHECK-NEXT:     %c63_i32 = arith.constant 63 : i32
+// CHECK-NEXT:     %cst_3 = arith.constant dense<0.000000e+00> : tensor<16x64xf32>
+// CHECK-NEXT:     %cst_4 = arith.constant dense<0.000000e+00> : tensor<16xf32>
+// CHECK-NEXT:     %c-2_i32 = arith.constant -2 : i32
+// CHECK-NEXT:     %c-4_i32 = arith.constant -4 : i32
+// CHECK-NEXT:     %c64_i32 = arith.constant 64 : i32
+// CHECK-NEXT:     %c0_i32 = arith.constant 0 : i32
+// CHECK-NEXT:     %cst_5 = arith.constant 0.180336878 : f32
+// CHECK-NEXT:     %c1_i32 = arith.constant 1 : i32
+// CHECK-NEXT:     %0 = tt.get_program_id x : i32
+// CHECK-NEXT:     %1 = tt.get_program_id y : i32
+// CHECK-NEXT:     %2 = arith.muli %1, %arg10 : i32
+// CHECK-NEXT:     %3 = arith.muli %1, %arg13 : i32
+// CHECK-NEXT:     %4 = arith.muli %0, %arg11 : i32
+// CHECK-NEXT:     %5 = arith.addi %2, %4 : i32
+// CHECK-NEXT:     %6 = tt.addptr %arg0, %5 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:     %7 = tt.addptr %arg1, %3 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:     %8 = tt.addptr %arg2, %3 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:     %9 = tt.addptr %arg3, %3 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:     %10 = tt.addptr %arg4, %3 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:     %11 = arith.muli %1, %arg25 : i32
+// CHECK-NEXT:     %12 = arith.muli %0, %arg26 : i32
+// CHECK-NEXT:     %13 = arith.addi %11, %12 : i32
+// CHECK-NEXT:     %14 = tt.addptr %arg5, %13 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:     %15 = arith.muli %1, %arg28 : i32
+// CHECK-NEXT:     %16 = arith.addi %15, %0 : i32
+// CHECK-NEXT:     %17 = tt.addptr %arg6, %16 : !tt.ptr<f32>, i32
+// CHECK-NEXT:     %18 = tt.make_range {end = 64 : i32, start = 0 : i32} : tensor<64xi32>
+// CHECK-NEXT:     %19 = tt.make_range {end = 16 : i32, start = 0 : i32} : tensor<16xi32>
+// CHECK-NEXT:     %20 = tt.expand_dims %19 {axis = 1 : i32} : tensor<16xi32> -> tensor<16x1xi32>
+// CHECK-NEXT:     %21 = tt.splat %arg12 : i32 -> tensor<16x1xi32>
+// CHECK-NEXT:     %22 = arith.muli %20, %21 : tensor<16x1xi32>
+// CHECK-NEXT:     %23 = tt.expand_dims %18 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32>
+// CHECK-NEXT:     %24 = tt.broadcast %22 : tensor<16x1xi32> -> tensor<16x64xi32>
+// CHECK-NEXT:     %25 = tt.broadcast %23 : tensor<1x64xi32> -> tensor<16x64xi32>
+// CHECK-NEXT:     %26 = arith.addi %24, %25 : tensor<16x64xi32>
+// CHECK-NEXT:     %27 = tt.splat %6 : !tt.ptr<bf16> -> tensor<16x64x!tt.ptr<bf16>>
+// CHECK-NEXT:     %28 = tt.addptr %27, %26 : tensor<16x64x!tt.ptr<bf16>>, tensor<16x64xi32>
+// CHECK-NEXT:     %29 = tt.load %28 : tensor<16x64x!tt.ptr<bf16>>
+// CHECK-NEXT:     %30 = arith.truncf %cst_5 : f32 to bf16
+// CHECK-NEXT:     %31 = tt.splat %30 : bf16 -> tensor<16x64xbf16>
+// CHECK-NEXT:     %32 = arith.mulf %29, %31 : tensor<16x64xbf16>
+// CHECK-NEXT:     %33 = arith.addi %0, %c-4_i32 : i32
+// CHECK-NEXT:     %34 = arith.maxsi %33, %c0_i32 : i32
+// CHECK-NEXT:     %35 = arith.addi %0, %c1_i32 : i32
+// CHECK-NEXT:     %36 = arith.minsi %arg8, %35 : i32
+// CHECK-NEXT:     %37 = arith.subi %36, %34 : i32
+// CHECK-NEXT:     %38 = arith.remsi %37, %c64_i32 : i32
+// CHECK-NEXT:     %39 = arith.cmpi sgt, %38, %c0_i32 : i32
+// CHECK-NEXT:     %40 = arith.addi %37, %c63_i32 : i32
+// CHECK-NEXT:     %41 = arith.divsi %40, %c64_i32 : i32
+// CHECK-NEXT:     %42 = scf.if %39 -> (i32) {
+// CHECK-NEXT:       %71 = arith.subi %41, %c1_i32 : i32
+// CHECK-NEXT:       scf.yield %71 : i32
+// CHECK-NEXT:     } else {
+// CHECK-NEXT:       scf.yield %41 : i32
+// CHECK-NEXT:     }
+// CHECK-NEXT:     %43 = arith.addi %0, %c-2_i32 : i32
+// CHECK-NEXT:     %44 = arith.maxsi %43, %c0_i32 : i32
+// CHECK-NEXT:     %45 = tt.splat %7 : !tt.ptr<bf16> -> tensor<64x!tt.ptr<bf16>>
+// CHECK-NEXT:     %46 = tt.splat %9 : !tt.ptr<bf16> -> tensor<64x!tt.ptr<bf16>>
+// CHECK-NEXT:     %47 = tt.splat %arg17 : i32 -> tensor<1x64xi32>
+// CHECK-NEXT:     %48 = tt.expand_dims %18 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32>
+// CHECK-NEXT:     %49 = tt.broadcast %48 : tensor<64x1xi32> -> tensor<64x64xi32>
+// CHECK-NEXT:     %50 = tt.splat %arg23 : i32 -> tensor<64x1xi32>
+// CHECK-NEXT:     %51 = tt.broadcast %23 : tensor<1x64xi32> -> tensor<64x64xi32>
+// CHECK-NEXT:     %52 = tt.splat %8 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>>
+// CHECK-NEXT:     %53 = tt.splat %10 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>>
+// CHECK-NEXT:     %54:3 = scf.for %arg30 = %44 to %36 step %c1_i32 iter_args(%arg31 = %cst_3, %arg32 = %cst, %arg33 = %cst_4) -> (tensor<16x64xf32>, tensor<16xf32>, tensor<16xf32>)  : i32 {
+// CHECK-NEXT:       %71 = arith.muli %arg30, %arg14 : i32
+// CHECK-NEXT:       %72 = tt.splat %71 : i32 -> tensor<64xi32>
+// CHECK-NEXT:       %73 = arith.addi %72, %18 : tensor<64xi32>
+// CHECK-NEXT:       %74 = tt.addptr %45, %73 : tensor<64x!tt.ptr<bf16>>, tensor<64xi32>
+// CHECK-NEXT:       %75 = tt.load %74 : tensor<64x!tt.ptr<bf16>>
+// CHECK-NEXT:       %76 = tt.expand_dims %75 {axis = 0 : i32} : tensor<64xbf16> -> tensor<1x64xbf16>
+// CHECK-NEXT:       %77 = tt.broadcast %76 : tensor<1x64xbf16> -> tensor<16x64xbf16>
+// CHECK-NEXT:       %78 = arith.mulf %32, %77 : tensor<16x64xbf16>
+// CHECK-NEXT:       %79 = arith.muli %arg30, %arg20 : i32
+// CHECK-NEXT:       %80 = tt.splat %79 : i32 -> tensor<64xi32>
+// CHECK-NEXT:       %81 = arith.addi %80, %18 : tensor<64xi32>
+// CHECK-NEXT:       %82 = tt.addptr %46, %81 : tensor<64x!tt.ptr<bf16>>, tensor<64xi32>
+// CHECK-NEXT:       %83 = tt.load %82 : tensor<64x!tt.ptr<bf16>>
+// CHECK-NEXT:       %84 = tt.expand_dims %83 {axis = 0 : i32} : tensor<64xbf16> -> tensor<1x64xbf16>
+// CHECK-NEXT:       %85 = arith.extf %84 : tensor<1x64xbf16> to tensor<1x64xf32>
+// CHECK-NEXT:       %86 = tt.broadcast %85 : tensor<1x64xf32> -> tensor<16x64xf32>
+// CHECK-NEXT:       %87:3 = scf.for %arg34 = %c0_i32 to %42 step %c1_i32 iter_args(%arg35 = %arg31, %arg36 = %arg32, %arg37 = %arg33) -> (tensor<16x64xf32>, tensor<16xf32>, tensor<16xf32>)  : i32 {
+// CHECK-NEXT:         %89 = arith.muli %arg34, %c64_i32 : i32
+// CHECK-NEXT:         %90 = arith.addi %34, %89 : i32
+// CHECK-NEXT:         %91 = tt.splat %90 : i32 -> tensor<64xi32>
+// CHECK-NEXT:         %92 = arith.addi %91, %18 : tensor<64xi32>
+// CHECK-NEXT:         %93 = tt.expand_dims %92 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32>
+// CHECK-NEXT:         %94 = arith.muli %93, %47 : tensor<1x64xi32>
+// CHECK-NEXT:         %95 = tt.broadcast %94 : tensor<1x64xi32> -> tensor<64x64xi32>
+// CHECK-NEXT:         %96 = arith.addi %95, %49 : tensor<64x64xi32>
+// CHECK-NEXT:         %97 = tt.expand_dims %92 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32>
+// CHECK-NEXT:         %98 = arith.muli %97, %50 : tensor<64x1xi32>
+// CHECK-NEXT:         %99 = tt.broadcast %98 : tensor<64x1xi32> -> tensor<64x64xi32>
+// CHECK-NEXT:         %100 = arith.addi %99, %51 : tensor<64x64xi32>
+// CHECK-NEXT:         %101 = tt.addptr %52, %96 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32>
+// CHECK-NEXT:         %102 = tt.load %101 : tensor<64x64x!tt.ptr<bf16>>
+// CHECK-NEXT:         %103 = tt.addptr %53, %100 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32>
+// CHECK-NEXT:         %104 = tt.load %103 : tensor<64x64x!tt.ptr<bf16>>
+// CHECK-NEXT:         %105 = tt.dot %78, %102, %cst_3 {triton_cv12.normalized_dot} : tensor<16x64xbf16> * tensor<64x64xbf16> -> tensor<16x64xf32>
+// CHECK-NEXT:         %106 = "tt.reduce"(%105) <{axis = 1 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg38: f32, %arg39: f32):
+// CHECK-NEXT:           %124 = arith.maxnumf %arg38, %arg39 : f32
+// CHECK-NEXT:           tt.reduce.return %124 : f32
+// CHECK-NEXT:         }) : (tensor<16x64xf32>) -> tensor<16xf32>
+// CHECK-NEXT:         %107 = arith.maxnumf %arg36, %106 : tensor<16xf32>
+// CHECK-NEXT:         %108 = tt.expand_dims %107 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
+// CHECK-NEXT:         %109 = tt.broadcast %108 : tensor<16x1xf32> -> tensor<16x64xf32>
+// CHECK-NEXT:         %110 = arith.subf %105, %109 : tensor<16x64xf32>
+// CHECK-NEXT:         %111 = math.exp2 %110 : tensor<16x64xf32>
+// CHECK-NEXT:         %112 = "tt.reduce"(%111) <{axis = 1 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg38: f32, %arg39: f32):
+// CHECK-NEXT:           %124 = arith.addf %arg38, %arg39 : f32
+// CHECK-NEXT:           tt.reduce.return %124 : f32
+// CHECK-NEXT:         }) : (tensor<16x64xf32>) -> tensor<16xf32>
+// CHECK-NEXT:         %113 = arith.subf %arg36, %107 : tensor<16xf32>
+// CHECK-NEXT:         %114 = math.exp2 %113 : tensor<16xf32>
+// CHECK-NEXT:         %115 = arith.mulf %arg37, %114 : tensor<16xf32>
+// CHECK-NEXT:         %116 = arith.addf %115, %112 : tensor<16xf32>
+// CHECK-NEXT:         %117 = tt.expand_dims %114 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
+// CHECK-NEXT:         %118 = tt.broadcast %117 : tensor<16x1xf32> -> tensor<16x64xf32>
+// CHECK-NEXT:         %119 = arith.mulf %arg35, %118 : tensor<16x64xf32>
+// CHECK-NEXT:         %120 = arith.truncf %111 : tensor<16x64xf32> to tensor<16x64xbf16>
+// CHECK-NEXT:         %121 = tt.dot %120, %104, %cst_3 {triton_cv12.normalized_dot} : tensor<16x64xbf16> * tensor<64x64xbf16> -> tensor<16x64xf32>
+// CHECK-NEXT:         %122 = arith.mulf %121, %86 : tensor<16x64xf32>
+// CHECK-NEXT:         %123 = arith.addf %119, %122 : tensor<16x64xf32>
+// CHECK-NEXT:         scf.yield %123, %107, %116 : tensor<16x64xf32>, tensor<16xf32>, tensor<16xf32>
+// CHECK-NEXT:       } {tt.num_stages = 1 : i32}
+// CHECK-NEXT:       %88:3 = scf.if %39 -> (tensor<16xf32>, tensor<16xf32>, tensor<16x64xf32>) {
+// CHECK-NEXT:         %89 = arith.muli %42, %c64_i32 : i32
+// CHECK-NEXT:         %90 = arith.addi %34, %89 : i32
+// CHECK-NEXT:         %91 = tt.splat %90 : i32 -> tensor<64xi32>
+// CHECK-NEXT:         %92 = arith.addi %91, %18 : tensor<64xi32>
+// CHECK-NEXT:         %93 = tt.expand_dims %92 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32>
+// CHECK-NEXT:         %94 = tt.splat %arg17 : i32 -> tensor<1x64xi32>
+// CHECK-NEXT:         %95 = arith.muli %93, %94 : tensor<1x64xi32>
+// CHECK-NEXT:         %96 = tt.expand_dims %18 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32>
+// CHECK-NEXT:         %97 = tt.broadcast %95 : tensor<1x64xi32> -> tensor<64x64xi32>
+// CHECK-NEXT:         %98 = tt.broadcast %96 : tensor<64x1xi32> -> tensor<64x64xi32>
+// CHECK-NEXT:         %99 = arith.addi %97, %98 : tensor<64x64xi32>
+// CHECK-NEXT:         %100 = tt.expand_dims %92 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32>
+// CHECK-NEXT:         %101 = tt.splat %arg23 : i32 -> tensor<64x1xi32>
+// CHECK-NEXT:         %102 = arith.muli %100, %101 : tensor<64x1xi32>
+// CHECK-NEXT:         %103 = tt.broadcast %102 : tensor<64x1xi32> -> tensor<64x64xi32>
+// CHECK-NEXT:         %104 = tt.broadcast %23 : tensor<1x64xi32> -> tensor<64x64xi32>
+// CHECK-NEXT:         %105 = arith.addi %103, %104 : tensor<64x64xi32>
+// CHECK-NEXT:         %106 = arith.subi %0, %c5_i32 : i32
+// CHECK-NEXT:         %107 = tt.splat %106 : i32 -> tensor<64xi32>
+// CHECK-NEXT:         %108 = arith.cmpi slt, %107, %92 : tensor<64xi32>
+// CHECK-NEXT:         %109 = tt.splat %0 : i32 -> tensor<64xi32>
+// CHECK-NEXT:         %110 = arith.cmpi sle, %92, %109 : tensor<64xi32>
+// CHECK-NEXT:         %111 = arith.andi %108, %110 : tensor<64xi1>
+// CHECK-NEXT:         %112 = tt.expand_dims %111 {axis = 0 : i32} : tensor<64xi1> -> tensor<1x64xi1>
+// CHECK-NEXT:         %113 = tt.splat %8 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>>
+// CHECK-NEXT:         %114 = tt.addptr %113, %99 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32>
+// CHECK-NEXT:         %115 = tt.broadcast %112 : tensor<1x64xi1> -> tensor<64x64xi1>
+// CHECK-NEXT:         %116 = tt.load %114, %115, %cst_2 : tensor<64x64x!tt.ptr<bf16>>
+// CHECK-NEXT:         %117 = tt.expand_dims %111 {axis = 1 : i32} : tensor<64xi1> -> tensor<64x1xi1>
+// CHECK-NEXT:         %118 = tt.splat %10 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>>
+// CHECK-NEXT:         %119 = tt.addptr %118, %105 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32>
+// CHECK-NEXT:         %120 = tt.broadcast %117 : tensor<64x1xi1> -> tensor<64x64xi1>
+// CHECK-NEXT:         %121 = tt.load %119, %120, %cst_2 : tensor<64x64x!tt.ptr<bf16>>
+// CHECK-NEXT:         %122 = arith.select %112, %cst_0, %cst_1 : tensor<1x64xi1>, tensor<1x64xf32>
+// CHECK-NEXT:         %123 = tt.broadcast %122 : tensor<1x64xf32> -> tensor<16x64xf32>
+// CHECK-NEXT:         %124 = tt.dot %78, %116, %cst_3 {triton_cv12.normalized_dot} : tensor<16x64xbf16> * tensor<64x64xbf16> -> tensor<16x64xf32>
+// CHECK-NEXT:         %125 = arith.addf %124, %123 {triton_cv12.add_from_dot} : tensor<16x64xf32>
+// CHECK-NEXT:         %126 = "tt.reduce"(%125) <{axis = 1 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg34: f32, %arg35: f32):
+// CHECK-NEXT:           %146 = arith.maxnumf %arg34, %arg35 : f32
+// CHECK-NEXT:           tt.reduce.return %146 : f32
+// CHECK-NEXT:         }) : (tensor<16x64xf32>) -> tensor<16xf32>
+// CHECK-NEXT:         %127 = arith.maxnumf %87#1, %126 : tensor<16xf32>
+// CHECK-NEXT:         %128 = tt.expand_dims %127 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
+// CHECK-NEXT:         %129 = tt.broadcast %128 : tensor<16x1xf32> -> tensor<16x64xf32>
+// CHECK-NEXT:         %130 = arith.subf %125, %129 : tensor<16x64xf32>
+// CHECK-NEXT:         %131 = math.exp2 %130 : tensor<16x64xf32>
+// CHECK-NEXT:         %132 = "tt.reduce"(%131) <{axis = 1 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg34: f32, %arg35: f32):
+// CHECK-NEXT:           %146 = arith.addf %arg34, %arg35 : f32
+// CHECK-NEXT:           tt.reduce.return %146 : f32
+// CHECK-NEXT:         }) : (tensor<16x64xf32>) -> tensor<16xf32>
+// CHECK-NEXT:         %133 = arith.subf %87#1, %127 : tensor<16xf32>
+// CHECK-NEXT:         %134 = math.exp2 %133 : tensor<16xf32>
+// CHECK-NEXT:         %135 = arith.mulf %87#2, %134 : tensor<16xf32>
+// CHECK-NEXT:         %136 = arith.addf %135, %132 : tensor<16xf32>
+// CHECK-NEXT:         %137 = tt.expand_dims %134 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
+// CHECK-NEXT:         %138 = tt.broadcast %137 : tensor<16x1xf32> -> tensor<16x64xf32>
+// CHECK-NEXT:         %139 = arith.mulf %87#0, %138 : tensor<16x64xf32>
+// CHECK-NEXT:         %140 = arith.truncf %131 : tensor<16x64xf32> to tensor<16x64xbf16>
+// CHECK-NEXT:         %141 = tt.dot %140, %121, %cst_3 {triton_cv12.normalized_dot} : tensor<16x64xbf16> * tensor<64x64xbf16> -> tensor<16x64xf32>
+// CHECK-NEXT:         %142 = arith.extf %84 : tensor<1x64xbf16> to tensor<1x64xf32>
+// CHECK-NEXT:         %143 = tt.broadcast %142 : tensor<1x64xf32> -> tensor<16x64xf32>
+// CHECK-NEXT:         %144 = arith.mulf %141, %143 : tensor<16x64xf32>
+// CHECK-NEXT:         %145 = arith.addf %139, %144 : tensor<16x64xf32>
+// CHECK-NEXT:         scf.yield %127, %136, %145 : tensor<16xf32>, tensor<16xf32>, tensor<16x64xf32>
+// CHECK-NEXT:       } else {
+// CHECK-NEXT:         scf.yield %87#1, %87#2, %87#0 : tensor<16xf32>, tensor<16xf32>, tensor<16x64xf32>
+// CHECK-NEXT:       }
+// CHECK-NEXT:       scf.yield %88#2, %88#0, %88#1 : tensor<16x64xf32>, tensor<16xf32>, tensor<16xf32>
+// CHECK-NEXT:     } {tt.num_stages = 16 : i32}
+// CHECK-NEXT:     %55 = tt.expand_dims %54#2 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
+// CHECK-NEXT:     %56 = tt.broadcast %55 : tensor<16x1xf32> -> tensor<16x64xf32>
+// CHECK-NEXT:     %57 = arith.divf %54#0, %56 : tensor<16x64xf32>
+// CHECK-NEXT:     %58 = arith.truncf %57 : tensor<16x64xf32> to tensor<16x64xbf16>
+// CHECK-NEXT:     %59 = tt.splat %arg27 : i32 -> tensor<16x1xi32>
+// CHECK-NEXT:     %60 = arith.muli %20, %59 : tensor<16x1xi32>
+// CHECK-NEXT:     %61 = tt.broadcast %60 : tensor<16x1xi32> -> tensor<16x64xi32>
+// CHECK-NEXT:     %62 = arith.addi %61, %25 : tensor<16x64xi32>
+// CHECK-NEXT:     %63 = tt.splat %14 : !tt.ptr<bf16> -> tensor<16x64x!tt.ptr<bf16>>
+// CHECK-NEXT:     %64 = tt.addptr %63, %62 : tensor<16x64x!tt.ptr<bf16>>, tensor<16x64xi32>
+// CHECK-NEXT:     tt.store %64, %58 : tensor<16x64x!tt.ptr<bf16>>
+// CHECK-NEXT:     %65 = math.log %54#2 : tensor<16xf32>
+// CHECK-NEXT:     %66 = arith.addf %54#1, %65 : tensor<16xf32>
+// CHECK-NEXT:     %67 = tt.splat %arg29 : i32 -> tensor<16xi32>
+// CHECK-NEXT:     %68 = arith.muli %19, %67 : tensor<16xi32>
+// CHECK-NEXT:     %69 = tt.splat %17 : !tt.ptr<f32> -> tensor<16x!tt.ptr<f32>>
+// CHECK-NEXT:     %70 = tt.addptr %69, %68 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+// CHECK-NEXT:     tt.store %70, %66 : tensor<16x!tt.ptr<f32>>
+// CHECK-NEXT:     tt.return
+// CHECK-NEXT:   }
+// CHECK-NEXT: }
+
+#loc = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0)
+#loc1 = loc(unknown)
+#loc47 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":305:16)
+#loc75 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":157:38)
+#loc82 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":159:21)
+#loc97 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":327:16)
+#loc141 = loc(callsite(#loc1 at #loc75))
+#loc148 = loc(callsite(#loc1 at #loc82))
+#loc195 = loc(callsite(#loc141 at #loc47))
+#loc198 = loc(callsite(#loc148 at #loc47))
+#loc201 = loc(callsite(#loc141 at #loc97))
+#loc203 = loc(callsite(#loc148 at #loc97))
+module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
+  tt.func public @_gqa_pack_fwd_kernel(%arg0: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg1: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg2: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg3: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg4: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg5: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg6: !tt.ptr<f32> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg7: i32 loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg8: i32 loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg9: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg10: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg11: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg12: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg13: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg14: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg15: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg16: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg17: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg18: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg19: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg20: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg21: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg22: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg23: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg24: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg25: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg26: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg27: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg28: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0), %arg29: i32 loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":185:0)) attributes {noinline = false} {
+    %cst = arith.constant dense<0xFF800000> : tensor<16xf32> loc(#loc1)
+    %c5_i32 = arith.constant 5 : i32 loc(#loc1)
+    %cst_0 = arith.constant dense<0.000000e+00> : tensor<1x64xf32> loc(#loc1)
+    %cst_1 = arith.constant dense<-1.000000e+06> : tensor<1x64xf32> loc(#loc1)
+    %cst_2 = arith.constant dense<0.000000e+00> : tensor<64x64xbf16> loc(#loc1)
+    %c63_i32 = arith.constant 63 : i32 loc(#loc1)
+    %cst_3 = arith.constant dense<0.000000e+00> : tensor<16x64xf32> loc(#loc1)
+    %cst_4 = arith.constant dense<0.000000e+00> : tensor<16xf32> loc(#loc1)
+    %c-2_i32 = arith.constant -2 : i32 loc(#loc1)
+    %c-4_i32 = arith.constant -4 : i32 loc(#loc1)
+    %c64_i32 = arith.constant 64 : i32 loc(#loc1)
+    %c0_i32 = arith.constant 0 : i32 loc(#loc1)
+    %cst_5 = arith.constant 0.180336878 : f32 loc(#loc1)
+    %c1_i32 = arith.constant 1 : i32 loc(#loc1)
+    %0 = tt.get_program_id x : i32 loc(#loc2)
+    %1 = tt.get_program_id y : i32 loc(#loc3)
+    %2 = arith.muli %1, %arg10 : i32 loc(#loc4)
+    %3 = arith.muli %1, %arg13 : i32 loc(#loc5)
+    %4 = arith.muli %0, %arg11 : i32 loc(#loc6)
+    %5 = arith.addi %2, %4 : i32 loc(#loc7)
+    %6 = tt.addptr %arg0, %5 : !tt.ptr<bf16>, i32 loc(#loc8)
+    %7 = tt.addptr %arg1, %3 : !tt.ptr<bf16>, i32 loc(#loc9)
+    %8 = tt.addptr %arg2, %3 : !tt.ptr<bf16>, i32 loc(#loc10)
+    %9 = tt.addptr %arg3, %3 : !tt.ptr<bf16>, i32 loc(#loc11)
+    %10 = tt.addptr %arg4, %3 : !tt.ptr<bf16>, i32 loc(#loc12)
+    %11 = arith.muli %1, %arg25 : i32 loc(#loc13)
+    %12 = arith.muli %0, %arg26 : i32 loc(#loc14)
+    %13 = arith.addi %11, %12 : i32 loc(#loc15)
+    %14 = tt.addptr %arg5, %13 : !tt.ptr<bf16>, i32 loc(#loc16)
+    %15 = arith.muli %1, %arg28 : i32 loc(#loc17)
+    %16 = arith.addi %15, %0 : i32 loc(#loc18)
+    %17 = tt.addptr %arg6, %16 : !tt.ptr<f32>, i32 loc(#loc19)
+    %18 = tt.make_range {end = 64 : i32, start = 0 : i32} : tensor<64xi32> loc(#loc20)
+    %19 = tt.make_range {end = 16 : i32, start = 0 : i32} : tensor<16xi32> loc(#loc21)
+    %20 = tt.expand_dims %19 {axis = 1 : i32} : tensor<16xi32> -> tensor<16x1xi32> loc(#loc22)
+    %21 = tt.splat %arg12 : i32 -> tensor<16x1xi32> loc(#loc23)
+    %22 = arith.muli %20, %21 : tensor<16x1xi32> loc(#loc23)
+    %23 = tt.expand_dims %18 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32> loc(#loc24)
+    %24 = tt.broadcast %22 : tensor<16x1xi32> -> tensor<16x64xi32> loc(#loc25)
+    %25 = tt.broadcast %23 : tensor<1x64xi32> -> tensor<16x64xi32> loc(#loc25)
+    %26 = arith.addi %24, %25 : tensor<16x64xi32> loc(#loc25)
+    %27 = tt.splat %6 : !tt.ptr<bf16> -> tensor<16x64x!tt.ptr<bf16>> loc(#loc26)
+    %28 = tt.addptr %27, %26 : tensor<16x64x!tt.ptr<bf16>>, tensor<16x64xi32> loc(#loc26)
+    %29 = tt.load %28 : tensor<16x64x!tt.ptr<bf16>> loc(#loc27)
+    %30 = arith.truncf %cst_5 : f32 to bf16 loc(#loc28)
+    %31 = tt.splat %30 : bf16 -> tensor<16x64xbf16> loc(#loc29)
+    %32 = arith.mulf %29, %31 : tensor<16x64xbf16> loc(#loc29)
+    %33 = arith.addi %0, %c-4_i32 : i32 loc(#loc30)
+    %34 = arith.maxsi %33, %c0_i32 : i32 loc(#loc31)
+    %35 = arith.addi %0, %c1_i32 : i32 loc(#loc32)
+    %36 = arith.minsi %arg8, %35 : i32 loc(#loc33)
+    %37 = arith.subi %36, %34 : i32 loc(#loc34)
+    %38 = arith.remsi %37, %c64_i32 : i32 loc(#loc35)
+    %39 = arith.cmpi sgt, %38, %c0_i32 : i32 loc(#loc36)
+    %40 = arith.addi %37, %c63_i32 : i32 loc(#loc124)
+    %41 = arith.divsi %40, %c64_i32 : i32 loc(#loc125)
+    %42 = scf.if %39 -> (i32) {
+      %71 = arith.subi %41, %c1_i32 : i32 loc(#loc41)
+      scf.yield %71 : i32 loc(#loc41)
+    } else {
+      scf.yield %41 : i32 loc(#loc1)
+    } loc(#loc40)
+    %43 = arith.addi %0, %c-2_i32 : i32 loc(#loc42)
+    %44 = arith.maxsi %43, %c0_i32 : i32 loc(#loc43)
+    %45 = tt.splat %7 : !tt.ptr<bf16> -> tensor<64x!tt.ptr<bf16>> loc(#loc44)
+    %46 = tt.splat %9 : !tt.ptr<bf16> -> tensor<64x!tt.ptr<bf16>> loc(#loc45)
+    %47 = tt.splat %arg17 : i32 -> tensor<1x64xi32> loc(#loc126)
+    %48 = tt.expand_dims %18 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32> loc(#loc127)
+    %49 = tt.broadcast %48 : tensor<64x1xi32> -> tensor<64x64xi32> loc(#loc128)
+    %50 = tt.splat %arg23 : i32 -> tensor<64x1xi32> loc(#loc129)
+    %51 = tt.broadcast %23 : tensor<1x64xi32> -> tensor<64x64xi32> loc(#loc130)
+    %52 = tt.splat %8 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>> loc(#loc131)
+    %53 = tt.splat %10 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>> loc(#loc132)
+    %54:3 = scf.for %arg30 = %44 to %36 step %c1_i32 iter_args(%arg31 = %cst_3, %arg32 = %cst, %arg33 = %cst_4) -> (tensor<16x64xf32>, tensor<16xf32>, tensor<16xf32>)  : i32 {
+      %71 = arith.muli %arg30, %arg14 : i32 loc(#loc55)
+      %72 = tt.splat %71 : i32 -> tensor<64xi32> loc(#loc56)
+      %73 = arith.addi %72, %18 : tensor<64xi32> loc(#loc56)
+      %74 = tt.addptr %45, %73 : tensor<64x!tt.ptr<bf16>>, tensor<64xi32> loc(#loc44)
+      %75 = tt.load %74 : tensor<64x!tt.ptr<bf16>> loc(#loc57)
+      %76 = tt.expand_dims %75 {axis = 0 : i32} : tensor<64xbf16> -> tensor<1x64xbf16> loc(#loc58)
+      %77 = tt.broadcast %76 : tensor<1x64xbf16> -> tensor<16x64xbf16> loc(#loc59)
+      %78 = arith.mulf %32, %77 : tensor<16x64xbf16> loc(#loc59)
+      %79 = arith.muli %arg30, %arg20 : i32 loc(#loc60)
+      %80 = tt.splat %79 : i32 -> tensor<64xi32> loc(#loc61)
+      %81 = arith.addi %80, %18 : tensor<64xi32> loc(#loc61)
+      %82 = tt.addptr %46, %81 : tensor<64x!tt.ptr<bf16>>, tensor<64xi32> loc(#loc45)
+      %83 = tt.load %82 : tensor<64x!tt.ptr<bf16>> loc(#loc62)
+      %84 = tt.expand_dims %83 {axis = 0 : i32} : tensor<64xbf16> -> tensor<1x64xbf16> loc(#loc63)
+      %85 = arith.extf %84 : tensor<1x64xbf16> to tensor<1x64xf32> loc(#loc133)
+      %86 = tt.broadcast %85 : tensor<1x64xf32> -> tensor<16x64xf32> loc(#loc133)
+      %87:3 = scf.for %arg34 = %c0_i32 to %42 step %c1_i32 iter_args(%arg35 = %arg31, %arg36 = %arg32, %arg37 = %arg33) -> (tensor<16x64xf32>, tensor<16xf32>, tensor<16xf32>)  : i32 {
+        %89 = arith.muli %arg34, %c64_i32 : i32 loc(#loc66)
+        %90 = arith.addi %34, %89 : i32 loc(#loc67)
+        %91 = tt.splat %90 : i32 -> tensor<64xi32> loc(#loc134)
+        %92 = arith.addi %91, %18 : tensor<64xi32> loc(#loc134)
+        %93 = tt.expand_dims %92 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32> loc(#loc135)
+        %94 = arith.muli %93, %47 : tensor<1x64xi32> loc(#loc126)
+        %95 = tt.broadcast %94 : tensor<1x64xi32> -> tensor<64x64xi32> loc(#loc128)
+        %96 = arith.addi %95, %49 : tensor<64x64xi32> loc(#loc128)
+        %97 = tt.expand_dims %92 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32> loc(#loc136)
+        %98 = arith.muli %97, %50 : tensor<64x1xi32> loc(#loc129)
+        %99 = tt.broadcast %98 : tensor<64x1xi32> -> tensor<64x64xi32> loc(#loc130)
+        %100 = arith.addi %99, %51 : tensor<64x64xi32> loc(#loc130)
+        %101 = tt.addptr %52, %96 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32> loc(#loc131)
+        %102 = tt.load %101 : tensor<64x64x!tt.ptr<bf16>> loc(#loc137)
+        %103 = tt.addptr %53, %100 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32> loc(#loc132)
+        %104 = tt.load %103 : tensor<64x64x!tt.ptr<bf16>> loc(#loc138)
+        %105 = tt.dot %78, %102, %cst_3 : tensor<16x64xbf16> * tensor<64x64xbf16> -> tensor<16x64xf32> loc(#loc139)
+        %106 = "tt.reduce"(%105) <{axis = 1 : i32}> ({
+        ^bb0(%arg38: f32 loc(callsite(#loc141 at #loc47)), %arg39: f32 loc(callsite(#loc141 at #loc47))):
+          %124 = arith.maxnumf %arg38, %arg39 : f32 loc(#loc204)
+          tt.reduce.return %124 : f32 loc(#loc194)
+        }) : (tensor<16x64xf32>) -> tensor<16xf32> loc(#loc194)
+        %107 = arith.maxnumf %arg36, %106 : tensor<16xf32> loc(#loc143)
+        %108 = tt.expand_dims %107 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32> loc(#loc144)
+        %109 = tt.broadcast %108 : tensor<16x1xf32> -> tensor<16x64xf32> loc(#loc145)
+        %110 = arith.subf %105, %109 : tensor<16x64xf32> loc(#loc145)
+        %111 = math.exp2 %110 : tensor<16x64xf32> loc(#loc146)
+        %112 = "tt.reduce"(%111) <{axis = 1 : i32}> ({
+        ^bb0(%arg38: f32 loc(callsite(#loc148 at #loc47)), %arg39: f32 loc(callsite(#loc148 at #loc47))):
+          %124 = arith.addf %arg38, %arg39 : f32 loc(#loc205)
+          tt.reduce.return %124 : f32 loc(#loc197)
+        }) : (tensor<16x64xf32>) -> tensor<16xf32> loc(#loc197)
+        %113 = arith.subf %arg36, %107 : tensor<16xf32> loc(#loc150)
+        %114 = math.exp2 %113 : tensor<16xf32> loc(#loc151)
+        %115 = arith.mulf %arg37, %114 : tensor<16xf32> loc(#loc152)
+        %116 = arith.addf %115, %112 : tensor<16xf32> loc(#loc153)
+        %117 = tt.expand_dims %114 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32> loc(#loc154)
+        %118 = tt.broadcast %117 : tensor<16x1xf32> -> tensor<16x64xf32> loc(#loc155)
+        %119 = arith.mulf %arg35, %118 : tensor<16x64xf32> loc(#loc155)
+        %120 = arith.truncf %111 : tensor<16x64xf32> to tensor<16x64xbf16> loc(#loc156)
+        %121 = tt.dot %120, %104, %cst_3 : tensor<16x64xbf16> * tensor<64x64xbf16> -> tensor<16x64xf32> loc(#loc157)
+        %122 = arith.mulf %121, %86 : tensor<16x64xf32> loc(#loc133)
+        %123 = arith.addf %119, %122 : tensor<16x64xf32> loc(#loc158)
+        scf.yield %123, %107, %116 : tensor<16x64xf32>, tensor<16xf32>, tensor<16xf32> loc(#loc93)
+      } {tt.num_stages = 1 : i32} loc(#loc65)
+      %88:3 = scf.if %39 -> (tensor<16xf32>, tensor<16xf32>, tensor<16x64xf32>) {
+        %89 = arith.muli %42, %c64_i32 : i32 loc(#loc95)
+        %90 = arith.addi %34, %89 : i32 loc(#loc96)
+        %91 = tt.splat %90 : i32 -> tensor<64xi32> loc(#loc159)
+        %92 = arith.addi %91, %18 : tensor<64xi32> loc(#loc159)
+        %93 = tt.expand_dims %92 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32> loc(#loc160)
+        %94 = tt.splat %arg17 : i32 -> tensor<1x64xi32> loc(#loc161)
+        %95 = arith.muli %93, %94 : tensor<1x64xi32> loc(#loc161)
+        %96 = tt.expand_dims %18 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32> loc(#loc162)
+        %97 = tt.broadcast %95 : tensor<1x64xi32> -> tensor<64x64xi32> loc(#loc163)
+        %98 = tt.broadcast %96 : tensor<64x1xi32> -> tensor<64x64xi32> loc(#loc163)
+        %99 = arith.addi %97, %98 : tensor<64x64xi32> loc(#loc163)
+        %100 = tt.expand_dims %92 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32> loc(#loc164)
+        %101 = tt.splat %arg23 : i32 -> tensor<64x1xi32> loc(#loc165)
+        %102 = arith.muli %100, %101 : tensor<64x1xi32> loc(#loc165)
+        %103 = tt.broadcast %102 : tensor<64x1xi32> -> tensor<64x64xi32> loc(#loc166)
+        %104 = tt.broadcast %23 : tensor<1x64xi32> -> tensor<64x64xi32> loc(#loc166)
+        %105 = arith.addi %103, %104 : tensor<64x64xi32> loc(#loc166)
+        %106 = arith.subi %0, %c5_i32 : i32 loc(#loc167)
+        %107 = tt.splat %106 : i32 -> tensor<64xi32> loc(#loc168)
+        %108 = arith.cmpi slt, %107, %92 : tensor<64xi32> loc(#loc168)
+        %109 = tt.splat %0 : i32 -> tensor<64xi32> loc(#loc169)
+        %110 = arith.cmpi sle, %92, %109 : tensor<64xi32> loc(#loc169)
+        %111 = arith.andi %108, %110 : tensor<64xi1> loc(#loc170)
+        %112 = tt.expand_dims %111 {axis = 0 : i32} : tensor<64xi1> -> tensor<1x64xi1> loc(#loc171)
+        %113 = tt.splat %8 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>> loc(#loc172)
+        %114 = tt.addptr %113, %99 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32> loc(#loc172)
+        %115 = tt.broadcast %112 : tensor<1x64xi1> -> tensor<64x64xi1> loc(#loc173)
+        %116 = tt.load %114, %115, %cst_2 : tensor<64x64x!tt.ptr<bf16>> loc(#loc173)
+        %117 = tt.expand_dims %111 {axis = 1 : i32} : tensor<64xi1> -> tensor<64x1xi1> loc(#loc174)
+        %118 = tt.splat %10 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>> loc(#loc175)
+        %119 = tt.addptr %118, %105 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32> loc(#loc175)
+        %120 = tt.broadcast %117 : tensor<64x1xi1> -> tensor<64x64xi1> loc(#loc176)
+        %121 = tt.load %119, %120, %cst_2 : tensor<64x64x!tt.ptr<bf16>> loc(#loc176)
+        %122 = arith.select %112, %cst_0, %cst_1 : tensor<1x64xi1>, tensor<1x64xf32> loc(#loc177)
+        %123 = tt.broadcast %122 : tensor<1x64xf32> -> tensor<16x64xf32> loc(#loc178)
+        %124 = tt.dot %78, %116, %123 : tensor<16x64xbf16> * tensor<64x64xbf16> -> tensor<16x64xf32> loc(#loc179)
+        %125 = "tt.reduce"(%124) <{axis = 1 : i32}> ({
+        ^bb0(%arg34: f32 loc(callsite(#loc141 at #loc97)), %arg35: f32 loc(callsite(#loc141 at #loc97))):
+          %145 = arith.maxnumf %arg34, %arg35 : f32 loc(#loc206)
+          tt.reduce.return %145 : f32 loc(#loc200)
+        }) : (tensor<16x64xf32>) -> tensor<16xf32> loc(#loc200)
+        %126 = arith.maxnumf %87#1, %125 : tensor<16xf32> loc(#loc180)
+        %127 = tt.expand_dims %126 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32> loc(#loc181)
+        %128 = tt.broadcast %127 : tensor<16x1xf32> -> tensor<16x64xf32> loc(#loc182)
+        %129 = arith.subf %124, %128 : tensor<16x64xf32> loc(#loc182)
+        %130 = math.exp2 %129 : tensor<16x64xf32> loc(#loc183)
+        %131 = "tt.reduce"(%130) <{axis = 1 : i32}> ({
+        ^bb0(%arg34: f32 loc(callsite(#loc148 at #loc97)), %arg35: f32 loc(callsite(#loc148 at #loc97))):
+          %145 = arith.addf %arg34, %arg35 : f32 loc(#loc207)
+          tt.reduce.return %145 : f32 loc(#loc202)
+        }) : (tensor<16x64xf32>) -> tensor<16xf32> loc(#loc202)
+        %132 = arith.subf %87#1, %126 : tensor<16xf32> loc(#loc184)
+        %133 = math.exp2 %132 : tensor<16xf32> loc(#loc185)
+        %134 = arith.mulf %87#2, %133 : tensor<16xf32> loc(#loc186)
+        %135 = arith.addf %134, %131 : tensor<16xf32> loc(#loc187)
+        %136 = tt.expand_dims %133 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32> loc(#loc188)
+        %137 = tt.broadcast %136 : tensor<16x1xf32> -> tensor<16x64xf32> loc(#loc189)
+        %138 = arith.mulf %87#0, %137 : tensor<16x64xf32> loc(#loc189)
+        %139 = arith.truncf %130 : tensor<16x64xf32> to tensor<16x64xbf16> loc(#loc190)
+        %140 = tt.dot %139, %121, %cst_3 : tensor<16x64xbf16> * tensor<64x64xbf16> -> tensor<16x64xf32> loc(#loc191)
+        %141 = arith.extf %84 : tensor<1x64xbf16> to tensor<1x64xf32> loc(#loc192)
+        %142 = tt.broadcast %141 : tensor<1x64xf32> -> tensor<16x64xf32> loc(#loc192)
+        %143 = arith.mulf %140, %142 : tensor<16x64xf32> loc(#loc192)
+        %144 = arith.addf %138, %143 : tensor<16x64xf32> loc(#loc193)
+        scf.yield %126, %135, %144 : tensor<16xf32>, tensor<16xf32>, tensor<16x64xf32> loc(#loc97)
+      } else {
+        scf.yield %87#1, %87#2, %87#0 : tensor<16xf32>, tensor<16xf32>, tensor<16x64xf32> loc(#loc1)
+      } loc(#loc94)
+      scf.yield %88#2, %88#0, %88#1 : tensor<16x64xf32>, tensor<16xf32>, tensor<16xf32> loc(#loc110)
+    } {tt.num_stages = 16 : i32} loc(#loc54)
+    %55 = tt.expand_dims %54#2 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32> loc(#loc111)
+    %56 = tt.broadcast %55 : tensor<16x1xf32> -> tensor<16x64xf32> loc(#loc112)
+    %57 = arith.divf %54#0, %56 : tensor<16x64xf32> loc(#loc112)
+    %58 = arith.truncf %57 : tensor<16x64xf32> to tensor<16x64xbf16> loc(#loc113)
+    %59 = tt.splat %arg27 : i32 -> tensor<16x1xi32> loc(#loc114)
+    %60 = arith.muli %20, %59 : tensor<16x1xi32> loc(#loc114)
+    %61 = tt.broadcast %60 : tensor<16x1xi32> -> tensor<16x64xi32> loc(#loc115)
+    %62 = arith.addi %61, %25 : tensor<16x64xi32> loc(#loc115)
+    %63 = tt.splat %14 : !tt.ptr<bf16> -> tensor<16x64x!tt.ptr<bf16>> loc(#loc116)
+    %64 = tt.addptr %63, %62 : tensor<16x64x!tt.ptr<bf16>>, tensor<16x64xi32> loc(#loc116)
+    tt.store %64, %58 : tensor<16x64x!tt.ptr<bf16>> loc(#loc117)
+    %65 = math.log %54#2 : tensor<16xf32> loc(#loc118)
+    %66 = arith.addf %54#1, %65 : tensor<16xf32> loc(#loc119)
+    %67 = tt.splat %arg29 : i32 -> tensor<16xi32> loc(#loc120)
+    %68 = arith.muli %19, %67 : tensor<16xi32> loc(#loc120)
+    %69 = tt.splat %17 : !tt.ptr<f32> -> tensor<16x!tt.ptr<f32>> loc(#loc121)
+    %70 = tt.addptr %69, %68 : tensor<16x!tt.ptr<f32>>, tensor<16xi32> loc(#loc121)
+    tt.store %70, %66 : tensor<16x!tt.ptr<f32>> loc(#loc122)
+    tt.return loc(#loc123)
+  } loc(#loc)
+} loc(#loc)
+#loc2 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":240:26)
+#loc3 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":241:27)
+#loc4 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":243:24)
+#loc5 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":244:25)
+#loc6 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":246:32)
+#loc7 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":246:24)
+#loc8 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":246:13)
+#loc9 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":247:14)
+#loc10 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":248:14)
+#loc11 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":249:14)
+#loc12 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":250:14)
+#loc13 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":251:22)
+#loc14 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":251:45)
+#loc15 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":251:37)
+#loc16 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":251:13)
+#loc17 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":252:22)
+#loc18 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":252:35)
+#loc19 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":252:13)
+#loc20 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":258:30)
+#loc21 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":259:28)
+#loc22 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":260:22)
+#loc23 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":260:33)
+#loc24 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":260:57)
+#loc25 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":260:46)
+#loc26 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":262:29)
+#loc27 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":262:21)
+#loc28 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":263:38)
+#loc29 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":265:22)
+#loc30 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":267:43)
+#loc31 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":267:30)
+#loc32 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":268:42)
+#loc33 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":268:34)
+#loc34 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":269:31)
+#loc35 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":269:44)
+#loc36 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":269:60)
+#loc37 = loc("/usr/local/python3.11.0/lib/python3.11/site-packages/triton/language/standard.py":40:22)
+#loc38 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":270:47)
+#loc39 = loc("/usr/local/python3.11.0/lib/python3.11/site-packages/triton/language/standard.py":40:28)
+#loc40 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":271:43)
+#loc41 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":271:38)
+#loc42 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":273:43)
+#loc43 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":273:30)
+#loc44 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":277:35)
+#loc45 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":281:35)
+#loc46 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":128:36)
+#loc48 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":128:61)
+#loc49 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":128:50)
+#loc50 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":129:36)
+#loc51 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":129:50)
+#loc52 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":141:36)
+#loc53 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":142:35)
+#loc54 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":275:48)
+#loc55 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":276:28)
+#loc56 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":276:42)
+#loc57 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":277:26)
+#loc58 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":277:44)
+#loc59 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":278:28)
+#loc60 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":280:28)
+#loc61 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":280:42)
+#loc62 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":281:26)
+#loc63 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":281:44)
+#loc64 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":171:17)
+#loc65 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":285:12)
+#loc66 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":287:47)
+#loc67 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":287:34)
+#loc68 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":127:27)
+#loc69 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":128:25)
+#loc70 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":129:25)
+#loc71 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":141:27)
+#loc72 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":142:26)
+#loc73 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":146:8)
+#loc74 = loc("/usr/local/python3.11.0/lib/python3.11/site-packages/triton/language/standard.py":193:44)
+#loc76 = loc("/usr/local/python3.11.0/lib/python3.11/site-packages/triton/language/standard.py":164:27)
+#loc77 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":157:27)
+#loc78 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":158:31)
+#loc79 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":158:26)
+#loc80 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":158:21)
+#loc81 = loc("/usr/local/python3.11.0/lib/python3.11/site-packages/triton/language/standard.py":282:36)
+#loc83 = loc("/usr/local/python3.11.0/lib/python3.11/site-packages/triton/language/standard.py":271:15)
+#loc84 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":160:31)
+#loc85 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":160:25)
+#loc86 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":161:16)
+#loc87 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":161:24)
+#loc88 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":162:22)
+#loc89 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":162:16)
+#loc90 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":165:13)
+#loc91 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":166:8)
+#loc92 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":173:11)
+#loc93 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":288:12)
+#loc94 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":308:11)
+#loc95 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":309:54)
+#loc96 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":309:34)
+#loc98 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":132:30)
+#loc99 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":132:35)
+#loc100 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":132:66)
+#loc101 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":132:52)
+#loc102 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":134:46)
+#loc103 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":134:21)
+#loc104 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":134:12)
+#loc105 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":137:46)
+#loc106 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":137:21)
+#loc107 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":137:12)
+#loc108 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":155:35)
+#loc109 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":155:14)
+#loc110 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":308:8)
+#loc111 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":331:20)
+#loc112 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":331:16)
+#loc113 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":332:17)
+#loc114 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":333:35)
+#loc115 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":333:50)
+#loc116 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":334:21)
+#loc117 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":334:31)
+#loc118 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":336:21)
+#loc119 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":336:14)
+#loc120 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":338:24)
+#loc121 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":339:21)
+#loc122 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":339:29)
+#loc123 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__gqa_pack_fwd_kernel_npu.py":339:4)
+#loc124 = loc(callsite(#loc37 at #loc38))
+#loc125 = loc(callsite(#loc39 at #loc38))
+#loc126 = loc(callsite(#loc46 at #loc47))
+#loc127 = loc(callsite(#loc48 at #loc47))
+#loc128 = loc(callsite(#loc49 at #loc47))
+#loc129 = loc(callsite(#loc50 at #loc47))
+#loc130 = loc(callsite(#loc51 at #loc47))
+#loc131 = loc(callsite(#loc52 at #loc47))
+#loc132 = loc(callsite(#loc53 at #loc47))
+#loc133 = loc(callsite(#loc64 at #loc47))
+#loc134 = loc(callsite(#loc68 at #loc47))
+#loc135 = loc(callsite(#loc69 at #loc47))
+#loc136 = loc(callsite(#loc70 at #loc47))
+#loc137 = loc(callsite(#loc71 at #loc47))
+#loc138 = loc(callsite(#loc72 at #loc47))
+#loc139 = loc(callsite(#loc73 at #loc47))
+#loc140 = loc(callsite(#loc74 at #loc75))
+#loc142 = loc(callsite(#loc76 at #loc74))
+#loc143 = loc(callsite(#loc77 at #loc47))
+#loc144 = loc(callsite(#loc78 at #loc47))
+#loc145 = loc(callsite(#loc79 at #loc47))
+#loc146 = loc(callsite(#loc80 at #loc47))
+#loc147 = loc(callsite(#loc81 at #loc82))
+#loc149 = loc(callsite(#loc83 at #loc81))
+#loc150 = loc(callsite(#loc84 at #loc47))
+#loc151 = loc(callsite(#loc85 at #loc47))
+#loc152 = loc(callsite(#loc86 at #loc47))
+#loc153 = loc(callsite(#loc87 at #loc47))
+#loc154 = loc(callsite(#loc88 at #loc47))
+#loc155 = loc(callsite(#loc89 at #loc47))
+#loc156 = loc(callsite(#loc90 at #loc47))
+#loc157 = loc(callsite(#loc91 at #loc47))
+#loc158 = loc(callsite(#loc92 at #loc47))
+#loc159 = loc(callsite(#loc68 at #loc97))
+#loc160 = loc(callsite(#loc69 at #loc97))
+#loc161 = loc(callsite(#loc46 at #loc97))
+#loc162 = loc(callsite(#loc48 at #loc97))
+#loc163 = loc(callsite(#loc49 at #loc97))
+#loc164 = loc(callsite(#loc70 at #loc97))
+#loc165 = loc(callsite(#loc50 at #loc97))
+#loc166 = loc(callsite(#loc51 at #loc97))
+#loc167 = loc(callsite(#loc98 at #loc97))
+#loc168 = loc(callsite(#loc99 at #loc97))
+#loc169 = loc(callsite(#loc100 at #loc97))
+#loc170 = loc(callsite(#loc101 at #loc97))
+#loc171 = loc(callsite(#loc102 at #loc97))
+#loc172 = loc(callsite(#loc103 at #loc97))
+#loc173 = loc(callsite(#loc104 at #loc97))
+#loc174 = loc(callsite(#loc105 at #loc97))
+#loc175 = loc(callsite(#loc106 at #loc97))
+#loc176 = loc(callsite(#loc107 at #loc97))
+#loc177 = loc(callsite(#loc108 at #loc97))
+#loc178 = loc(callsite(#loc109 at #loc97))
+#loc179 = loc(callsite(#loc73 at #loc97))
+#loc180 = loc(callsite(#loc77 at #loc97))
+#loc181 = loc(callsite(#loc78 at #loc97))
+#loc182 = loc(callsite(#loc79 at #loc97))
+#loc183 = loc(callsite(#loc80 at #loc97))
+#loc184 = loc(callsite(#loc84 at #loc97))
+#loc185 = loc(callsite(#loc85 at #loc97))
+#loc186 = loc(callsite(#loc86 at #loc97))
+#loc187 = loc(callsite(#loc87 at #loc97))
+#loc188 = loc(callsite(#loc88 at #loc97))
+#loc189 = loc(callsite(#loc89 at #loc97))
+#loc190 = loc(callsite(#loc90 at #loc97))
+#loc191 = loc(callsite(#loc91 at #loc97))
+#loc192 = loc(callsite(#loc64 at #loc97))
+#loc193 = loc(callsite(#loc92 at #loc97))
+#loc194 = loc(callsite(#loc140 at #loc47))
+#loc196 = loc(callsite(#loc142 at #loc75))
+#loc197 = loc(callsite(#loc147 at #loc47))
+#loc199 = loc(callsite(#loc149 at #loc82))
+#loc200 = loc(callsite(#loc140 at #loc97))
+#loc202 = loc(callsite(#loc147 at #loc97))
+#loc204 = loc(callsite(#loc196 at #loc47))
+#loc205 = loc(callsite(#loc199 at #loc47))
+#loc206 = loc(callsite(#loc196 at #loc97))
+#loc207 = loc(callsite(#loc199 at #loc97))
+
+// -----
+// Source: gaoyou/0701/matmul_fp8/input.mlir
+// CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
+// CHECK-NEXT:   tt.func public @_kernel_matmul_fp8_block_fastacc(%arg0: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg2: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg3: i32 {tt.divisibility = 16 : i32}, %arg4: i32 {tt.divisibility = 16 : i32}, %arg5: i32 {tt.divisibility = 16 : i32}, %arg6: i32, %arg7: i32, %arg8: i32, %arg9: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg10: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg11: i32 {tt.divisibility = 16 : i32}, %arg12: i32 {tt.divisibility = 16 : i32}, %arg13: i32 {tt.divisibility = 16 : i32}, %arg14: i32, %arg15: i32) attributes {noinline = false} {
+// CHECK-NEXT:     %c31_i32 = arith.constant 31 : i32
+// CHECK-NEXT:     %cst = arith.constant dense<0.000000e+00> : tensor<64x64xf32>
+// CHECK-NEXT:     %c63_i32 = arith.constant 63 : i32
+// CHECK-NEXT:     %cst_0 = arith.constant dense<32> : tensor<32x64xi32>
+// CHECK-NEXT:     %cst_1 = arith.constant dense<32> : tensor<64x32xi32>
+// CHECK-NEXT:     %c0_i32 = arith.constant 0 : i32
+// CHECK-NEXT:     %c256_i32 = arith.constant 256 : i32
+// CHECK-NEXT:     %c1_i32 = arith.constant 1 : i32
+// CHECK-NEXT:     %c32_i32 = arith.constant 32 : i32
+// CHECK-NEXT:     %c64_i32 = arith.constant 64 : i32
+// CHECK-NEXT:     %c8_i32 = arith.constant 8 : i32
+// CHECK-NEXT:     %true = arith.constant true
+// CHECK-NEXT:     tt.assert %true, "" : i1
+// CHECK-NEXT:     tt.assert %true, "" : i1
+// CHECK-NEXT:     tt.assert %true, "" : i1
+// CHECK-NEXT:     %0 = tt.get_program_id x : i32
+// CHECK-NEXT:     %1 = tt.get_program_id y : i32
+// CHECK-NEXT:     %2 = arith.addi %arg3, %c63_i32 : i32
+// CHECK-NEXT:     %3 = arith.divsi %2, %c64_i32 : i32
+// CHECK-NEXT:     %4 = arith.addi %arg4, %c63_i32 : i32
+// CHECK-NEXT:     %5 = arith.divsi %4, %c64_i32 : i32
+// CHECK-NEXT:     %6 = arith.muli %5, %c8_i32 : i32
+// CHECK-NEXT:     %7 = arith.divsi %0, %6 : i32
+// CHECK-NEXT:     %8 = arith.muli %7, %c8_i32 : i32
+// CHECK-NEXT:     %9 = arith.subi %3, %8 : i32
+// CHECK-NEXT:     %10 = arith.minsi %9, %c8_i32 : i32
+// CHECK-NEXT:     %11 = arith.remsi %0, %10 : i32
+// CHECK-NEXT:     %12 = arith.addi %8, %11 : i32
+// CHECK-NEXT:     %13 = arith.remsi %0, %6 : i32
+// CHECK-NEXT:     %14 = arith.divsi %13, %10 : i32
+// CHECK-NEXT:     %15 = arith.muli %12, %c64_i32 : i32
+// CHECK-NEXT:     %16 = tt.make_range {end = 64 : i32, start = 0 : i32} : tensor<64xi32>
+// CHECK-NEXT:     %17 = tt.splat %15 : i32 -> tensor<64xi32>
+// CHECK-NEXT:     %18 = arith.addi %17, %16 : tensor<64xi32>
+// CHECK-NEXT:     %19 = arith.muli %14, %c64_i32 : i32
+// CHECK-NEXT:     %20 = tt.splat %19 : i32 -> tensor<64xi32>
+// CHECK-NEXT:     %21 = arith.addi %20, %16 : tensor<64xi32>
+// CHECK-NEXT:     %22 = tt.splat %arg3 : i32 -> tensor<64xi32>
+// CHECK-NEXT:     %23 = arith.remsi %18, %22 {tt.contiguity = dense<64> : tensor<1xi32>, tt.divisibility = dense<64> : tensor<1xi32>} : tensor<64xi32>
+// CHECK-NEXT:     %24 = tt.splat %arg4 : i32 -> tensor<64xi32>
+// CHECK-NEXT:     %25 = arith.remsi %21, %24 {tt.contiguity = dense<64> : tensor<1xi32>, tt.divisibility = dense<64> : tensor<1xi32>} : tensor<64xi32>
+// CHECK-NEXT:     %26 = arith.muli %1, %c32_i32 : i32
+// CHECK-NEXT:     %27 = tt.make_range {end = 32 : i32, start = 0 : i32} : tensor<32xi32>
+// CHECK-NEXT:     %28 = tt.splat %26 : i32 -> tensor<32xi32>
+// CHECK-NEXT:     %29 = arith.addi %28, %27 : tensor<32xi32>
+// CHECK-NEXT:     %30 = tt.expand_dims %23 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32>
+// CHECK-NEXT:     %31 = tt.splat %arg11 : i32 -> tensor<64x1xi32>
+// CHECK-NEXT:     %32 = arith.muli %30, %31 : tensor<64x1xi32>
+// CHECK-NEXT:     %33 = tt.expand_dims %29 {axis = 0 : i32} : tensor<32xi32> -> tensor<1x32xi32>
+// CHECK-NEXT:     %34 = tt.broadcast %32 : tensor<64x1xi32> -> tensor<64x32xi32>
+// CHECK-NEXT:     %35 = tt.broadcast %33 : tensor<1x32xi32> -> tensor<64x32xi32>
+// CHECK-NEXT:     %36 = arith.addi %34, %35 : tensor<64x32xi32>
+// CHECK-NEXT:     %37 = tt.splat %arg0 : !tt.ptr<f32> -> tensor<64x32x!tt.ptr<f32>>
+// CHECK-NEXT:     %38 = tt.addptr %37, %36 : tensor<64x32x!tt.ptr<f32>>, tensor<64x32xi32>
+// CHECK-NEXT:     %39 = tt.expand_dims %29 {axis = 1 : i32} : tensor<32xi32> -> tensor<32x1xi32>
+// CHECK-NEXT:     %40 = tt.expand_dims %25 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32>
+// CHECK-NEXT:     %41 = tt.splat %arg12 : i32 -> tensor<1x64xi32>
+// CHECK-NEXT:     %42 = arith.muli %40, %41 : tensor<1x64xi32>
+// CHECK-NEXT:     %43 = tt.broadcast %39 : tensor<32x1xi32> -> tensor<32x64xi32>
+// CHECK-NEXT:     %44 = tt.broadcast %42 : tensor<1x64xi32> -> tensor<32x64xi32>
+// CHECK-NEXT:     %45 = arith.addi %43, %44 : tensor<32x64xi32>
+// CHECK-NEXT:     %46 = tt.splat %arg1 : !tt.ptr<f32> -> tensor<32x64x!tt.ptr<f32>>
+// CHECK-NEXT:     %47 = tt.addptr %46, %45 : tensor<32x64x!tt.ptr<f32>>, tensor<32x64xi32>
+// CHECK-NEXT:     %48 = arith.divsi %15, %c256_i32 : i32
+// CHECK-NEXT:     %49 = arith.divsi %19, %c256_i32 : i32
+// CHECK-NEXT:     %50 = arith.addi %arg5, %c31_i32 : i32
+// CHECK-NEXT:     %51 = arith.divsi %50, %c32_i32 : i32
+// CHECK-NEXT:     %52:3 = scf.for %arg16 = %c0_i32 to %51 step %c1_i32 iter_args(%arg17 = %cst, %arg18 = %38, %arg19 = %47) -> (tensor<64x64xf32>, tensor<64x32x!tt.ptr<f32>>, tensor<32x64x!tt.ptr<f32>>)  : i32 {
+// CHECK-NEXT:       %69 = arith.muli %arg16, %c32_i32 : i32
+// CHECK-NEXT:       %70 = arith.subi %arg5, %69 : i32
+// CHECK-NEXT:       %71 = tt.load %arg18 : tensor<64x32x!tt.ptr<f32>>
+// CHECK-NEXT:       %72 = tt.load %arg19 : tensor<32x64x!tt.ptr<f32>>
+// CHECK-NEXT:       %73 = tt.dot %71, %72, %cst, inputPrecision = hf32 {triton_cv12.normalized_dot} : tensor<64x32xf32> * tensor<32x64xf32> -> tensor<64x64xf32>
+// CHECK-NEXT:       %74 = arith.addf %73, %arg17 {triton_cv12.add_from_dot} : tensor<64x64xf32>
+// CHECK-NEXT:       %75 = tt.addptr %arg18, %cst_1 : tensor<64x32x!tt.ptr<f32>>, tensor<64x32xi32>
+// CHECK-NEXT:       %76 = tt.addptr %arg19, %cst_0 : tensor<32x64x!tt.ptr<f32>>, tensor<32x64xi32>
+// CHECK-NEXT:       %77 = arith.addi %arg16, %1 : i32
+// CHECK-NEXT:       %78 = arith.addi %77, %c1_i32 : i32
+// CHECK-NEXT:       %79 = arith.remsi %78, %c8_i32 : i32
+// CHECK-NEXT:       %80 = arith.cmpi eq, %79, %c0_i32 : i32
+// CHECK-NEXT:       %81 = arith.cmpi slt, %70, %c32_i32 : i32
+// CHECK-NEXT:       %82 = arith.ori %80, %81 : i1
+// CHECK-NEXT:       %83 = scf.if %82 -> (tensor<64x64xf32>) {
+// CHECK-NEXT:         %84 = arith.divsi %77, %c8_i32 : i32
+// CHECK-NEXT:         %85 = arith.addi %84, %c1_i32 : i32
+// CHECK-NEXT:         %86 = arith.muli %48, %arg14 : i32
+// CHECK-NEXT:         %87 = tt.addptr %arg9, %86 : !tt.ptr<f32>, i32
+// CHECK-NEXT:         %88 = tt.addptr %87, %84 : !tt.ptr<f32>, i32
+// CHECK-NEXT:         %89 = tt.load %88 : !tt.ptr<f32>
+// CHECK-NEXT:         %90 = arith.muli %49, %arg15 : i32
+// CHECK-NEXT:         %91 = tt.addptr %arg10, %90 : !tt.ptr<f32>, i32
+// CHECK-NEXT:         %92 = tt.addptr %91, %84 : !tt.ptr<f32>, i32
+// CHECK-NEXT:         %93 = tt.load %92 : !tt.ptr<f32>
+// CHECK-NEXT:         %94 = arith.mulf %89, %93 : f32
+// CHECK-NEXT:         %95 = arith.addi %arg16, %c1_i32 : i32
+// CHECK-NEXT:         %96 = arith.cmpi eq, %95, %51 : i32
+// CHECK-NEXT:         %97 = scf.if %96 -> (f32) {
+// CHECK-NEXT:           scf.yield %94 : f32
+// CHECK-NEXT:         } else {
+// CHECK-NEXT:           %100 = tt.addptr %87, %85 : !tt.ptr<f32>, i32
+// CHECK-NEXT:           %101 = tt.load %100 : !tt.ptr<f32>
+// CHECK-NEXT:           %102 = tt.addptr %91, %85 : !tt.ptr<f32>, i32
+// CHECK-NEXT:           %103 = tt.load %102 : !tt.ptr<f32>
+// CHECK-NEXT:           %104 = arith.mulf %101, %103 : f32
+// CHECK-NEXT:           %105 = arith.divf %94, %104 : f32
+// CHECK-NEXT:           scf.yield %105 : f32
+// CHECK-NEXT:         }
+// CHECK-NEXT:         %98 = tt.splat %97 : f32 -> tensor<64x64xf32>
+// CHECK-NEXT:         %99 = arith.mulf %74, %98 : tensor<64x64xf32>
+// CHECK-NEXT:         scf.yield %99 : tensor<64x64xf32>
+// CHECK-NEXT:       } else {
+// CHECK-NEXT:         scf.yield %74 : tensor<64x64xf32>
+// CHECK-NEXT:       }
+// CHECK-NEXT:       scf.yield %83, %75, %76 : tensor<64x64xf32>, tensor<64x32x!tt.ptr<f32>>, tensor<32x64x!tt.ptr<f32>>
+// CHECK-NEXT:     }
+// CHECK-NEXT:     %53 = tt.expand_dims %18 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32>
+// CHECK-NEXT:     %54 = tt.splat %arg13 : i32 -> tensor<64x1xi32>
+// CHECK-NEXT:     %55 = arith.muli %53, %54 : tensor<64x1xi32>
+// CHECK-NEXT:     %56 = tt.expand_dims %21 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32>
+// CHECK-NEXT:     %57 = tt.broadcast %55 : tensor<64x1xi32> -> tensor<64x64xi32>
+// CHECK-NEXT:     %58 = tt.broadcast %56 : tensor<1x64xi32> -> tensor<64x64xi32>
+// CHECK-NEXT:     %59 = arith.addi %57, %58 : tensor<64x64xi32>
+// CHECK-NEXT:     %60 = tt.splat %arg2 : !tt.ptr<f32> -> tensor<64x64x!tt.ptr<f32>>
+// CHECK-NEXT:     %61 = tt.addptr %60, %59 : tensor<64x64x!tt.ptr<f32>>, tensor<64x64xi32>
+// CHECK-NEXT:     %62 = arith.cmpi slt, %18, %22 : tensor<64xi32>
+// CHECK-NEXT:     %63 = tt.expand_dims %62 {axis = 1 : i32} : tensor<64xi1> -> tensor<64x1xi1>
+// CHECK-NEXT:     %64 = arith.cmpi slt, %21, %24 : tensor<64xi32>
+// CHECK-NEXT:     %65 = tt.expand_dims %64 {axis = 0 : i32} : tensor<64xi1> -> tensor<1x64xi1>
+// CHECK-NEXT:     %66 = tt.broadcast %63 : tensor<64x1xi1> -> tensor<64x64xi1>
+// CHECK-NEXT:     %67 = tt.broadcast %65 : tensor<1x64xi1> -> tensor<64x64xi1>
+// CHECK-NEXT:     %68 = arith.andi %66, %67 : tensor<64x64xi1>
+// CHECK-NEXT:     tt.store %61, %52#0, %68 : tensor<64x64x!tt.ptr<f32>>
+// CHECK-NEXT:     tt.return
+// CHECK-NEXT:   }
+// CHECK-NEXT: }
+
+#loc = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":23:0)
+module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
+  tt.func public @_kernel_matmul_fp8_block_fastacc(%arg0: !tt.ptr<f32> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":23:0), %arg1: !tt.ptr<f32> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":23:0), %arg2: !tt.ptr<f32> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":23:0), %arg3: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":23:0), %arg4: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":23:0), %arg5: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":23:0), %arg6: i32 loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":23:0), %arg7: i32 loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":23:0), %arg8: i32 loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":23:0), %arg9: !tt.ptr<f32> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":23:0), %arg10: !tt.ptr<f32> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":23:0), %arg11: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":23:0), %arg12: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":23:0), %arg13: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":23:0), %arg14: i32 loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":23:0), %arg15: i32 loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":23:0)) attributes {noinline = false} {
+    %c31_i32 = arith.constant 31 : i32 loc(#loc1)
+    %cst = arith.constant dense<0.000000e+00> : tensor<64x64xf32> loc(#loc1)
+    %c63_i32 = arith.constant 63 : i32 loc(#loc1)
+    %cst_0 = arith.constant dense<32> : tensor<32x64xi32> loc(#loc1)
+    %cst_1 = arith.constant dense<32> : tensor<64x32xi32> loc(#loc1)
+    %c0_i32 = arith.constant 0 : i32 loc(#loc1)
+    %c256_i32 = arith.constant 256 : i32 loc(#loc1)
+    %c1_i32 = arith.constant 1 : i32 loc(#loc1)
+    %c32_i32 = arith.constant 32 : i32 loc(#loc1)
+    %c64_i32 = arith.constant 64 : i32 loc(#loc1)
+    %c8_i32 = arith.constant 8 : i32 loc(#loc1)
+    %true = arith.constant true loc(#loc1)
+    tt.assert %true, "" : i1 loc(#loc2)
+    tt.assert %true, "" : i1 loc(#loc3)
+    tt.assert %true, "" : i1 loc(#loc4)
+    %0 = tt.get_program_id x : i32 loc(#loc5)
+    %1 = tt.get_program_id y : i32 loc(#loc6)
+    %2 = arith.addi %arg3, %c63_i32 : i32 loc(#loc92)
+    %3 = arith.divsi %2, %c64_i32 : i32 loc(#loc93)
+    %4 = arith.addi %arg4, %c63_i32 : i32 loc(#loc94)
+    %5 = arith.divsi %4, %c64_i32 : i32 loc(#loc95)
+    %6 = arith.muli %5, %c8_i32 : i32 loc(#loc11)
+    %7 = arith.divsi %0, %6 : i32 loc(#loc12)
+    %8 = arith.muli %7, %c8_i32 : i32 loc(#loc13)
+    %9 = arith.subi %3, %8 : i32 loc(#loc14)
+    %10 = arith.minsi %9, %c8_i32 : i32 loc(#loc15)
+    %11 = arith.remsi %0, %10 : i32 loc(#loc16)
+    %12 = arith.addi %8, %11 : i32 loc(#loc17)
+    %13 = arith.remsi %0, %6 : i32 loc(#loc18)
+    %14 = arith.divsi %13, %10 : i32 loc(#loc19)
+    %15 = arith.muli %12, %c64_i32 : i32 loc(#loc20)
+    %16 = tt.make_range {end = 64 : i32, start = 0 : i32} : tensor<64xi32> loc(#loc21)
+    %17 = tt.splat %15 : i32 -> tensor<64xi32> loc(#loc22)
+    %18 = arith.addi %17, %16 : tensor<64xi32> loc(#loc22)
+    %19 = arith.muli %14, %c64_i32 : i32 loc(#loc23)
+    %20 = tt.splat %19 : i32 -> tensor<64xi32> loc(#loc24)
+    %21 = arith.addi %20, %16 : tensor<64xi32> loc(#loc24)
+    %22 = tt.splat %arg3 : i32 -> tensor<64xi32> loc(#loc25)
+    %23 = arith.remsi %18, %22 {tt.contiguity = dense<64> : tensor<1xi32>, tt.divisibility = dense<64> : tensor<1xi32>} : tensor<64xi32> loc(#loc25)
+    %24 = tt.splat %arg4 : i32 -> tensor<64xi32> loc(#loc26)
+    %25 = arith.remsi %21, %24 {tt.contiguity = dense<64> : tensor<1xi32>, tt.divisibility = dense<64> : tensor<1xi32>} : tensor<64xi32> loc(#loc26)
+    %26 = arith.muli %1, %c32_i32 : i32 loc(#loc27)
+    %27 = tt.make_range {end = 32 : i32, start = 0 : i32} : tensor<32xi32> loc(#loc28)
+    %28 = tt.splat %26 : i32 -> tensor<32xi32> loc(#loc29)
+    %29 = arith.addi %28, %27 : tensor<32xi32> loc(#loc29)
+    %30 = tt.expand_dims %23 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32> loc(#loc30)
+    %31 = tt.splat %arg11 : i32 -> tensor<64x1xi32> loc(#loc31)
+    %32 = arith.muli %30, %31 : tensor<64x1xi32> loc(#loc31)
+    %33 = tt.expand_dims %29 {axis = 0 : i32} : tensor<32xi32> -> tensor<1x32xi32> loc(#loc32)
+    %34 = tt.broadcast %32 : tensor<64x1xi32> -> tensor<64x32xi32> loc(#loc33)
+    %35 = tt.broadcast %33 : tensor<1x32xi32> -> tensor<64x32xi32> loc(#loc33)
+    %36 = arith.addi %34, %35 : tensor<64x32xi32> loc(#loc33)
+    %37 = tt.splat %arg0 : !tt.ptr<f32> -> tensor<64x32x!tt.ptr<f32>> loc(#loc34)
+    %38 = tt.addptr %37, %36 : tensor<64x32x!tt.ptr<f32>>, tensor<64x32xi32> loc(#loc34)
+    %39 = tt.expand_dims %29 {axis = 1 : i32} : tensor<32xi32> -> tensor<32x1xi32> loc(#loc35)
+    %40 = tt.expand_dims %25 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32> loc(#loc36)
+    %41 = tt.splat %arg12 : i32 -> tensor<1x64xi32> loc(#loc37)
+    %42 = arith.muli %40, %41 : tensor<1x64xi32> loc(#loc37)
+    %43 = tt.broadcast %39 : tensor<32x1xi32> -> tensor<32x64xi32> loc(#loc38)
+    %44 = tt.broadcast %42 : tensor<1x64xi32> -> tensor<32x64xi32> loc(#loc38)
+    %45 = arith.addi %43, %44 : tensor<32x64xi32> loc(#loc38)
+    %46 = tt.splat %arg1 : !tt.ptr<f32> -> tensor<32x64x!tt.ptr<f32>> loc(#loc39)
+    %47 = tt.addptr %46, %45 : tensor<32x64x!tt.ptr<f32>>, tensor<32x64xi32> loc(#loc39)
+    %48 = arith.divsi %15, %c256_i32 : i32 loc(#loc40)
+    %49 = arith.divsi %19, %c256_i32 : i32 loc(#loc41)
+    %50 = arith.addi %arg5, %c31_i32 : i32 loc(#loc96)
+    %51 = arith.divsi %50, %c32_i32 : i32 loc(#loc97)
+    %52:3 = scf.for %arg16 = %c0_i32 to %51 step %c1_i32 iter_args(%arg17 = %cst, %arg18 = %38, %arg19 = %47) -> (tensor<64x64xf32>, tensor<64x32x!tt.ptr<f32>>, tensor<32x64x!tt.ptr<f32>>)  : i32 {
+      %69 = arith.muli %arg16, %c32_i32 : i32 loc(#loc44)
+      %70 = arith.subi %arg5, %69 : i32 loc(#loc45)
+      %71 = tt.load %arg18 : tensor<64x32x!tt.ptr<f32>> loc(#loc46)
+      %72 = tt.load %arg19 : tensor<32x64x!tt.ptr<f32>> loc(#loc47)
+      %73 = tt.dot %71, %72, %arg17, inputPrecision = hf32 : tensor<64x32xf32> * tensor<32x64xf32> -> tensor<64x64xf32> loc(#loc48)
+      %74 = tt.addptr %arg18, %cst_1 : tensor<64x32x!tt.ptr<f32>>, tensor<64x32xi32> loc(#loc49)
+      %75 = tt.addptr %arg19, %cst_0 : tensor<32x64x!tt.ptr<f32>>, tensor<32x64xi32> loc(#loc50)
+      %76 = arith.addi %arg16, %1 : i32 loc(#loc51)
+      %77 = arith.addi %76, %c1_i32 : i32 loc(#loc52)
+      %78 = arith.remsi %77, %c8_i32 : i32 loc(#loc53)
+      %79 = arith.cmpi eq, %78, %c0_i32 : i32 loc(#loc54)
+      %80 = arith.cmpi slt, %70, %c32_i32 : i32 loc(#loc55)
+      %81 = arith.ori %79, %80 : i1 loc(#loc56)
+      %82 = scf.if %81 -> (tensor<64x64xf32>) {
+        %83 = arith.divsi %76, %c8_i32 : i32 loc(#loc58)
+        %84 = arith.addi %83, %c1_i32 : i32 loc(#loc59)
+        %85 = arith.muli %48, %arg14 : i32 loc(#loc60)
+        %86 = tt.addptr %arg9, %85 : !tt.ptr<f32>, i32 loc(#loc61)
+        %87 = tt.addptr %86, %83 : !tt.ptr<f32>, i32 loc(#loc62)
+        %88 = tt.load %87 : !tt.ptr<f32> loc(#loc63)
+        %89 = arith.muli %49, %arg15 : i32 loc(#loc64)
+        %90 = tt.addptr %arg10, %89 : !tt.ptr<f32>, i32 loc(#loc65)
+        %91 = tt.addptr %90, %83 : !tt.ptr<f32>, i32 loc(#loc66)
+        %92 = tt.load %91 : !tt.ptr<f32> loc(#loc67)
+        %93 = arith.mulf %88, %92 : f32 loc(#loc68)
+        %94 = arith.addi %arg16, %c1_i32 : i32 loc(#loc69)
+        %95 = arith.cmpi eq, %94, %51 : i32 loc(#loc70)
+        %96 = scf.if %95 -> (f32) {
+          scf.yield %93 : f32 loc(#loc1)
+        } else {
+          %99 = tt.addptr %86, %84 : !tt.ptr<f32>, i32 loc(#loc72)
+          %100 = tt.load %99 : !tt.ptr<f32> loc(#loc73)
+          %101 = tt.addptr %90, %84 : !tt.ptr<f32>, i32 loc(#loc74)
+          %102 = tt.load %101 : !tt.ptr<f32> loc(#loc75)
+          %103 = arith.mulf %100, %102 : f32 loc(#loc76)
+          %104 = arith.divf %93, %103 : f32 loc(#loc77)
+          scf.yield %104 : f32 loc(#loc77)
+        } loc(#loc71)
+        %97 = tt.splat %96 : f32 -> tensor<64x64xf32> loc(#loc78)
+        %98 = arith.mulf %73, %97 : tensor<64x64xf32> loc(#loc78)
+        scf.yield %98 : tensor<64x64xf32> loc(#loc78)
+      } else {
+        scf.yield %73 : tensor<64x64xf32> loc(#loc1)
+      } loc(#loc57)
+      scf.yield %82, %74, %75 : tensor<64x64xf32>, tensor<64x32x!tt.ptr<f32>>, tensor<32x64x!tt.ptr<f32>> loc(#loc79)
+    } loc(#loc43)
+    %53 = tt.expand_dims %18 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32> loc(#loc80)
+    %54 = tt.splat %arg13 : i32 -> tensor<64x1xi32> loc(#loc81)
+    %55 = arith.muli %53, %54 : tensor<64x1xi32> loc(#loc81)
+    %56 = tt.expand_dims %21 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32> loc(#loc82)
+    %57 = tt.broadcast %55 : tensor<64x1xi32> -> tensor<64x64xi32> loc(#loc83)
+    %58 = tt.broadcast %56 : tensor<1x64xi32> -> tensor<64x64xi32> loc(#loc83)
+    %59 = arith.addi %57, %58 : tensor<64x64xi32> loc(#loc83)
+    %60 = tt.splat %arg2 : !tt.ptr<f32> -> tensor<64x64x!tt.ptr<f32>> loc(#loc84)
+    %61 = tt.addptr %60, %59 : tensor<64x64x!tt.ptr<f32>>, tensor<64x64xi32> loc(#loc84)
+    %62 = arith.cmpi slt, %18, %22 : tensor<64xi32> loc(#loc85)
+    %63 = tt.expand_dims %62 {axis = 1 : i32} : tensor<64xi1> -> tensor<64x1xi1> loc(#loc86)
+    %64 = arith.cmpi slt, %21, %24 : tensor<64xi32> loc(#loc87)
+    %65 = tt.expand_dims %64 {axis = 0 : i32} : tensor<64xi1> -> tensor<1x64xi1> loc(#loc88)
+    %66 = tt.broadcast %63 : tensor<64x1xi1> -> tensor<64x64xi1> loc(#loc89)
+    %67 = tt.broadcast %65 : tensor<1x64xi1> -> tensor<64x64xi1> loc(#loc89)
+    %68 = arith.andi %66, %67 : tensor<64x64xi1> loc(#loc89)
+    tt.store %61, %52#0, %68 : tensor<64x64x!tt.ptr<f32>> loc(#loc90)
+    tt.return loc(#loc91)
+  } loc(#loc)
+} loc(#loc)
+#loc1 = loc(unknown)
+#loc2 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":103:11)
+#loc3 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":104:11)
+#loc4 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":105:11)
+#loc5 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":106:24)
+#loc6 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":107:26)
+#loc7 = loc("/usr/local/python3.11.0/lib/python3.11/site-packages/triton/language/standard.py":40:22)
+#loc8 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":109:24)
+#loc9 = loc("/usr/local/python3.11.0/lib/python3.11/site-packages/triton/language/standard.py":40:28)
+#loc10 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":110:24)
+#loc11 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":111:22)
+#loc12 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":112:22)
+#loc13 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":113:41)
+#loc14 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":113:30)
+#loc15 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":113:50)
+#loc16 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":114:40)
+#loc17 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":114:34)
+#loc18 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":115:19)
+#loc19 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":115:30)
+#loc20 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":117:17)
+#loc21 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":117:40)
+#loc22 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":117:27)
+#loc23 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":118:17)
+#loc24 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":118:27)
+#loc25 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":119:48)
+#loc26 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":120:48)
+#loc27 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":121:17)
+#loc28 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":121:40)
+#loc29 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":121:27)
+#loc30 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":123:17)
+#loc31 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":123:28)
+#loc32 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":123:43)
+#loc33 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":123:40)
+#loc34 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":123:13)
+#loc35 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":124:16)
+#loc36 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":124:43)
+#loc37 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":124:54)
+#loc38 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":124:39)
+#loc39 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":124:13)
+#loc40 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":127:33)
+#loc41 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":128:33)
+#loc42 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":131:33)
+#loc43 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":131:22)
+#loc44 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":133:31)
+#loc45 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":133:26)
+#loc46 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":136:24)
+#loc47 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":137:24)
+#loc48 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":145:27)
+#loc49 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":147:13)
+#loc50 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":148:13)
+#loc51 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":151:30)
+#loc52 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":152:21)
+#loc53 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":152:26)
+#loc54 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":152:40)
+#loc55 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":152:61)
+#loc56 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":152:47)
+#loc57 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":152:11)
+#loc58 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":155:31)
+#loc59 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":156:37)
+#loc60 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":158:36)
+#loc61 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":158:26)
+#loc62 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":158:54)
+#loc63 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":158:16)
+#loc64 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":161:36)
+#loc65 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":161:26)
+#loc66 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":161:54)
+#loc67 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":161:16)
+#loc68 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":163:30)
+#loc69 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":164:19)
+#loc70 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":164:24)
+#loc71 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":164:15)
+#loc72 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":168:58)
+#loc73 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":168:20)
+#loc74 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":171:58)
+#loc75 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":171:20)
+#loc76 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":173:44)
+#loc77 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":174:47)
+#loc78 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":175:19)
+#loc79 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":152:8)
+#loc80 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":182:16)
+#loc81 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":182:27)
+#loc82 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":182:42)
+#loc83 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":182:39)
+#loc84 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":182:13)
+#loc85 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":183:17)
+#loc86 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":183:20)
+#loc87 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":183:37)
+#loc88 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":183:40)
+#loc89 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":183:31)
+#loc90 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":186:20)
+#loc91 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test__kernel_matmul_fp8_block_fastacc_npu.py":185:4)
+#loc92 = loc(callsite(#loc7 at #loc8))
+#loc93 = loc(callsite(#loc9 at #loc8))
+#loc94 = loc(callsite(#loc7 at #loc10))
+#loc95 = loc(callsite(#loc9 at #loc10))
+#loc96 = loc(callsite(#loc7 at #loc42))
+#loc97 = loc(callsite(#loc9 at #loc42))
 
 // -----
 // Source: gaoyou/0701/prepare_wy/input.mlir
-// CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
-// CHECK-NEXT:   tt.func public @prepare_wy_repr_bwd_kernel(%arg0: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg2: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg3: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg4: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg5: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg6: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg7: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg8: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg9: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg10: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg11: i32) attributes {noinline = false} {
-// CHECK-NEXT:     %c2_i32 = arith.constant 2 : i32
-// CHECK-NEXT:     %cst = arith.constant dense<0.000000e+00> : tensor<64xf32>
-// CHECK-NEXT:     %c1_i32 = arith.constant 1 : i32
-// CHECK-NEXT:     %cst_0 = arith.constant dense<0.000000e+00> : tensor<64x64xf32>
-// CHECK-NEXT:     %c4096_i64 = arith.constant 4096 : i64
-// CHECK-NEXT:     %c128_i64 = arith.constant 128 : i64
-// CHECK-NEXT:     %c128_i32 = arith.constant 128 : i32
-// CHECK-NEXT:     %c0_i32 = arith.constant 0 : i32
-// CHECK-NEXT:     %c2048_i64 = arith.constant 2048 : i64
-// CHECK-NEXT:     %c1_i64 = arith.constant 1 : i64
-// CHECK-NEXT:     %c64_i64 = arith.constant 64 : i64
-// CHECK-NEXT:     %c32_i64 = arith.constant 32 : i64
-// CHECK-NEXT:     %c64_i32 = arith.constant 64 : i32
-// CHECK-NEXT:     %c32_i32 = arith.constant 32 : i32
-// CHECK-NEXT:     %0 = tt.get_program_id x : i32
-// CHECK-NEXT:     %1 = tt.get_program_id y : i32
-// CHECK-NEXT:     %2 = arith.divsi %1, %c32_i32 : i32
-// CHECK-NEXT:     %3 = arith.remsi %1, %c32_i32 : i32
-// CHECK-NEXT:     %4 = arith.muli %2, %arg11 : i32
-// CHECK-NEXT:     %5 = arith.muli %4, %c32_i32 : i32
-// CHECK-NEXT:     %6 = arith.addi %5, %3 : i32
-// CHECK-NEXT:     %7 = tt.addptr %arg2, %6 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %8 = arith.muli %0, %c64_i32 : i32
-// CHECK-NEXT:     %9 = arith.extsi %arg11 : i32 to i64
-// CHECK-NEXT:     %10 = tt.make_tensor_ptr %7, [%9], [%c32_i64], [%8] {order = array<i32: 0>} : <tensor<64xbf16>>
-// CHECK-NEXT:     %11 = tt.addptr %arg9, %6 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %12 = tt.make_tensor_ptr %11, [%9], [%c32_i64], [%8] {order = array<i32: 0>} : <tensor<64xbf16>>
-// CHECK-NEXT:     %13 = arith.muli %6, %c64_i32 : i32
-// CHECK-NEXT:     %14 = tt.addptr %arg4, %13 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %15 = tt.make_tensor_ptr %14, [%c64_i64, %9], [%c1_i64, %c2048_i64], [%c0_i32, %8] {order = array<i32: 0, 1>} : <tensor<64x64xbf16>>
-// CHECK-NEXT:     %16 = tt.load %10 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<64xbf16>>
-// CHECK-NEXT:     %17 = tt.load %15 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
-// CHECK-NEXT:     %18 = tt.addptr %arg3, %6 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %19 = tt.make_tensor_ptr %18, [%9], [%c32_i64], [%8] {order = array<i32: 0>} : <tensor<64xbf16>>
-// CHECK-NEXT:     %20 = tt.load %19 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<64xbf16>>
-// CHECK-NEXT:     %21 = math.exp %20 : tensor<64xbf16>
-// CHECK-NEXT:     %22 = arith.muli %6, %c128_i32 : i32
-// CHECK-NEXT:     %23 = tt.addptr %arg0, %22 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %24 = tt.addptr %arg7, %22 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %25 = tt.addptr %arg5, %22 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %26 = arith.mulf %16, %21 : tensor<64xbf16>
-// CHECK-NEXT:     %27 = tt.expand_dims %26 {axis = 1 : i32} : tensor<64xbf16> -> tensor<64x1xbf16>
-// CHECK-NEXT:     %28 = tt.broadcast %27 : tensor<64x1xbf16> -> tensor<64x64xbf16>
-// CHECK-NEXT:     %29 = arith.extf %27 : tensor<64x1xbf16> to tensor<64x1xf32>
-// CHECK-NEXT:     %30 = tt.broadcast %29 : tensor<64x1xf32> -> tensor<64x64xf32>
-// CHECK-NEXT:     %31 = tt.expand_dims %21 {axis = 1 : i32} : tensor<64xbf16> -> tensor<64x1xbf16>
-// CHECK-NEXT:     %32 = arith.extf %31 : tensor<64x1xbf16> to tensor<64x1xf32>
-// CHECK-NEXT:     %33 = tt.broadcast %32 : tensor<64x1xf32> -> tensor<64x64xf32>
-// CHECK-NEXT:     %34:3 = scf.for %arg12 = %c0_i32 to %c2_i32 step %c1_i32 iter_args(%arg13 = %cst_0, %arg14 = %cst, %arg15 = %cst) -> (tensor<64x64xf32>, tensor<64xf32>, tensor<64xf32>)  : i32 {
-// CHECK-NEXT:       %98 = arith.muli %arg12, %c64_i32 : i32
-// CHECK-NEXT:       %99 = tt.make_tensor_ptr %23, [%9, %c128_i64], [%c4096_i64, %c1_i64], [%8, %98] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
-// CHECK-NEXT:       %100 = tt.make_tensor_ptr %24, [%9, %c128_i64], [%c4096_i64, %c1_i64], [%8, %98] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
-// CHECK-NEXT:       %101 = tt.make_tensor_ptr %25, [%9, %c128_i64], [%c4096_i64, %c1_i64], [%8, %98] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
-// CHECK-NEXT:       %102 = tt.load %99 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
-// CHECK-NEXT:       %103 = arith.mulf %102, %28 : tensor<64x64xbf16>
-// CHECK-NEXT:       %104 = tt.load %101 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
-// CHECK-NEXT:       %105 = tt.trans %103 {order = array<i32: 1, 0>} : tensor<64x64xbf16> -> tensor<64x64xbf16>
-// CHECK-NEXT:       %106 = tt.dot %104, %105, %arg13 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
-// CHECK-NEXT:       %107 = tt.dot %17, %104, %cst_0 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
-// CHECK-NEXT:       %108 = arith.mulf %107, %30 : tensor<64x64xf32>
-// CHECK-NEXT:       %109 = arith.extf %102 : tensor<64x64xbf16> to tensor<64x64xf32>
-// CHECK-NEXT:       %110 = arith.mulf %107, %109 : tensor<64x64xf32>
-// CHECK-NEXT:       %111 = arith.mulf %110, %33 : tensor<64x64xf32>
-// CHECK-NEXT:       %112 = "tt.reduce"(%111) <{axis = 1 : i32}> ({
-// CHECK-NEXT:       ^bb0(%arg16: f32, %arg17: f32):
-// CHECK-NEXT:         %119 = arith.addf %arg16, %arg17 : f32
-// CHECK-NEXT:         tt.reduce.return %119 : f32
+// CHECK: #map = affine_map<()[s0] -> (s0 * 32)>
+// CHECK-NEXT: module {
+// CHECK-NEXT:   module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
+// CHECK-NEXT:     tt.func public @prepare_wy_repr_bwd_kernel(%arg0: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg2: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg3: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg4: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg5: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg6: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg7: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg8: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg9: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg10: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg11: i32) attributes {noinline = false} {
+// CHECK-NEXT:       %c2_i32 = arith.constant 2 : i32
+// CHECK-NEXT:       %cst = arith.constant dense<0.000000e+00> : tensor<64xf32>
+// CHECK-NEXT:       %c1_i32 = arith.constant 1 : i32
+// CHECK-NEXT:       %cst_0 = arith.constant dense<0.000000e+00> : tensor<64x64xf32>
+// CHECK-NEXT:       %c4096_i64 = arith.constant 4096 : i64
+// CHECK-NEXT:       %c128_i64 = arith.constant 128 : i64
+// CHECK-NEXT:       %c128_i32 = arith.constant 128 : i32
+// CHECK-NEXT:       %c0_i32 = arith.constant 0 : i32
+// CHECK-NEXT:       %c2048_i64 = arith.constant 2048 : i64
+// CHECK-NEXT:       %c1_i64 = arith.constant 1 : i64
+// CHECK-NEXT:       %c64_i64 = arith.constant 64 : i64
+// CHECK-NEXT:       %c32_i64 = arith.constant 32 : i64
+// CHECK-NEXT:       %c64_i32 = arith.constant 64 : i32
+// CHECK-NEXT:       %c32_i32 = arith.constant 32 : i32
+// CHECK-NEXT:       %0 = tt.get_program_id x : i32
+// CHECK-NEXT:       %1 = tt.get_program_id y : i32
+// CHECK-NEXT:       %2 = arith.divsi %1, %c32_i32 : i32
+// CHECK-NEXT:       %3 = arith.remsi %1, %c32_i32 : i32
+// CHECK-NEXT:       %4 = arith.muli %2, %arg11 : i32
+// CHECK-NEXT:       %5 = arith.muli %4, %c32_i32 : i32
+// CHECK-NEXT:       %6 = arith.addi %5, %3 : i32
+// CHECK-NEXT:       %7 = tt.addptr %arg2, %6 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %8 = arith.muli %0, %c64_i32 : i32
+// CHECK-NEXT:       %9 = arith.extsi %arg11 : i32 to i64
+// CHECK-NEXT:       %10 = tt.make_tensor_ptr %7, [%9], [%c32_i64], [%8] {order = array<i32: 0>} : <tensor<64xbf16>>
+// CHECK-NEXT:       %11 = tt.addptr %arg9, %6 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %12 = tt.make_tensor_ptr %11, [%9], [%c32_i64], [%8] {order = array<i32: 0>} : <tensor<64xbf16>>
+// CHECK-NEXT:       %13 = arith.muli %6, %c64_i32 : i32
+// CHECK-NEXT:       %14 = tt.addptr %arg4, %13 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %15 = tt.make_tensor_ptr %14, [%c64_i64, %9], [%c1_i64, %c2048_i64], [%c0_i32, %8] {order = array<i32: 0, 1>} : <tensor<64x64xbf16>>
+// CHECK-NEXT:       %16 = tt.load %10 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<64xbf16>>
+// CHECK-NEXT:       %17 = tt.load %15 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
+// CHECK-NEXT:       %18 = tt.addptr %arg3, %6 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %19 = tt.make_tensor_ptr %18, [%9], [%c32_i64], [%8] {order = array<i32: 0>} : <tensor<64xbf16>>
+// CHECK-NEXT:       %20 = tt.load %19 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<64xbf16>>
+// CHECK-NEXT:       %21 = math.exp %20 : tensor<64xbf16>
+// CHECK-NEXT:       %22 = arith.muli %6, %c128_i32 : i32
+// CHECK-NEXT:       %23 = tt.addptr %arg0, %22 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %24 = tt.addptr %arg7, %22 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %25 = tt.addptr %arg5, %22 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %26 = arith.mulf %16, %21 : tensor<64xbf16>
+// CHECK-NEXT:       %27 = tt.expand_dims %26 {axis = 1 : i32} : tensor<64xbf16> -> tensor<64x1xbf16>
+// CHECK-NEXT:       %28 = tt.broadcast %27 : tensor<64x1xbf16> -> tensor<64x64xbf16>
+// CHECK-NEXT:       %29 = arith.extf %27 : tensor<64x1xbf16> to tensor<64x1xf32>
+// CHECK-NEXT:       %30 = tt.broadcast %29 : tensor<64x1xf32> -> tensor<64x64xf32>
+// CHECK-NEXT:       %31 = tt.expand_dims %21 {axis = 1 : i32} : tensor<64xbf16> -> tensor<64x1xbf16>
+// CHECK-NEXT:       %32 = arith.extf %31 : tensor<64x1xbf16> to tensor<64x1xf32>
+// CHECK-NEXT:       %33 = tt.broadcast %32 : tensor<64x1xf32> -> tensor<64x64xf32>
+// CHECK-NEXT:       %34:3 = scf.for %arg12 = %c0_i32 to %c2_i32 step %c1_i32 iter_args(%arg13 = %cst_0, %arg14 = %cst, %arg15 = %cst) -> (tensor<64x64xf32>, tensor<64xf32>, tensor<64xf32>)  : i32 {
+// CHECK-NEXT:         %98 = arith.muli %arg12, %c64_i32 : i32
+// CHECK-NEXT:         %99 = tt.make_tensor_ptr %23, [%9, %c128_i64], [%c4096_i64, %c1_i64], [%8, %98] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
+// CHECK-NEXT:         %100 = tt.make_tensor_ptr %24, [%9, %c128_i64], [%c4096_i64, %c1_i64], [%8, %98] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
+// CHECK-NEXT:         %101 = tt.make_tensor_ptr %25, [%9, %c128_i64], [%c4096_i64, %c1_i64], [%8, %98] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
+// CHECK-NEXT:         %102 = tt.load %99 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
+// CHECK-NEXT:         %103 = arith.mulf %102, %28 : tensor<64x64xbf16>
+// CHECK-NEXT:         %104 = tt.load %101 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
+// CHECK-NEXT:         %105 = tt.trans %103 {order = array<i32: 1, 0>} : tensor<64x64xbf16> -> tensor<64x64xbf16>
+// CHECK-NEXT:         %106 = tt.dot %104, %105, %arg13 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:         %107 = tt.dot %17, %104, %cst_0 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:         %108 = arith.mulf %107, %30 : tensor<64x64xf32>
+// CHECK-NEXT:         %109 = arith.extf %102 : tensor<64x64xbf16> to tensor<64x64xf32>
+// CHECK-NEXT:         %110 = arith.mulf %107, %109 : tensor<64x64xf32>
+// CHECK-NEXT:         %111 = arith.mulf %110, %33 : tensor<64x64xf32>
+// CHECK-NEXT:         %112 = "tt.reduce"(%111) <{axis = 1 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg16: f32, %arg17: f32):
+// CHECK-NEXT:           %119 = arith.addf %arg16, %arg17 : f32
+// CHECK-NEXT:           tt.reduce.return %119 : f32
+// CHECK-NEXT:         }) : (tensor<64x64xf32>) -> tensor<64xf32>
+// CHECK-NEXT:         %113 = arith.addf %arg14, %112 : tensor<64xf32>
+// CHECK-NEXT:         %114 = arith.extf %103 : tensor<64x64xbf16> to tensor<64x64xf32>
+// CHECK-NEXT:         %115 = arith.mulf %107, %114 : tensor<64x64xf32>
+// CHECK-NEXT:         %116 = "tt.reduce"(%115) <{axis = 1 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg16: f32, %arg17: f32):
+// CHECK-NEXT:           %119 = arith.addf %arg16, %arg17 : f32
+// CHECK-NEXT:           tt.reduce.return %119 : f32
+// CHECK-NEXT:         }) : (tensor<64x64xf32>) -> tensor<64xf32>
+// CHECK-NEXT:         %117 = arith.addf %arg15, %116 : tensor<64xf32>
+// CHECK-NEXT:         %118 = arith.truncf %108 : tensor<64x64xf32> to tensor<64x64xbf16>
+// CHECK-NEXT:         tt.store %100, %118 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<64x64xbf16>>
+// CHECK-NEXT:         scf.yield %106, %113, %117 : tensor<64x64xf32>, tensor<64xf32>, tensor<64xf32>
+// CHECK-NEXT:       }
+// CHECK-NEXT:       %35 = arith.muli %6, %c128_i32 : i32
+// CHECK-NEXT:       %36 = tt.addptr %arg1, %35 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %37 = tt.addptr %arg8, %35 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %38 = tt.addptr %arg6, %35 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %39 = tt.expand_dims %16 {axis = 1 : i32} : tensor<64xbf16> -> tensor<64x1xbf16>
+// CHECK-NEXT:       %40 = tt.broadcast %39 : tensor<64x1xbf16> -> tensor<64x64xbf16>
+// CHECK-NEXT:       %41 = arith.extf %39 : tensor<64x1xbf16> to tensor<64x1xf32>
+// CHECK-NEXT:       %42 = tt.broadcast %41 : tensor<64x1xf32> -> tensor<64x64xf32>
+// CHECK-NEXT:       %43:2 = scf.for %arg12 = %c0_i32 to %c2_i32 step %c1_i32 iter_args(%arg13 = %34#0, %arg14 = %34#1) -> (tensor<64x64xf32>, tensor<64xf32>)  : i32 {
+// CHECK-NEXT:         %98 = arith.muli %arg12, %c64_i32 : i32
+// CHECK-NEXT:         %99 = tt.make_tensor_ptr %36, [%9, %c128_i64], [%c4096_i64, %c1_i64], [%8, %98] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
+// CHECK-NEXT:         %100 = tt.make_tensor_ptr %37, [%9, %c128_i64], [%c4096_i64, %c1_i64], [%8, %98] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
+// CHECK-NEXT:         %101 = tt.make_tensor_ptr %38, [%9, %c128_i64], [%c4096_i64, %c1_i64], [%8, %98] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
+// CHECK-NEXT:         %102 = tt.load %99 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
+// CHECK-NEXT:         %103 = arith.mulf %102, %40 : tensor<64x64xbf16>
+// CHECK-NEXT:         %104 = tt.load %101 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
+// CHECK-NEXT:         %105 = tt.trans %103 {order = array<i32: 1, 0>} : tensor<64x64xbf16> -> tensor<64x64xbf16>
+// CHECK-NEXT:         %106 = tt.dot %104, %105, %arg13 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:         %107 = tt.dot %17, %104, %cst_0 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:         %108 = arith.mulf %107, %42 : tensor<64x64xf32>
+// CHECK-NEXT:         %109 = arith.extf %102 : tensor<64x64xbf16> to tensor<64x64xf32>
+// CHECK-NEXT:         %110 = arith.mulf %107, %109 : tensor<64x64xf32>
+// CHECK-NEXT:         %111 = "tt.reduce"(%110) <{axis = 1 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg15: f32, %arg16: f32):
+// CHECK-NEXT:           %114 = arith.addf %arg15, %arg16 : f32
+// CHECK-NEXT:           tt.reduce.return %114 : f32
+// CHECK-NEXT:         }) : (tensor<64x64xf32>) -> tensor<64xf32>
+// CHECK-NEXT:         %112 = arith.addf %arg14, %111 : tensor<64xf32>
+// CHECK-NEXT:         %113 = arith.truncf %108 : tensor<64x64xf32> to tensor<64x64xbf16>
+// CHECK-NEXT:         tt.store %100, %113 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<64x64xbf16>>
+// CHECK-NEXT:         scf.yield %106, %112 : tensor<64x64xf32>, tensor<64xf32>
+// CHECK-NEXT:       }
+// CHECK-NEXT:       %44 = tt.make_range {end = 64 : i32, start = 0 : i32} : tensor<64xi32>
+// CHECK-NEXT:       %45 = tt.splat %8 : i32 -> tensor<64xi32>
+// CHECK-NEXT:       %46 = arith.addi %45, %44 : tensor<64xi32>
+// CHECK-NEXT:       %47 = tt.splat %arg11 : i32 -> tensor<64xi32>
+// CHECK-NEXT:       %48 = arith.cmpi slt, %46, %47 : tensor<64xi32>
+// CHECK-NEXT:       %49 = tt.expand_dims %46 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32>
+// CHECK-NEXT:       %50 = tt.expand_dims %46 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32>
+// CHECK-NEXT:       %51 = tt.broadcast %49 : tensor<64x1xi32> -> tensor<64x64xi32>
+// CHECK-NEXT:       %52 = tt.broadcast %50 : tensor<1x64xi32> -> tensor<64x64xi32>
+// CHECK-NEXT:       %53 = arith.cmpi sgt, %51, %52 : tensor<64x64xi32>
+// CHECK-NEXT:       %54 = tt.expand_dims %48 {axis = 1 : i32} : tensor<64xi1> -> tensor<64x1xi1>
+// CHECK-NEXT:       %55 = tt.expand_dims %48 {axis = 0 : i32} : tensor<64xi1> -> tensor<1x64xi1>
+// CHECK-NEXT:       %56 = tt.broadcast %54 : tensor<64x1xi1> -> tensor<64x64xi1>
+// CHECK-NEXT:       %57 = tt.broadcast %55 : tensor<1x64xi1> -> tensor<64x64xi1>
+// CHECK-NEXT:       %58 = arith.andi %56, %57 : tensor<64x64xi1>
+// CHECK-NEXT:       %59 = arith.andi %53, %58 : tensor<64x64xi1>
+// CHECK-NEXT:       %60 = arith.select %59, %43#0, %cst_0 : tensor<64x64xi1>, tensor<64x64xf32>
+// CHECK-NEXT:       %61 = arith.truncf %60 : tensor<64x64xf32> to tensor<64x64xbf16>
+// CHECK-NEXT:       %62 = tt.dot %61, %17, %cst_0 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:       %63 = arith.truncf %62 : tensor<64x64xf32> to tensor<64x64xbf16>
+// CHECK-NEXT:       %64 = tt.dot %17, %63, %cst_0 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:       %65 = tt.expand_dims %20 {axis = 1 : i32} : tensor<64xbf16> -> tensor<64x1xbf16>
+// CHECK-NEXT:       %66 = tt.expand_dims %20 {axis = 0 : i32} : tensor<64xbf16> -> tensor<1x64xbf16>
+// CHECK-NEXT:       %67 = tt.broadcast %65 : tensor<64x1xbf16> -> tensor<64x64xbf16>
+// CHECK-NEXT:       %68 = tt.broadcast %66 : tensor<1x64xbf16> -> tensor<64x64xbf16>
+// CHECK-NEXT:       %69 = arith.subf %67, %68 : tensor<64x64xbf16>
+// CHECK-NEXT:       %70 = arith.extf %69 : tensor<64x64xbf16> to tensor<64x64xf32>
+// CHECK-NEXT:       %71 = math.exp %70 : tensor<64x64xf32>
+// CHECK-NEXT:       %72 = arith.mulf %64, %71 : tensor<64x64xf32>
+// CHECK-NEXT:       %73 = arith.subf %cst_0, %72 : tensor<64x64xf32>
+// CHECK-NEXT:       %74 = arith.select %59, %73, %cst_0 : tensor<64x64xi1>, tensor<64x64xf32>
+// CHECK-NEXT:       %75 = arith.truncf %74 : tensor<64x64xf32> to tensor<64x64xbf16>
+// CHECK-NEXT:       gpu.barrier
+// CHECK-NEXT:       %76 = arith.muli %6, %c128_i32 : i32
+// CHECK-NEXT:       %77 = tt.addptr %arg0, %76 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %78 = tt.addptr %arg7, %76 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %79 = tt.expand_dims %16 {axis = 1 : i32} : tensor<64xbf16> -> tensor<64x1xbf16>
+// CHECK-NEXT:       %80 = tt.broadcast %79 : tensor<64x1xbf16> -> tensor<64x64xbf16>
+// CHECK-NEXT:       %81 = arith.extf %79 : tensor<64x1xbf16> to tensor<64x1xf32>
+// CHECK-NEXT:       %82 = tt.broadcast %81 : tensor<64x1xf32> -> tensor<64x64xf32>
+// CHECK-NEXT:       %83:2 = scf.for %arg12 = %c0_i32 to %c2_i32 step %c1_i32 iter_args(%arg13 = %cst_0, %arg14 = %43#1) -> (tensor<64x64xf32>, tensor<64xf32>)  : i32 {
+// CHECK-NEXT:         %98 = arith.muli %arg12, %c64_i32 : i32
+// CHECK-NEXT:         %99 = tt.make_tensor_ptr %77, [%9, %c128_i64], [%c4096_i64, %c1_i64], [%8, %98] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
+// CHECK-NEXT:         %100 = tt.make_tensor_ptr %78, [%9, %c128_i64], [%c4096_i64, %c1_i64], [%8, %98] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
+// CHECK-NEXT:         %101 = tt.load %99 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
+// CHECK-NEXT:         %102 = tt.trans %101 {order = array<i32: 1, 0>} : tensor<64x64xbf16> -> tensor<64x64xbf16>
+// CHECK-NEXT:         %103 = arith.mulf %101, %80 : tensor<64x64xbf16>
+// CHECK-NEXT:         %104 = tt.dot %101, %102, %arg13 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:         %105 = tt.dot %75, %101, %cst_0 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:         %106 = arith.extf %101 : tensor<64x64xbf16> to tensor<64x64xf32>
+// CHECK-NEXT:         %107 = arith.mulf %105, %106 : tensor<64x64xf32>
+// CHECK-NEXT:         %108 = "tt.reduce"(%107) <{axis = 1 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg15: f32, %arg16: f32):
+// CHECK-NEXT:           %119 = arith.addf %arg15, %arg16 : f32
+// CHECK-NEXT:           tt.reduce.return %119 : f32
+// CHECK-NEXT:         }) : (tensor<64x64xf32>) -> tensor<64xf32>
+// CHECK-NEXT:         %109 = arith.addf %arg14, %108 : tensor<64xf32>
+// CHECK-NEXT:         %110 = arith.mulf %105, %82 : tensor<64x64xf32>
+// CHECK-NEXT:         %111 = tt.trans %103 {order = array<i32: 1, 0>} : tensor<64x64xbf16> -> tensor<64x64xbf16>
+// CHECK-NEXT:         %112 = tt.dot %111, %75, %cst_0 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:         %113 = tt.trans %112 {order = array<i32: 1, 0>} : tensor<64x64xf32> -> tensor<64x64xf32>
+// CHECK-NEXT:         %114 = arith.addf %110, %113 : tensor<64x64xf32>
+// CHECK-NEXT:         %115 = tt.load %100 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
+// CHECK-NEXT:         %116 = arith.extf %115 : tensor<64x64xbf16> to tensor<64x64xf32>
+// CHECK-NEXT:         %117 = arith.addf %114, %116 : tensor<64x64xf32>
+// CHECK-NEXT:         %118 = arith.truncf %117 : tensor<64x64xf32> to tensor<64x64xbf16>
+// CHECK-NEXT:         tt.store %100, %118 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<64x64xbf16>>
+// CHECK-NEXT:         scf.yield %104, %109 : tensor<64x64xf32>, tensor<64xf32>
+// CHECK-NEXT:       }
+// CHECK-NEXT:       %84 = arith.truncf %83#1 : tensor<64xf32> to tensor<64xbf16>
+// CHECK-NEXT:       tt.store %12, %84 {boundaryCheck = array<i32: 0>} : !tt.ptr<tensor<64xbf16>>
+// CHECK-NEXT:       %85 = tt.expand_dims %16 {axis = 1 : i32} : tensor<64xbf16> -> tensor<64x1xbf16>
+// CHECK-NEXT:       %86 = arith.extf %85 : tensor<64x1xbf16> to tensor<64x1xf32>
+// CHECK-NEXT:       %87 = tt.broadcast %86 : tensor<64x1xf32> -> tensor<64x64xf32>
+// CHECK-NEXT:       %88 = arith.mulf %83#0, %87 : tensor<64x64xf32>
+// CHECK-NEXT:       %89 = arith.extf %75 : tensor<64x64xbf16> to tensor<64x64xf32>
+// CHECK-NEXT:       %90 = arith.mulf %89, %88 : tensor<64x64xf32>
+// CHECK-NEXT:       %91 = tt.addptr %arg10, %6 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %92 = tt.make_tensor_ptr %91, [%9], [%c32_i64], [%8] {order = array<i32: 0>} : <tensor<64xbf16>>
+// CHECK-NEXT:       %93 = "tt.reduce"(%90) <{axis = 1 : i32}> ({
+// CHECK-NEXT:       ^bb0(%arg12: f32, %arg13: f32):
+// CHECK-NEXT:         %98 = arith.addf %arg12, %arg13 : f32
+// CHECK-NEXT:         tt.reduce.return %98 : f32
 // CHECK-NEXT:       }) : (tensor<64x64xf32>) -> tensor<64xf32>
-// CHECK-NEXT:       %113 = arith.addf %arg14, %112 : tensor<64xf32>
-// CHECK-NEXT:       %114 = arith.extf %103 : tensor<64x64xbf16> to tensor<64x64xf32>
-// CHECK-NEXT:       %115 = arith.mulf %107, %114 : tensor<64x64xf32>
-// CHECK-NEXT:       %116 = "tt.reduce"(%115) <{axis = 1 : i32}> ({
-// CHECK-NEXT:       ^bb0(%arg16: f32, %arg17: f32):
-// CHECK-NEXT:         %119 = arith.addf %arg16, %arg17 : f32
-// CHECK-NEXT:         tt.reduce.return %119 : f32
+// CHECK-NEXT:       %94 = "tt.reduce"(%90) <{axis = 0 : i32}> ({
+// CHECK-NEXT:       ^bb0(%arg12: f32, %arg13: f32):
+// CHECK-NEXT:         %98 = arith.addf %arg12, %arg13 : f32
+// CHECK-NEXT:         tt.reduce.return %98 : f32
 // CHECK-NEXT:       }) : (tensor<64x64xf32>) -> tensor<64xf32>
-// CHECK-NEXT:       %117 = arith.addf %arg15, %116 : tensor<64xf32>
-// CHECK-NEXT:       %118 = arith.truncf %108 : tensor<64x64xf32> to tensor<64x64xbf16>
-// CHECK-NEXT:       tt.store %100, %118 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<64x64xbf16>>
-// CHECK-NEXT:       scf.yield %106, %113, %117 : tensor<64x64xf32>, tensor<64xf32>, tensor<64xf32>
+// CHECK-NEXT:       %95 = arith.subf %93, %94 : tensor<64xf32>
+// CHECK-NEXT:       %96 = arith.addf %34#2, %95 : tensor<64xf32>
+// CHECK-NEXT:       %97 = arith.truncf %96 : tensor<64xf32> to tensor<64xbf16>
+// CHECK-NEXT:       tt.store %92, %97 {boundaryCheck = array<i32: 0>} : !tt.ptr<tensor<64xbf16>>
+// CHECK-NEXT:       tt.return
 // CHECK-NEXT:     }
-// CHECK-NEXT:     %35 = arith.muli %6, %c128_i32 : i32
-// CHECK-NEXT:     %36 = tt.addptr %arg1, %35 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %37 = tt.addptr %arg8, %35 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %38 = tt.addptr %arg6, %35 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %39 = tt.expand_dims %16 {axis = 1 : i32} : tensor<64xbf16> -> tensor<64x1xbf16>
-// CHECK-NEXT:     %40 = tt.broadcast %39 : tensor<64x1xbf16> -> tensor<64x64xbf16>
-// CHECK-NEXT:     %41 = arith.extf %39 : tensor<64x1xbf16> to tensor<64x1xf32>
-// CHECK-NEXT:     %42 = tt.broadcast %41 : tensor<64x1xf32> -> tensor<64x64xf32>
-// CHECK-NEXT:     %43:2 = scf.for %arg12 = %c0_i32 to %c2_i32 step %c1_i32 iter_args(%arg13 = %34#0, %arg14 = %34#1) -> (tensor<64x64xf32>, tensor<64xf32>)  : i32 {
-// CHECK-NEXT:       %98 = arith.muli %arg12, %c64_i32 : i32
-// CHECK-NEXT:       %99 = tt.make_tensor_ptr %36, [%9, %c128_i64], [%c4096_i64, %c1_i64], [%8, %98] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
-// CHECK-NEXT:       %100 = tt.make_tensor_ptr %37, [%9, %c128_i64], [%c4096_i64, %c1_i64], [%8, %98] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
-// CHECK-NEXT:       %101 = tt.make_tensor_ptr %38, [%9, %c128_i64], [%c4096_i64, %c1_i64], [%8, %98] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
-// CHECK-NEXT:       %102 = tt.load %99 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
-// CHECK-NEXT:       %103 = arith.mulf %102, %40 : tensor<64x64xbf16>
-// CHECK-NEXT:       %104 = tt.load %101 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
-// CHECK-NEXT:       %105 = tt.trans %103 {order = array<i32: 1, 0>} : tensor<64x64xbf16> -> tensor<64x64xbf16>
-// CHECK-NEXT:       %106 = tt.dot %104, %105, %arg13 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
-// CHECK-NEXT:       %107 = tt.dot %17, %104, %cst_0 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
-// CHECK-NEXT:       %108 = arith.mulf %107, %42 : tensor<64x64xf32>
-// CHECK-NEXT:       %109 = arith.extf %102 : tensor<64x64xbf16> to tensor<64x64xf32>
-// CHECK-NEXT:       %110 = arith.mulf %107, %109 : tensor<64x64xf32>
-// CHECK-NEXT:       %111 = "tt.reduce"(%110) <{axis = 1 : i32}> ({
-// CHECK-NEXT:       ^bb0(%arg15: f32, %arg16: f32):
-// CHECK-NEXT:         %114 = arith.addf %arg15, %arg16 : f32
-// CHECK-NEXT:         tt.reduce.return %114 : f32
-// CHECK-NEXT:       }) : (tensor<64x64xf32>) -> tensor<64xf32>
-// CHECK-NEXT:       %112 = arith.addf %arg14, %111 : tensor<64xf32>
-// CHECK-NEXT:       %113 = arith.truncf %108 : tensor<64x64xf32> to tensor<64x64xbf16>
-// CHECK-NEXT:       tt.store %100, %113 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<64x64xbf16>>
-// CHECK-NEXT:       scf.yield %106, %112 : tensor<64x64xf32>, tensor<64xf32>
+// CHECK-NEXT:   }
+// CHECK-NEXT:   module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">, hivm.disable_auto_tile_and_bind_subblock} {
+// CHECK-NEXT:     tt.func public @prepare_wy_repr_bwd_kernel(%arg0: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg2: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg3: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg4: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg5: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg6: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg7: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg8: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg9: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg10: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg11: i32) attributes {noinline = false} {
+// CHECK-NEXT:       %cst = arith.constant dense<0.000000e+00> : tensor<32x64xf32>
+// CHECK-NEXT:       %cst_0 = arith.constant dense<0.000000e+00> : tensor<32xf32>
+// CHECK-NEXT:       %c32_i32 = arith.constant 32 : i32
+// CHECK-NEXT:       %c64_i32 = arith.constant 64 : i32
+// CHECK-NEXT:       %c32_i64 = arith.constant 32 : i64
+// CHECK-NEXT:       %c64_i64 = arith.constant 64 : i64
+// CHECK-NEXT:       %c1_i64 = arith.constant 1 : i64
+// CHECK-NEXT:       %c2048_i64 = arith.constant 2048 : i64
+// CHECK-NEXT:       %c0_i32 = arith.constant 0 : i32
+// CHECK-NEXT:       %c128_i32 = arith.constant 128 : i32
+// CHECK-NEXT:       %c128_i64 = arith.constant 128 : i64
+// CHECK-NEXT:       %c4096_i64 = arith.constant 4096 : i64
+// CHECK-NEXT:       %cst_1 = arith.constant dense<0.000000e+00> : tensor<64x64xf32>
+// CHECK-NEXT:       %c1_i32 = arith.constant 1 : i32
+// CHECK-NEXT:       %c2_i32 = arith.constant 2 : i32
+// CHECK-NEXT:       %0 = hivm.hir.get_sub_block_idx -> i64
+// CHECK-NEXT:       %1 = arith.index_cast %0 : i64 to index
+// CHECK-NEXT:       %2 = affine.apply #map()[%1]
+// CHECK-NEXT:       %3 = arith.index_cast %2 : index to i32
+// CHECK-NEXT:       %4 = tt.get_program_id x : i32
+// CHECK-NEXT:       %5 = tt.get_program_id y : i32
+// CHECK-NEXT:       %6 = arith.divsi %5, %c32_i32 : i32
+// CHECK-NEXT:       %7 = arith.remsi %5, %c32_i32 : i32
+// CHECK-NEXT:       %8 = arith.muli %6, %arg11 : i32
+// CHECK-NEXT:       %9 = arith.muli %8, %c32_i32 : i32
+// CHECK-NEXT:       %10 = arith.addi %9, %7 : i32
+// CHECK-NEXT:       %11 = tt.addptr %arg2, %10 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %12 = arith.muli %4, %c64_i32 : i32
+// CHECK-NEXT:       %13 = arith.extsi %arg11 : i32 to i64
+// CHECK-NEXT:       %14 = arith.addi %12, %3 : i32
+// CHECK-NEXT:       %15 = tt.make_tensor_ptr %11, [%13], [%c32_i64], [%14] {order = array<i32: 0>} : <tensor<32xbf16>>
+// CHECK-NEXT:       %16 = tt.addptr %arg9, %10 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %17 = tt.make_tensor_ptr %16, [%13], [%c32_i64], [%14] {order = array<i32: 0>, tiled_op} : <tensor<32xbf16>>
+// CHECK-NEXT:       %18 = arith.muli %10, %c64_i32 : i32
+// CHECK-NEXT:       %19 = tt.addptr %arg4, %18 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %20 = tt.make_tensor_ptr %19, [%c64_i64, %13], [%c1_i64, %c2048_i64], [%c0_i32, %12] {order = array<i32: 0, 1>} : <tensor<64x64xbf16>>
+// CHECK-NEXT:       %21 = tt.load %15 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32xbf16>>
+// CHECK-NEXT:       %22 = tt.load %20 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
+// CHECK-NEXT:       %23 = tt.addptr %arg3, %10 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %24 = tt.make_tensor_ptr %23, [%13], [%c32_i64], [%12] {order = array<i32: 0>} : <tensor<64xbf16>>
+// CHECK-NEXT:       %25 = tt.load %24 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<64xbf16>>
+// CHECK-NEXT:       %extracted_slice = tensor.extract_slice %25[%2] [32] [1] {should_kept_slice} : tensor<64xbf16> to tensor<32xbf16>
+// CHECK-NEXT:       %26 = math.exp %extracted_slice : tensor<32xbf16>
+// CHECK-NEXT:       %27 = arith.muli %10, %c128_i32 : i32
+// CHECK-NEXT:       %28 = tt.addptr %arg0, %27 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %29 = tt.addptr %arg7, %27 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %30 = tt.addptr %arg5, %27 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %31 = arith.mulf %21, %26 : tensor<32xbf16>
+// CHECK-NEXT:       %32 = tt.expand_dims %31 {axis = 1 : i32} : tensor<32xbf16> -> tensor<32x1xbf16>
+// CHECK-NEXT:       %33 = tt.broadcast %32 : tensor<32x1xbf16> -> tensor<32x64xbf16>
+// CHECK-NEXT:       %34 = arith.extf %32 : tensor<32x1xbf16> to tensor<32x1xf32>
+// CHECK-NEXT:       %35 = tt.broadcast %34 : tensor<32x1xf32> -> tensor<32x64xf32>
+// CHECK-NEXT:       %36 = tt.expand_dims %26 {axis = 1 : i32} : tensor<32xbf16> -> tensor<32x1xbf16>
+// CHECK-NEXT:       %37 = arith.extf %36 : tensor<32x1xbf16> to tensor<32x1xf32>
+// CHECK-NEXT:       %38 = tt.broadcast %37 : tensor<32x1xf32> -> tensor<32x64xf32>
+// CHECK-NEXT:       %39:3 = scf.for %arg12 = %c0_i32 to %c2_i32 step %c1_i32 iter_args(%arg13 = %cst_1, %arg14 = %cst_0, %arg15 = %cst_0) -> (tensor<64x64xf32>, tensor<32xf32>, tensor<32xf32>)  : i32 {
+// CHECK-NEXT:         %107 = arith.muli %arg12, %c64_i32 : i32
+// CHECK-NEXT:         %108 = tt.make_tensor_ptr %28, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%14, %107] {order = array<i32: 1, 0>} : <tensor<32x64xbf16>>
+// CHECK-NEXT:         %109 = tt.make_tensor_ptr %29, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%14, %107] {order = array<i32: 1, 0>, tiled_op} : <tensor<32x64xbf16>>
+// CHECK-NEXT:         %110 = tt.make_tensor_ptr %30, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%12, %107] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
+// CHECK-NEXT:         %111 = tt.load %108 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<32x64xbf16>>
+// CHECK-NEXT:         %112 = arith.mulf %111, %33 : tensor<32x64xbf16>
+// CHECK-NEXT:         %113 = tt.load %110 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
+// CHECK-NEXT:         %114 = memref_ext.alloc_workspace() : memref<64x64xbf16>
+// CHECK-NEXT:         %subview_17 = memref.subview %114[%2, 0] [32, 64] [1, 1] : memref<64x64xbf16> to memref<32x64xbf16, strided<[64, 1], offset: ?>>
+// CHECK-NEXT:         bufferization.materialize_in_destination %112 in writable %subview_17 : (tensor<32x64xbf16>, memref<32x64xbf16, strided<[64, 1], offset: ?>>) -> ()
+// CHECK-NEXT:         %alloc_18 = memref.alloc() : memref<64x64xbf16>
+// CHECK-NEXT:         memref.copy %114, %alloc_18 : memref<64x64xbf16> to memref<64x64xbf16>
+// CHECK-NEXT:         %115 = bufferization.to_tensor %alloc_18 restrict writable : memref<64x64xbf16>
+// CHECK-NEXT:         %116 = tt.trans %115 {order = array<i32: 1, 0>} : tensor<64x64xbf16> -> tensor<64x64xbf16>
+// CHECK-NEXT:         %117 = tt.dot %113, %116, %arg13 {tiled_op, triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:         %118 = tt.dot %22, %113, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:         %119 = memref_ext.alloc_workspace() : memref<64x64xf32>
+// CHECK-NEXT:         bufferization.materialize_in_destination %118 in writable %119 : (tensor<64x64xf32>, memref<64x64xf32>) -> ()
+// CHECK-NEXT:         %subview_19 = memref.subview %119[%2, 0] [32, 64] [1, 1] : memref<64x64xf32> to memref<32x64xf32, strided<[64, 1], offset: ?>>
+// CHECK-NEXT:         %alloc_20 = memref.alloc() : memref<32x64xf32>
+// CHECK-NEXT:         memref.copy %subview_19, %alloc_20 : memref<32x64xf32, strided<[64, 1], offset: ?>> to memref<32x64xf32>
+// CHECK-NEXT:         %120 = bufferization.to_tensor %alloc_20 restrict writable : memref<32x64xf32>
+// CHECK-NEXT:         %121 = arith.mulf %120, %35 : tensor<32x64xf32>
+// CHECK-NEXT:         %122 = arith.extf %111 : tensor<32x64xbf16> to tensor<32x64xf32>
+// CHECK-NEXT:         %123 = arith.mulf %120, %122 : tensor<32x64xf32>
+// CHECK-NEXT:         %124 = arith.mulf %123, %38 : tensor<32x64xf32>
+// CHECK-NEXT:         %125 = "tt.reduce"(%124) <{axis = 1 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg16: f32, %arg17: f32):
+// CHECK-NEXT:           %132 = arith.addf %arg16, %arg17 : f32
+// CHECK-NEXT:           tt.reduce.return %132 : f32
+// CHECK-NEXT:         }) : (tensor<32x64xf32>) -> tensor<32xf32>
+// CHECK-NEXT:         %126 = arith.addf %arg14, %125 : tensor<32xf32>
+// CHECK-NEXT:         %127 = arith.extf %112 : tensor<32x64xbf16> to tensor<32x64xf32>
+// CHECK-NEXT:         %128 = arith.mulf %120, %127 : tensor<32x64xf32>
+// CHECK-NEXT:         %129 = "tt.reduce"(%128) <{axis = 1 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg16: f32, %arg17: f32):
+// CHECK-NEXT:           %132 = arith.addf %arg16, %arg17 : f32
+// CHECK-NEXT:           tt.reduce.return %132 : f32
+// CHECK-NEXT:         }) : (tensor<32x64xf32>) -> tensor<32xf32>
+// CHECK-NEXT:         %130 = arith.addf %arg15, %129 : tensor<32xf32>
+// CHECK-NEXT:         %131 = arith.truncf %121 : tensor<32x64xf32> to tensor<32x64xbf16>
+// CHECK-NEXT:         tt.store %109, %131 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<32x64xbf16>>
+// CHECK-NEXT:         scf.yield %117, %126, %130 : tensor<64x64xf32>, tensor<32xf32>, tensor<32xf32>
+// CHECK-NEXT:       }
+// CHECK-NEXT:       %40 = tt.addptr %arg1, %27 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %41 = tt.addptr %arg8, %27 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %42 = tt.addptr %arg6, %27 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %43 = tt.expand_dims %21 {axis = 1 : i32} : tensor<32xbf16> -> tensor<32x1xbf16>
+// CHECK-NEXT:       %44 = tt.broadcast %43 : tensor<32x1xbf16> -> tensor<32x64xbf16>
+// CHECK-NEXT:       %45 = arith.extf %43 : tensor<32x1xbf16> to tensor<32x1xf32>
+// CHECK-NEXT:       %46 = tt.broadcast %45 : tensor<32x1xf32> -> tensor<32x64xf32>
+// CHECK-NEXT:       %47:2 = scf.for %arg12 = %c0_i32 to %c2_i32 step %c1_i32 iter_args(%arg13 = %39#0, %arg14 = %39#1) -> (tensor<64x64xf32>, tensor<32xf32>)  : i32 {
+// CHECK-NEXT:         %107 = arith.muli %arg12, %c64_i32 : i32
+// CHECK-NEXT:         %108 = tt.make_tensor_ptr %40, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%14, %107] {order = array<i32: 1, 0>} : <tensor<32x64xbf16>>
+// CHECK-NEXT:         %109 = tt.make_tensor_ptr %41, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%14, %107] {order = array<i32: 1, 0>, tiled_op} : <tensor<32x64xbf16>>
+// CHECK-NEXT:         %110 = tt.make_tensor_ptr %42, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%12, %107] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
+// CHECK-NEXT:         %111 = tt.load %108 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<32x64xbf16>>
+// CHECK-NEXT:         %112 = arith.mulf %111, %44 : tensor<32x64xbf16>
+// CHECK-NEXT:         %113 = tt.load %110 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
+// CHECK-NEXT:         %114 = memref_ext.alloc_workspace() : memref<64x64xbf16>
+// CHECK-NEXT:         %subview_17 = memref.subview %114[%2, 0] [32, 64] [1, 1] : memref<64x64xbf16> to memref<32x64xbf16, strided<[64, 1], offset: ?>>
+// CHECK-NEXT:         bufferization.materialize_in_destination %112 in writable %subview_17 : (tensor<32x64xbf16>, memref<32x64xbf16, strided<[64, 1], offset: ?>>) -> ()
+// CHECK-NEXT:         %alloc_18 = memref.alloc() : memref<64x64xbf16>
+// CHECK-NEXT:         memref.copy %114, %alloc_18 : memref<64x64xbf16> to memref<64x64xbf16>
+// CHECK-NEXT:         %115 = bufferization.to_tensor %alloc_18 restrict writable : memref<64x64xbf16>
+// CHECK-NEXT:         %116 = tt.trans %115 {order = array<i32: 1, 0>} : tensor<64x64xbf16> -> tensor<64x64xbf16>
+// CHECK-NEXT:         %117 = tt.dot %113, %116, %arg13 {tiled_op, triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:         %118 = tt.dot %22, %113, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:         %119 = memref_ext.alloc_workspace() : memref<64x64xf32>
+// CHECK-NEXT:         bufferization.materialize_in_destination %118 in writable %119 : (tensor<64x64xf32>, memref<64x64xf32>) -> ()
+// CHECK-NEXT:         %subview_19 = memref.subview %119[%2, 0] [32, 64] [1, 1] : memref<64x64xf32> to memref<32x64xf32, strided<[64, 1], offset: ?>>
+// CHECK-NEXT:         %alloc_20 = memref.alloc() : memref<32x64xf32>
+// CHECK-NEXT:         memref.copy %subview_19, %alloc_20 : memref<32x64xf32, strided<[64, 1], offset: ?>> to memref<32x64xf32>
+// CHECK-NEXT:         %120 = bufferization.to_tensor %alloc_20 restrict writable : memref<32x64xf32>
+// CHECK-NEXT:         %121 = arith.mulf %120, %46 : tensor<32x64xf32>
+// CHECK-NEXT:         %122 = arith.extf %111 : tensor<32x64xbf16> to tensor<32x64xf32>
+// CHECK-NEXT:         %123 = arith.mulf %120, %122 : tensor<32x64xf32>
+// CHECK-NEXT:         %124 = "tt.reduce"(%123) <{axis = 1 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg15: f32, %arg16: f32):
+// CHECK-NEXT:           %127 = arith.addf %arg15, %arg16 : f32
+// CHECK-NEXT:           tt.reduce.return %127 : f32
+// CHECK-NEXT:         }) : (tensor<32x64xf32>) -> tensor<32xf32>
+// CHECK-NEXT:         %125 = arith.addf %arg14, %124 : tensor<32xf32>
+// CHECK-NEXT:         %126 = arith.truncf %121 : tensor<32x64xf32> to tensor<32x64xbf16>
+// CHECK-NEXT:         tt.store %109, %126 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<32x64xbf16>>
+// CHECK-NEXT:         scf.yield %117, %125 : tensor<64x64xf32>, tensor<32xf32>
+// CHECK-NEXT:       }
+// CHECK-NEXT:       %48 = tt.make_range {end = 64 : i32, start = 0 : i32} : tensor<64xi32>
+// CHECK-NEXT:       %49 = tt.splat %12 : i32 -> tensor<64xi32>
+// CHECK-NEXT:       %50 = arith.addi %49, %48 : tensor<64xi32>
+// CHECK-NEXT:       %51 = tt.splat %arg11 : i32 -> tensor<64xi32>
+// CHECK-NEXT:       %52 = arith.cmpi slt, %50, %51 : tensor<64xi32>
+// CHECK-NEXT:       %extracted_slice_2 = tensor.extract_slice %50[%2] [32] [1] {should_kept_slice} : tensor<64xi32> to tensor<32xi32>
+// CHECK-NEXT:       %53 = tt.expand_dims %extracted_slice_2 {axis = 1 : i32} : tensor<32xi32> -> tensor<32x1xi32>
+// CHECK-NEXT:       %54 = tt.expand_dims %50 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32>
+// CHECK-NEXT:       %55 = tt.broadcast %53 : tensor<32x1xi32> -> tensor<32x64xi32>
+// CHECK-NEXT:       %56 = tt.broadcast %54 : tensor<1x64xi32> -> tensor<32x64xi32>
+// CHECK-NEXT:       %57 = arith.cmpi sgt, %55, %56 : tensor<32x64xi32>
+// CHECK-NEXT:       %extracted_slice_3 = tensor.extract_slice %52[%2] [32] [1] {should_kept_slice} : tensor<64xi1> to tensor<32xi1>
+// CHECK-NEXT:       %58 = tt.expand_dims %extracted_slice_3 {axis = 1 : i32} : tensor<32xi1> -> tensor<32x1xi1>
+// CHECK-NEXT:       %59 = tt.expand_dims %52 {axis = 0 : i32} : tensor<64xi1> -> tensor<1x64xi1>
+// CHECK-NEXT:       %60 = tt.broadcast %58 : tensor<32x1xi1> -> tensor<32x64xi1>
+// CHECK-NEXT:       %61 = tt.broadcast %59 : tensor<1x64xi1> -> tensor<32x64xi1>
+// CHECK-NEXT:       %62 = arith.andi %60, %61 : tensor<32x64xi1>
+// CHECK-NEXT:       %63 = arith.andi %57, %62 : tensor<32x64xi1>
+// CHECK-NEXT:       %64 = memref_ext.alloc_workspace() : memref<64x64xf32>
+// CHECK-NEXT:       bufferization.materialize_in_destination %47#0 in writable %64 : (tensor<64x64xf32>, memref<64x64xf32>) -> ()
+// CHECK-NEXT:       %subview = memref.subview %64[%2, 0] [32, 64] [1, 1] : memref<64x64xf32> to memref<32x64xf32, strided<[64, 1], offset: ?>>
+// CHECK-NEXT:       %alloc = memref.alloc() : memref<32x64xf32>
+// CHECK-NEXT:       memref.copy %subview, %alloc : memref<32x64xf32, strided<[64, 1], offset: ?>> to memref<32x64xf32>
+// CHECK-NEXT:       %65 = bufferization.to_tensor %alloc restrict writable : memref<32x64xf32>
+// CHECK-NEXT:       %66 = arith.select %63, %65, %cst : tensor<32x64xi1>, tensor<32x64xf32>
+// CHECK-NEXT:       %67 = arith.truncf %66 : tensor<32x64xf32> to tensor<32x64xbf16>
+// CHECK-NEXT:       %68 = memref_ext.alloc_workspace() : memref<64x64xbf16>
+// CHECK-NEXT:       %subview_4 = memref.subview %68[%2, 0] [32, 64] [1, 1] : memref<64x64xbf16> to memref<32x64xbf16, strided<[64, 1], offset: ?>>
+// CHECK-NEXT:       bufferization.materialize_in_destination %67 in writable %subview_4 : (tensor<32x64xbf16>, memref<32x64xbf16, strided<[64, 1], offset: ?>>) -> ()
+// CHECK-NEXT:       %alloc_5 = memref.alloc() : memref<64x64xbf16>
+// CHECK-NEXT:       memref.copy %68, %alloc_5 : memref<64x64xbf16> to memref<64x64xbf16>
+// CHECK-NEXT:       %69 = bufferization.to_tensor %alloc_5 restrict writable : memref<64x64xbf16>
+// CHECK-NEXT:       %70 = tt.dot %69, %22, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:       %71 = memref_ext.alloc_workspace() : memref<64x64xf32>
+// CHECK-NEXT:       bufferization.materialize_in_destination %70 in writable %71 : (tensor<64x64xf32>, memref<64x64xf32>) -> ()
+// CHECK-NEXT:       %subview_6 = memref.subview %71[%2, 0] [32, 64] [1, 1] : memref<64x64xf32> to memref<32x64xf32, strided<[64, 1], offset: ?>>
+// CHECK-NEXT:       %alloc_7 = memref.alloc() : memref<32x64xf32>
+// CHECK-NEXT:       memref.copy %subview_6, %alloc_7 : memref<32x64xf32, strided<[64, 1], offset: ?>> to memref<32x64xf32>
+// CHECK-NEXT:       %72 = bufferization.to_tensor %alloc_7 restrict writable : memref<32x64xf32>
+// CHECK-NEXT:       %73 = arith.truncf %72 : tensor<32x64xf32> to tensor<32x64xbf16>
+// CHECK-NEXT:       %74 = memref_ext.alloc_workspace() : memref<64x64xbf16>
+// CHECK-NEXT:       %subview_8 = memref.subview %74[%2, 0] [32, 64] [1, 1] : memref<64x64xbf16> to memref<32x64xbf16, strided<[64, 1], offset: ?>>
+// CHECK-NEXT:       bufferization.materialize_in_destination %73 in writable %subview_8 : (tensor<32x64xbf16>, memref<32x64xbf16, strided<[64, 1], offset: ?>>) -> ()
+// CHECK-NEXT:       %alloc_9 = memref.alloc() : memref<64x64xbf16>
+// CHECK-NEXT:       memref.copy %74, %alloc_9 : memref<64x64xbf16> to memref<64x64xbf16>
+// CHECK-NEXT:       %75 = bufferization.to_tensor %alloc_9 restrict writable : memref<64x64xbf16>
+// CHECK-NEXT:       %76 = tt.dot %22, %75, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:       %77 = tt.expand_dims %extracted_slice {axis = 1 : i32} : tensor<32xbf16> -> tensor<32x1xbf16>
+// CHECK-NEXT:       %78 = tt.expand_dims %25 {axis = 0 : i32} : tensor<64xbf16> -> tensor<1x64xbf16>
+// CHECK-NEXT:       %79 = tt.broadcast %77 : tensor<32x1xbf16> -> tensor<32x64xbf16>
+// CHECK-NEXT:       %80 = tt.broadcast %78 : tensor<1x64xbf16> -> tensor<32x64xbf16>
+// CHECK-NEXT:       %81 = arith.subf %79, %80 : tensor<32x64xbf16>
+// CHECK-NEXT:       %82 = arith.extf %81 : tensor<32x64xbf16> to tensor<32x64xf32>
+// CHECK-NEXT:       %83 = math.exp %82 : tensor<32x64xf32>
+// CHECK-NEXT:       %84 = memref_ext.alloc_workspace() : memref<64x64xf32>
+// CHECK-NEXT:       bufferization.materialize_in_destination %76 in writable %84 : (tensor<64x64xf32>, memref<64x64xf32>) -> ()
+// CHECK-NEXT:       %subview_10 = memref.subview %84[%2, 0] [32, 64] [1, 1] : memref<64x64xf32> to memref<32x64xf32, strided<[64, 1], offset: ?>>
+// CHECK-NEXT:       %alloc_11 = memref.alloc() : memref<32x64xf32>
+// CHECK-NEXT:       memref.copy %subview_10, %alloc_11 : memref<32x64xf32, strided<[64, 1], offset: ?>> to memref<32x64xf32>
+// CHECK-NEXT:       %85 = bufferization.to_tensor %alloc_11 restrict writable : memref<32x64xf32>
+// CHECK-NEXT:       %86 = arith.mulf %85, %83 : tensor<32x64xf32>
+// CHECK-NEXT:       %87 = arith.subf %cst, %86 : tensor<32x64xf32>
+// CHECK-NEXT:       %88 = arith.select %63, %87, %cst : tensor<32x64xi1>, tensor<32x64xf32>
+// CHECK-NEXT:       %89 = arith.truncf %88 : tensor<32x64xf32> to tensor<32x64xbf16>
+// CHECK-NEXT:       gpu.barrier
+// CHECK-NEXT:       %90:2 = scf.for %arg12 = %c0_i32 to %c2_i32 step %c1_i32 iter_args(%arg13 = %cst_1, %arg14 = %47#1) -> (tensor<64x64xf32>, tensor<32xf32>)  : i32 {
+// CHECK-NEXT:         %107 = arith.muli %arg12, %c64_i32 : i32
+// CHECK-NEXT:         %108 = tt.make_tensor_ptr %28, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%12, %107] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
+// CHECK-NEXT:         %109 = tt.make_tensor_ptr %28, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%14, %107] {order = array<i32: 1, 0>} : <tensor<32x64xbf16>>
+// CHECK-NEXT:         %110 = tt.make_tensor_ptr %29, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%14, %107] {order = array<i32: 1, 0>} : <tensor<32x64xbf16>>
+// CHECK-NEXT:         %111 = tt.make_tensor_ptr %29, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%14, %107] {order = array<i32: 1, 0>, tiled_op} : <tensor<32x64xbf16>>
+// CHECK-NEXT:         %112 = tt.load %109 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<32x64xbf16>>
+// CHECK-NEXT:         %113 = tt.load %108 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
+// CHECK-NEXT:         %114 = tt.trans %113 {order = array<i32: 1, 0>} : tensor<64x64xbf16> -> tensor<64x64xbf16>
+// CHECK-NEXT:         %115 = arith.mulf %112, %44 : tensor<32x64xbf16>
+// CHECK-NEXT:         %116 = tt.dot %113, %114, %arg13 {tiled_op, triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:         %117 = memref_ext.alloc_workspace() : memref<64x64xbf16>
+// CHECK-NEXT:         %subview_17 = memref.subview %117[%2, 0] [32, 64] [1, 1] : memref<64x64xbf16> to memref<32x64xbf16, strided<[64, 1], offset: ?>>
+// CHECK-NEXT:         bufferization.materialize_in_destination %89 in writable %subview_17 : (tensor<32x64xbf16>, memref<32x64xbf16, strided<[64, 1], offset: ?>>) -> ()
+// CHECK-NEXT:         %alloc_18 = memref.alloc() : memref<64x64xbf16>
+// CHECK-NEXT:         memref.copy %117, %alloc_18 : memref<64x64xbf16> to memref<64x64xbf16>
+// CHECK-NEXT:         %118 = bufferization.to_tensor %alloc_18 restrict writable : memref<64x64xbf16>
+// CHECK-NEXT:         %119 = tt.dot %118, %113, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:         %120 = memref_ext.alloc_workspace() : memref<64x64xf32>
+// CHECK-NEXT:         bufferization.materialize_in_destination %119 in writable %120 : (tensor<64x64xf32>, memref<64x64xf32>) -> ()
+// CHECK-NEXT:         %subview_19 = memref.subview %120[%2, 0] [32, 64] [1, 1] : memref<64x64xf32> to memref<32x64xf32, strided<[64, 1], offset: ?>>
+// CHECK-NEXT:         %alloc_20 = memref.alloc() : memref<32x64xf32>
+// CHECK-NEXT:         memref.copy %subview_19, %alloc_20 : memref<32x64xf32, strided<[64, 1], offset: ?>> to memref<32x64xf32>
+// CHECK-NEXT:         %121 = bufferization.to_tensor %alloc_20 restrict writable : memref<32x64xf32>
+// CHECK-NEXT:         %122 = arith.extf %112 : tensor<32x64xbf16> to tensor<32x64xf32>
+// CHECK-NEXT:         %123 = arith.mulf %121, %122 : tensor<32x64xf32>
+// CHECK-NEXT:         %124 = "tt.reduce"(%123) <{axis = 1 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg15: f32, %arg16: f32):
+// CHECK-NEXT:           %139 = arith.addf %arg15, %arg16 : f32
+// CHECK-NEXT:           tt.reduce.return %139 : f32
+// CHECK-NEXT:         }) : (tensor<32x64xf32>) -> tensor<32xf32>
+// CHECK-NEXT:         %125 = arith.addf %arg14, %124 : tensor<32xf32>
+// CHECK-NEXT:         %126 = arith.mulf %121, %46 : tensor<32x64xf32>
+// CHECK-NEXT:         %127 = memref_ext.alloc_workspace() : memref<64x64xbf16>
+// CHECK-NEXT:         %subview_21 = memref.subview %127[%2, 0] [32, 64] [1, 1] : memref<64x64xbf16> to memref<32x64xbf16, strided<[64, 1], offset: ?>>
+// CHECK-NEXT:         bufferization.materialize_in_destination %115 in writable %subview_21 : (tensor<32x64xbf16>, memref<32x64xbf16, strided<[64, 1], offset: ?>>) -> ()
+// CHECK-NEXT:         %alloc_22 = memref.alloc() : memref<64x64xbf16>
+// CHECK-NEXT:         memref.copy %127, %alloc_22 : memref<64x64xbf16> to memref<64x64xbf16>
+// CHECK-NEXT:         %128 = bufferization.to_tensor %alloc_22 restrict writable : memref<64x64xbf16>
+// CHECK-NEXT:         %129 = tt.trans %128 {order = array<i32: 1, 0>} : tensor<64x64xbf16> -> tensor<64x64xbf16>
+// CHECK-NEXT:         %130 = tt.dot %129, %118, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:         %131 = memref_ext.alloc_workspace() : memref<64x64xf32>
+// CHECK-NEXT:         bufferization.materialize_in_destination %130 in writable %131 : (tensor<64x64xf32>, memref<64x64xf32>) -> ()
+// CHECK-NEXT:         %subview_23 = memref.subview %131[0, %2] [64, 32] [1, 1] : memref<64x64xf32> to memref<64x32xf32, strided<[64, 1], offset: ?>>
+// CHECK-NEXT:         %alloc_24 = memref.alloc() : memref<64x32xf32>
+// CHECK-NEXT:         memref.copy %subview_23, %alloc_24 : memref<64x32xf32, strided<[64, 1], offset: ?>> to memref<64x32xf32>
+// CHECK-NEXT:         %132 = bufferization.to_tensor %alloc_24 restrict writable : memref<64x32xf32>
+// CHECK-NEXT:         %133 = tt.trans %132 {order = array<i32: 1, 0>} : tensor<64x32xf32> -> tensor<32x64xf32>
+// CHECK-NEXT:         %134 = arith.addf %126, %133 : tensor<32x64xf32>
+// CHECK-NEXT:         %135 = tt.load %110 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<32x64xbf16>>
+// CHECK-NEXT:         %136 = arith.extf %135 : tensor<32x64xbf16> to tensor<32x64xf32>
+// CHECK-NEXT:         %137 = arith.addf %134, %136 : tensor<32x64xf32>
+// CHECK-NEXT:         %138 = arith.truncf %137 : tensor<32x64xf32> to tensor<32x64xbf16>
+// CHECK-NEXT:         tt.store %111, %138 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<32x64xbf16>>
+// CHECK-NEXT:         scf.yield %116, %125 : tensor<64x64xf32>, tensor<32xf32>
+// CHECK-NEXT:       }
+// CHECK-NEXT:       %91 = arith.truncf %90#1 : tensor<32xf32> to tensor<32xbf16>
+// CHECK-NEXT:       tt.store %17, %91 {boundaryCheck = array<i32: 0>, tiled_op} : !tt.ptr<tensor<32xbf16>>
+// CHECK-NEXT:       %92 = memref_ext.alloc_workspace() : memref<64x64xf32>
+// CHECK-NEXT:       bufferization.materialize_in_destination %90#0 in writable %92 : (tensor<64x64xf32>, memref<64x64xf32>) -> ()
+// CHECK-NEXT:       %subview_12 = memref.subview %92[%2, 0] [32, 64] [1, 1] : memref<64x64xf32> to memref<32x64xf32, strided<[64, 1], offset: ?>>
+// CHECK-NEXT:       %alloc_13 = memref.alloc() : memref<32x64xf32>
+// CHECK-NEXT:       memref.copy %subview_12, %alloc_13 : memref<32x64xf32, strided<[64, 1], offset: ?>> to memref<32x64xf32>
+// CHECK-NEXT:       %93 = bufferization.to_tensor %alloc_13 restrict writable : memref<32x64xf32>
+// CHECK-NEXT:       %94 = arith.mulf %93, %46 : tensor<32x64xf32>
+// CHECK-NEXT:       %95 = arith.extf %89 : tensor<32x64xbf16> to tensor<32x64xf32>
+// CHECK-NEXT:       %96 = arith.mulf %95, %94 : tensor<32x64xf32>
+// CHECK-NEXT:       %97 = tt.addptr %arg10, %10 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:       %98 = tt.make_tensor_ptr %97, [%13], [%c32_i64], [%14] {order = array<i32: 0>, tiled_op} : <tensor<32xbf16>>
+// CHECK-NEXT:       %99 = "tt.reduce"(%96) <{axis = 1 : i32}> ({
+// CHECK-NEXT:       ^bb0(%arg12: f32, %arg13: f32):
+// CHECK-NEXT:         %107 = arith.addf %arg12, %arg13 : f32
+// CHECK-NEXT:         tt.reduce.return %107 : f32
+// CHECK-NEXT:       }) : (tensor<32x64xf32>) -> tensor<32xf32>
+// CHECK-NEXT:       %100 = "tt.reduce"(%96) <{axis = 0 : i32}> ({
+// CHECK-NEXT:       ^bb0(%arg12: f32, %arg13: f32):
+// CHECK-NEXT:         %107 = arith.addf %arg12, %arg13 : f32
+// CHECK-NEXT:         tt.reduce.return %107 : f32
+// CHECK-NEXT:       }) {tiled_op} : (tensor<32x64xf32>) -> tensor<64xf32>
+// CHECK-NEXT:       %101 = memref_ext.alloc_workspace() : memref<2x64xf32>
+// CHECK-NEXT:       %subview_14 = memref.subview %101[%1, 0] [1, 64] [1, 1] : memref<2x64xf32> to memref<1x64xf32, strided<[64, 1], offset: ?>>
+// CHECK-NEXT:       %expanded = tensor.expand_shape %100 {{\[\[}}0, 1]] output_shape [1, 64] : tensor<64xf32> into tensor<1x64xf32>
+// CHECK-NEXT:       bufferization.materialize_in_destination %expanded in writable %subview_14 : (tensor<1x64xf32>, memref<1x64xf32, strided<[64, 1], offset: ?>>) -> ()
+// CHECK-NEXT:       hivm.hir.sync_block[<ALL_SUB_VECTOR>] tvector_pipe = <PIPE_ALL>
+// CHECK-NEXT:       %subview_15 = memref.subview %101[0, %2] [2, 32] [1, 1] : memref<2x64xf32> to memref<2x32xf32, strided<[64, 1], offset: ?>>
+// CHECK-NEXT:       %alloc_16 = memref.alloc() : memref<2x32xf32>
+// CHECK-NEXT:       memref.copy %subview_15, %alloc_16 : memref<2x32xf32, strided<[64, 1], offset: ?>> to memref<2x32xf32>
+// CHECK-NEXT:       %102 = bufferization.to_tensor %alloc_16 restrict writable : memref<2x32xf32>
+// CHECK-NEXT:       %103 = "tt.reduce"(%102) <{axis = 0 : i32}> ({
+// CHECK-NEXT:       ^bb0(%arg12: f32, %arg13: f32):
+// CHECK-NEXT:         %107 = arith.addf %arg12, %arg13 : f32
+// CHECK-NEXT:         tt.reduce.return %107 : f32
+// CHECK-NEXT:       }) {tiled_op} : (tensor<2x32xf32>) -> tensor<32xf32>
+// CHECK-NEXT:       %104 = arith.subf %99, %103 : tensor<32xf32>
+// CHECK-NEXT:       %105 = arith.addf %39#2, %104 : tensor<32xf32>
+// CHECK-NEXT:       %106 = arith.truncf %105 : tensor<32xf32> to tensor<32xbf16>
+// CHECK-NEXT:       tt.store %98, %106 {boundaryCheck = array<i32: 0>, tiled_op} : !tt.ptr<tensor<32xbf16>>
+// CHECK-NEXT:       tt.return
 // CHECK-NEXT:     }
-// CHECK-NEXT:     %44 = tt.make_range {end = 64 : i32, start = 0 : i32} : tensor<64xi32>
-// CHECK-NEXT:     %45 = tt.splat %8 : i32 -> tensor<64xi32>
-// CHECK-NEXT:     %46 = arith.addi %45, %44 : tensor<64xi32>
-// CHECK-NEXT:     %47 = tt.splat %arg11 : i32 -> tensor<64xi32>
-// CHECK-NEXT:     %48 = arith.cmpi slt, %46, %47 : tensor<64xi32>
-// CHECK-NEXT:     %49 = tt.expand_dims %46 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32>
-// CHECK-NEXT:     %50 = tt.expand_dims %46 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32>
-// CHECK-NEXT:     %51 = tt.broadcast %49 : tensor<64x1xi32> -> tensor<64x64xi32>
-// CHECK-NEXT:     %52 = tt.broadcast %50 : tensor<1x64xi32> -> tensor<64x64xi32>
-// CHECK-NEXT:     %53 = arith.cmpi sgt, %51, %52 : tensor<64x64xi32>
-// CHECK-NEXT:     %54 = tt.expand_dims %48 {axis = 1 : i32} : tensor<64xi1> -> tensor<64x1xi1>
-// CHECK-NEXT:     %55 = tt.expand_dims %48 {axis = 0 : i32} : tensor<64xi1> -> tensor<1x64xi1>
-// CHECK-NEXT:     %56 = tt.broadcast %54 : tensor<64x1xi1> -> tensor<64x64xi1>
-// CHECK-NEXT:     %57 = tt.broadcast %55 : tensor<1x64xi1> -> tensor<64x64xi1>
-// CHECK-NEXT:     %58 = arith.andi %56, %57 : tensor<64x64xi1>
-// CHECK-NEXT:     %59 = arith.andi %53, %58 : tensor<64x64xi1>
-// CHECK-NEXT:     %60 = arith.select %59, %43#0, %cst_0 : tensor<64x64xi1>, tensor<64x64xf32>
-// CHECK-NEXT:     %61 = arith.truncf %60 : tensor<64x64xf32> to tensor<64x64xbf16>
-// CHECK-NEXT:     %62 = tt.dot %61, %17, %cst_0 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
-// CHECK-NEXT:     %63 = arith.truncf %62 : tensor<64x64xf32> to tensor<64x64xbf16>
-// CHECK-NEXT:     %64 = tt.dot %17, %63, %cst_0 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
-// CHECK-NEXT:     %65 = tt.expand_dims %20 {axis = 1 : i32} : tensor<64xbf16> -> tensor<64x1xbf16>
-// CHECK-NEXT:     %66 = tt.expand_dims %20 {axis = 0 : i32} : tensor<64xbf16> -> tensor<1x64xbf16>
-// CHECK-NEXT:     %67 = tt.broadcast %65 : tensor<64x1xbf16> -> tensor<64x64xbf16>
-// CHECK-NEXT:     %68 = tt.broadcast %66 : tensor<1x64xbf16> -> tensor<64x64xbf16>
-// CHECK-NEXT:     %69 = arith.subf %67, %68 : tensor<64x64xbf16>
-// CHECK-NEXT:     %70 = arith.extf %69 : tensor<64x64xbf16> to tensor<64x64xf32>
-// CHECK-NEXT:     %71 = math.exp %70 : tensor<64x64xf32>
-// CHECK-NEXT:     %72 = arith.mulf %64, %71 : tensor<64x64xf32>
-// CHECK-NEXT:     %73 = arith.subf %cst_0, %72 : tensor<64x64xf32>
-// CHECK-NEXT:     %74 = arith.select %59, %73, %cst_0 : tensor<64x64xi1>, tensor<64x64xf32>
-// CHECK-NEXT:     %75 = arith.truncf %74 : tensor<64x64xf32> to tensor<64x64xbf16>
-// CHECK-NEXT:     gpu.barrier
-// CHECK-NEXT:     %76 = arith.muli %6, %c128_i32 : i32
-// CHECK-NEXT:     %77 = tt.addptr %arg0, %76 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %78 = tt.addptr %arg7, %76 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %79 = tt.expand_dims %16 {axis = 1 : i32} : tensor<64xbf16> -> tensor<64x1xbf16>
-// CHECK-NEXT:     %80 = tt.broadcast %79 : tensor<64x1xbf16> -> tensor<64x64xbf16>
-// CHECK-NEXT:     %81 = arith.extf %79 : tensor<64x1xbf16> to tensor<64x1xf32>
-// CHECK-NEXT:     %82 = tt.broadcast %81 : tensor<64x1xf32> -> tensor<64x64xf32>
-// CHECK-NEXT:     %83:2 = scf.for %arg12 = %c0_i32 to %c2_i32 step %c1_i32 iter_args(%arg13 = %cst_0, %arg14 = %43#1) -> (tensor<64x64xf32>, tensor<64xf32>)  : i32 {
-// CHECK-NEXT:       %98 = arith.muli %arg12, %c64_i32 : i32
-// CHECK-NEXT:       %99 = tt.make_tensor_ptr %77, [%9, %c128_i64], [%c4096_i64, %c1_i64], [%8, %98] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
-// CHECK-NEXT:       %100 = tt.make_tensor_ptr %78, [%9, %c128_i64], [%c4096_i64, %c1_i64], [%8, %98] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
-// CHECK-NEXT:       %101 = tt.load %99 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
-// CHECK-NEXT:       %102 = tt.trans %101 {order = array<i32: 1, 0>} : tensor<64x64xbf16> -> tensor<64x64xbf16>
-// CHECK-NEXT:       %103 = arith.mulf %101, %80 : tensor<64x64xbf16>
-// CHECK-NEXT:       %104 = tt.dot %101, %102, %arg13 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
-// CHECK-NEXT:       %105 = tt.dot %75, %101, %cst_0 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
-// CHECK-NEXT:       %106 = arith.extf %101 : tensor<64x64xbf16> to tensor<64x64xf32>
-// CHECK-NEXT:       %107 = arith.mulf %105, %106 : tensor<64x64xf32>
-// CHECK-NEXT:       %108 = "tt.reduce"(%107) <{axis = 1 : i32}> ({
-// CHECK-NEXT:       ^bb0(%arg15: f32, %arg16: f32):
-// CHECK-NEXT:         %119 = arith.addf %arg15, %arg16 : f32
-// CHECK-NEXT:         tt.reduce.return %119 : f32
-// CHECK-NEXT:       }) : (tensor<64x64xf32>) -> tensor<64xf32>
-// CHECK-NEXT:       %109 = arith.addf %arg14, %108 : tensor<64xf32>
-// CHECK-NEXT:       %110 = arith.mulf %105, %82 : tensor<64x64xf32>
-// CHECK-NEXT:       %111 = tt.trans %103 {order = array<i32: 1, 0>} : tensor<64x64xbf16> -> tensor<64x64xbf16>
-// CHECK-NEXT:       %112 = tt.dot %111, %75, %cst_0 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
-// CHECK-NEXT:       %113 = tt.trans %112 {order = array<i32: 1, 0>} : tensor<64x64xf32> -> tensor<64x64xf32>
-// CHECK-NEXT:       %114 = arith.addf %110, %113 : tensor<64x64xf32>
-// CHECK-NEXT:       %115 = tt.load %100 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
-// CHECK-NEXT:       %116 = arith.extf %115 : tensor<64x64xbf16> to tensor<64x64xf32>
-// CHECK-NEXT:       %117 = arith.addf %114, %116 : tensor<64x64xf32>
-// CHECK-NEXT:       %118 = arith.truncf %117 : tensor<64x64xf32> to tensor<64x64xbf16>
-// CHECK-NEXT:       tt.store %100, %118 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<64x64xbf16>>
-// CHECK-NEXT:       scf.yield %104, %109 : tensor<64x64xf32>, tensor<64xf32>
-// CHECK-NEXT:     }
-// CHECK-NEXT:     %84 = arith.truncf %83#1 : tensor<64xf32> to tensor<64xbf16>
-// CHECK-NEXT:     tt.store %12, %84 {boundaryCheck = array<i32: 0>} : !tt.ptr<tensor<64xbf16>>
-// CHECK-NEXT:     %85 = tt.expand_dims %16 {axis = 1 : i32} : tensor<64xbf16> -> tensor<64x1xbf16>
-// CHECK-NEXT:     %86 = arith.extf %85 : tensor<64x1xbf16> to tensor<64x1xf32>
-// CHECK-NEXT:     %87 = tt.broadcast %86 : tensor<64x1xf32> -> tensor<64x64xf32>
-// CHECK-NEXT:     %88 = arith.mulf %83#0, %87 : tensor<64x64xf32>
-// CHECK-NEXT:     %89 = arith.extf %75 : tensor<64x64xbf16> to tensor<64x64xf32>
-// CHECK-NEXT:     %90 = arith.mulf %89, %88 : tensor<64x64xf32>
-// CHECK-NEXT:     %91 = tt.addptr %arg10, %6 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %92 = tt.make_tensor_ptr %91, [%9], [%c32_i64], [%8] {order = array<i32: 0>} : <tensor<64xbf16>>
-// CHECK-NEXT:     %93 = "tt.reduce"(%90) <{axis = 1 : i32}> ({
-// CHECK-NEXT:     ^bb0(%arg12: f32, %arg13: f32):
-// CHECK-NEXT:       %98 = arith.addf %arg12, %arg13 : f32
-// CHECK-NEXT:       tt.reduce.return %98 : f32
-// CHECK-NEXT:     }) : (tensor<64x64xf32>) -> tensor<64xf32>
-// CHECK-NEXT:     %94 = "tt.reduce"(%90) <{axis = 0 : i32}> ({
-// CHECK-NEXT:     ^bb0(%arg12: f32, %arg13: f32):
-// CHECK-NEXT:       %98 = arith.addf %arg12, %arg13 : f32
-// CHECK-NEXT:       tt.reduce.return %98 : f32
-// CHECK-NEXT:     }) : (tensor<64x64xf32>) -> tensor<64xf32>
-// CHECK-NEXT:     %95 = arith.subf %93, %94 : tensor<64xf32>
-// CHECK-NEXT:     %96 = arith.addf %34#2, %95 : tensor<64xf32>
-// CHECK-NEXT:     %97 = arith.truncf %96 : tensor<64xf32> to tensor<64xbf16>
-// CHECK-NEXT:     tt.store %92, %97 {boundaryCheck = array<i32: 0>} : !tt.ptr<tensor<64xbf16>>
-// CHECK-NEXT:     tt.return
 // CHECK-NEXT:   }
 // CHECK-NEXT: }
 
@@ -10177,6 +11518,321 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc161 = loc(callsite(#loc144 at #loc135))
 #loc162 = loc(callsite(#loc144 at #loc136))
 
+#map = affine_map<()[s0] -> (s0 * 32)>
+module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">, hivm.disable_auto_tile_and_bind_subblock} {
+  tt.func public @prepare_wy_repr_bwd_kernel(%arg0: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg2: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg3: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg4: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg5: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg6: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg7: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg8: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg9: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg10: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg11: i32) attributes {noinline = false} {
+    %cst = arith.constant dense<0.000000e+00> : tensor<32x64xf32>
+    %cst_0 = arith.constant dense<0.000000e+00> : tensor<32xf32>
+    %c32_i32 = arith.constant 32 : i32
+    %c64_i32 = arith.constant 64 : i32
+    %c32_i64 = arith.constant 32 : i64
+    %c64_i64 = arith.constant 64 : i64
+    %c1_i64 = arith.constant 1 : i64
+    %c2048_i64 = arith.constant 2048 : i64
+    %c0_i32 = arith.constant 0 : i32
+    %c128_i32 = arith.constant 128 : i32
+    %c128_i64 = arith.constant 128 : i64
+    %c4096_i64 = arith.constant 4096 : i64
+    %cst_1 = arith.constant dense<0.000000e+00> : tensor<64x64xf32>
+    %c1_i32 = arith.constant 1 : i32
+    %c2_i32 = arith.constant 2 : i32
+    %0 = hivm.hir.get_sub_block_idx -> i64
+    %1 = arith.index_cast %0 : i64 to index
+    %2 = affine.apply #map()[%1]
+    %3 = arith.index_cast %2 : index to i32
+    %4 = tt.get_program_id x : i32
+    %5 = tt.get_program_id y : i32
+    %6 = arith.divsi %5, %c32_i32 : i32
+    %7 = arith.remsi %5, %c32_i32 : i32
+    %8 = arith.muli %6, %arg11 : i32
+    %9 = arith.muli %8, %c32_i32 : i32
+    %10 = arith.addi %9, %7 : i32
+    %11 = tt.addptr %arg2, %10 : !tt.ptr<bf16>, i32
+    %12 = arith.muli %4, %c64_i32 : i32
+    %13 = arith.extsi %arg11 : i32 to i64
+    %14 = arith.addi %12, %3 : i32
+    %15 = tt.make_tensor_ptr %11, [%13], [%c32_i64], [%14] {order = array<i32: 0>} : <tensor<32xbf16>>
+    %16 = tt.addptr %arg9, %10 : !tt.ptr<bf16>, i32
+    %17 = tt.make_tensor_ptr %16, [%13], [%c32_i64], [%14] {order = array<i32: 0>, tiled_op} : <tensor<32xbf16>>
+    %18 = arith.muli %10, %c64_i32 : i32
+    %19 = tt.addptr %arg4, %18 : !tt.ptr<bf16>, i32
+    %20 = tt.make_tensor_ptr %19, [%c64_i64, %13], [%c1_i64, %c2048_i64], [%c0_i32, %12] {order = array<i32: 0, 1>} : <tensor<64x64xbf16>>
+    %21 = tt.load %15 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32xbf16>>
+    %22 = tt.load %20 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
+    %23 = tt.addptr %arg3, %10 : !tt.ptr<bf16>, i32
+    %24 = tt.make_tensor_ptr %23, [%13], [%c32_i64], [%12] {order = array<i32: 0>} : <tensor<64xbf16>>
+    %25 = tt.load %24 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<64xbf16>>
+    %extracted_slice = tensor.extract_slice %25[%2] [32] [1] {should_kept_slice} : tensor<64xbf16> to tensor<32xbf16>
+    %26 = math.exp %extracted_slice : tensor<32xbf16>
+    %27 = arith.muli %10, %c128_i32 : i32
+    %28 = tt.addptr %arg0, %27 : !tt.ptr<bf16>, i32
+    %29 = tt.addptr %arg7, %27 : !tt.ptr<bf16>, i32
+    %30 = tt.addptr %arg5, %27 : !tt.ptr<bf16>, i32
+    %31 = arith.mulf %21, %26 : tensor<32xbf16>
+    %32 = tt.expand_dims %31 {axis = 1 : i32} : tensor<32xbf16> -> tensor<32x1xbf16>
+    %33 = tt.broadcast %32 : tensor<32x1xbf16> -> tensor<32x64xbf16>
+    %34 = arith.extf %32 : tensor<32x1xbf16> to tensor<32x1xf32>
+    %35 = tt.broadcast %34 : tensor<32x1xf32> -> tensor<32x64xf32>
+    %36 = tt.expand_dims %26 {axis = 1 : i32} : tensor<32xbf16> -> tensor<32x1xbf16>
+    %37 = arith.extf %36 : tensor<32x1xbf16> to tensor<32x1xf32>
+    %38 = tt.broadcast %37 : tensor<32x1xf32> -> tensor<32x64xf32>
+    %39:3 = scf.for %arg12 = %c0_i32 to %c2_i32 step %c1_i32 iter_args(%arg13 = %cst_1, %arg14 = %cst_0, %arg15 = %cst_0) -> (tensor<64x64xf32>, tensor<32xf32>, tensor<32xf32>)  : i32 {
+      %109 = arith.muli %arg12, %c64_i32 : i32
+      %110 = tt.make_tensor_ptr %28, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%14, %109] {order = array<i32: 1, 0>} : <tensor<32x64xbf16>>
+      %111 = tt.make_tensor_ptr %29, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%14, %109] {order = array<i32: 1, 0>, tiled_op} : <tensor<32x64xbf16>>
+      %112 = tt.make_tensor_ptr %30, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%12, %109] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
+      %113 = tt.load %110 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<32x64xbf16>>
+      %114 = arith.mulf %113, %33 : tensor<32x64xbf16>
+      %115 = tt.load %112 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
+      %116 = tensor.empty() : tensor<64x64xbf16>
+      %117 = memref_ext.alloc_workspace() : memref<64x64xbf16>
+      %subview_17 = memref.subview %117[%2, 0] [32, 64] [1, 1] : memref<64x64xbf16> to memref<32x64xbf16, strided<[64, 1], offset: ?>>
+      bufferization.materialize_in_destination %114 in writable %subview_17 : (tensor<32x64xbf16>, memref<32x64xbf16, strided<[64, 1], offset: ?>>) -> ()
+      %alloc_18 = memref.alloc() : memref<64x64xbf16>
+      memref.copy %117, %alloc_18 : memref<64x64xbf16> to memref<64x64xbf16>
+      %118 = bufferization.to_tensor %alloc_18 restrict writable : memref<64x64xbf16>
+      %119 = tt.trans %118 {order = array<i32: 1, 0>} : tensor<64x64xbf16> -> tensor<64x64xbf16>
+      %120 = tt.dot %115, %119, %arg13 {tiled_op, triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+      %121 = tt.dot %22, %115, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+      %122 = memref_ext.alloc_workspace() : memref<64x64xf32>
+      bufferization.materialize_in_destination %121 in writable %122 : (tensor<64x64xf32>, memref<64x64xf32>) -> ()
+      %subview_19 = memref.subview %122[%2, 0] [32, 64] [1, 1] : memref<64x64xf32> to memref<32x64xf32, strided<[64, 1], offset: ?>>
+      %alloc_20 = memref.alloc() : memref<32x64xf32>
+      memref.copy %subview_19, %alloc_20 : memref<32x64xf32, strided<[64, 1], offset: ?>> to memref<32x64xf32>
+      %123 = bufferization.to_tensor %alloc_20 restrict writable : memref<32x64xf32>
+      %124 = arith.mulf %123, %35 : tensor<32x64xf32>
+      %125 = arith.extf %113 : tensor<32x64xbf16> to tensor<32x64xf32>
+      %126 = arith.mulf %123, %125 : tensor<32x64xf32>
+      %127 = arith.mulf %126, %38 : tensor<32x64xf32>
+      %128 = "tt.reduce"(%127) <{axis = 1 : i32}> ({
+      ^bb0(%arg16: f32, %arg17: f32):
+        %135 = arith.addf %arg16, %arg17 : f32
+        tt.reduce.return %135 : f32
+      }) : (tensor<32x64xf32>) -> tensor<32xf32>
+      %129 = arith.addf %arg14, %128 : tensor<32xf32>
+      %130 = arith.extf %114 : tensor<32x64xbf16> to tensor<32x64xf32>
+      %131 = arith.mulf %123, %130 : tensor<32x64xf32>
+      %132 = "tt.reduce"(%131) <{axis = 1 : i32}> ({
+      ^bb0(%arg16: f32, %arg17: f32):
+        %135 = arith.addf %arg16, %arg17 : f32
+        tt.reduce.return %135 : f32
+      }) : (tensor<32x64xf32>) -> tensor<32xf32>
+      %133 = arith.addf %arg15, %132 : tensor<32xf32>
+      %134 = arith.truncf %124 : tensor<32x64xf32> to tensor<32x64xbf16>
+      tt.store %111, %134 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<32x64xbf16>>
+      scf.yield %120, %129, %133 : tensor<64x64xf32>, tensor<32xf32>, tensor<32xf32>
+    }
+    %40 = tt.addptr %arg1, %27 : !tt.ptr<bf16>, i32
+    %41 = tt.addptr %arg8, %27 : !tt.ptr<bf16>, i32
+    %42 = tt.addptr %arg6, %27 : !tt.ptr<bf16>, i32
+    %43 = tt.expand_dims %21 {axis = 1 : i32} : tensor<32xbf16> -> tensor<32x1xbf16>
+    %44 = tt.broadcast %43 : tensor<32x1xbf16> -> tensor<32x64xbf16>
+    %45 = arith.extf %43 : tensor<32x1xbf16> to tensor<32x1xf32>
+    %46 = tt.broadcast %45 : tensor<32x1xf32> -> tensor<32x64xf32>
+    %47:2 = scf.for %arg12 = %c0_i32 to %c2_i32 step %c1_i32 iter_args(%arg13 = %39#0, %arg14 = %39#1) -> (tensor<64x64xf32>, tensor<32xf32>)  : i32 {
+      %109 = arith.muli %arg12, %c64_i32 : i32
+      %110 = tt.make_tensor_ptr %40, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%14, %109] {order = array<i32: 1, 0>} : <tensor<32x64xbf16>>
+      %111 = tt.make_tensor_ptr %41, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%14, %109] {order = array<i32: 1, 0>, tiled_op} : <tensor<32x64xbf16>>
+      %112 = tt.make_tensor_ptr %42, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%12, %109] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
+      %113 = tt.load %110 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<32x64xbf16>>
+      %114 = arith.mulf %113, %44 : tensor<32x64xbf16>
+      %115 = tt.load %112 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
+      %116 = tensor.empty() : tensor<64x64xbf16>
+      %117 = memref_ext.alloc_workspace() : memref<64x64xbf16>
+      %subview_17 = memref.subview %117[%2, 0] [32, 64] [1, 1] : memref<64x64xbf16> to memref<32x64xbf16, strided<[64, 1], offset: ?>>
+      bufferization.materialize_in_destination %114 in writable %subview_17 : (tensor<32x64xbf16>, memref<32x64xbf16, strided<[64, 1], offset: ?>>) -> ()
+      %alloc_18 = memref.alloc() : memref<64x64xbf16>
+      memref.copy %117, %alloc_18 : memref<64x64xbf16> to memref<64x64xbf16>
+      %118 = bufferization.to_tensor %alloc_18 restrict writable : memref<64x64xbf16>
+      %119 = tt.trans %118 {order = array<i32: 1, 0>} : tensor<64x64xbf16> -> tensor<64x64xbf16>
+      %120 = tt.dot %115, %119, %arg13 {tiled_op, triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+      %121 = tt.dot %22, %115, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+      %122 = memref_ext.alloc_workspace() : memref<64x64xf32>
+      bufferization.materialize_in_destination %121 in writable %122 : (tensor<64x64xf32>, memref<64x64xf32>) -> ()
+      %subview_19 = memref.subview %122[%2, 0] [32, 64] [1, 1] : memref<64x64xf32> to memref<32x64xf32, strided<[64, 1], offset: ?>>
+      %alloc_20 = memref.alloc() : memref<32x64xf32>
+      memref.copy %subview_19, %alloc_20 : memref<32x64xf32, strided<[64, 1], offset: ?>> to memref<32x64xf32>
+      %123 = bufferization.to_tensor %alloc_20 restrict writable : memref<32x64xf32>
+      %124 = arith.mulf %123, %46 : tensor<32x64xf32>
+      %125 = arith.extf %113 : tensor<32x64xbf16> to tensor<32x64xf32>
+      %126 = arith.mulf %123, %125 : tensor<32x64xf32>
+      %127 = "tt.reduce"(%126) <{axis = 1 : i32}> ({
+      ^bb0(%arg15: f32, %arg16: f32):
+        %130 = arith.addf %arg15, %arg16 : f32
+        tt.reduce.return %130 : f32
+      }) : (tensor<32x64xf32>) -> tensor<32xf32>
+      %128 = arith.addf %arg14, %127 : tensor<32xf32>
+      %129 = arith.truncf %124 : tensor<32x64xf32> to tensor<32x64xbf16>
+      tt.store %111, %129 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<32x64xbf16>>
+      scf.yield %120, %128 : tensor<64x64xf32>, tensor<32xf32>
+    }
+    %48 = tt.make_range {end = 64 : i32, start = 0 : i32} : tensor<64xi32>
+    %49 = tt.splat %12 : i32 -> tensor<64xi32>
+    %50 = arith.addi %49, %48 : tensor<64xi32>
+    %51 = tt.splat %arg11 : i32 -> tensor<64xi32>
+    %52 = arith.cmpi slt, %50, %51 : tensor<64xi32>
+    %extracted_slice_2 = tensor.extract_slice %50[%2] [32] [1] {should_kept_slice} : tensor<64xi32> to tensor<32xi32>
+    %53 = tt.expand_dims %extracted_slice_2 {axis = 1 : i32} : tensor<32xi32> -> tensor<32x1xi32>
+    %54 = tt.expand_dims %50 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32>
+    %55 = tt.broadcast %53 : tensor<32x1xi32> -> tensor<32x64xi32>
+    %56 = tt.broadcast %54 : tensor<1x64xi32> -> tensor<32x64xi32>
+    %57 = arith.cmpi sgt, %55, %56 : tensor<32x64xi32>
+    %extracted_slice_3 = tensor.extract_slice %52[%2] [32] [1] {should_kept_slice} : tensor<64xi1> to tensor<32xi1>
+    %58 = tt.expand_dims %extracted_slice_3 {axis = 1 : i32} : tensor<32xi1> -> tensor<32x1xi1>
+    %59 = tt.expand_dims %52 {axis = 0 : i32} : tensor<64xi1> -> tensor<1x64xi1>
+    %60 = tt.broadcast %58 : tensor<32x1xi1> -> tensor<32x64xi1>
+    %61 = tt.broadcast %59 : tensor<1x64xi1> -> tensor<32x64xi1>
+    %62 = arith.andi %60, %61 : tensor<32x64xi1>
+    %63 = arith.andi %57, %62 : tensor<32x64xi1>
+    %64 = memref_ext.alloc_workspace() : memref<64x64xf32>
+    bufferization.materialize_in_destination %47#0 in writable %64 : (tensor<64x64xf32>, memref<64x64xf32>) -> ()
+    %subview = memref.subview %64[%2, 0] [32, 64] [1, 1] : memref<64x64xf32> to memref<32x64xf32, strided<[64, 1], offset: ?>>
+    %alloc = memref.alloc() : memref<32x64xf32>
+    memref.copy %subview, %alloc : memref<32x64xf32, strided<[64, 1], offset: ?>> to memref<32x64xf32>
+    %65 = bufferization.to_tensor %alloc restrict writable : memref<32x64xf32>
+    %66 = arith.select %63, %65, %cst : tensor<32x64xi1>, tensor<32x64xf32>
+    %67 = arith.truncf %66 : tensor<32x64xf32> to tensor<32x64xbf16>
+    %68 = tensor.empty() : tensor<64x64xbf16>
+    %69 = memref_ext.alloc_workspace() : memref<64x64xbf16>
+    %subview_4 = memref.subview %69[%2, 0] [32, 64] [1, 1] : memref<64x64xbf16> to memref<32x64xbf16, strided<[64, 1], offset: ?>>
+    bufferization.materialize_in_destination %67 in writable %subview_4 : (tensor<32x64xbf16>, memref<32x64xbf16, strided<[64, 1], offset: ?>>) -> ()
+    %alloc_5 = memref.alloc() : memref<64x64xbf16>
+    memref.copy %69, %alloc_5 : memref<64x64xbf16> to memref<64x64xbf16>
+    %70 = bufferization.to_tensor %alloc_5 restrict writable : memref<64x64xbf16>
+    %71 = tt.dot %70, %22, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+    %72 = memref_ext.alloc_workspace() : memref<64x64xf32>
+    bufferization.materialize_in_destination %71 in writable %72 : (tensor<64x64xf32>, memref<64x64xf32>) -> ()
+    %subview_6 = memref.subview %72[%2, 0] [32, 64] [1, 1] : memref<64x64xf32> to memref<32x64xf32, strided<[64, 1], offset: ?>>
+    %alloc_7 = memref.alloc() : memref<32x64xf32>
+    memref.copy %subview_6, %alloc_7 : memref<32x64xf32, strided<[64, 1], offset: ?>> to memref<32x64xf32>
+    %73 = bufferization.to_tensor %alloc_7 restrict writable : memref<32x64xf32>
+    %74 = arith.truncf %73 : tensor<32x64xf32> to tensor<32x64xbf16>
+    %75 = memref_ext.alloc_workspace() : memref<64x64xbf16>
+    %subview_8 = memref.subview %75[%2, 0] [32, 64] [1, 1] : memref<64x64xbf16> to memref<32x64xbf16, strided<[64, 1], offset: ?>>
+    bufferization.materialize_in_destination %74 in writable %subview_8 : (tensor<32x64xbf16>, memref<32x64xbf16, strided<[64, 1], offset: ?>>) -> ()
+    %alloc_9 = memref.alloc() : memref<64x64xbf16>
+    memref.copy %75, %alloc_9 : memref<64x64xbf16> to memref<64x64xbf16>
+    %76 = bufferization.to_tensor %alloc_9 restrict writable : memref<64x64xbf16>
+    %77 = tt.dot %22, %76, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+    %78 = tt.expand_dims %extracted_slice {axis = 1 : i32} : tensor<32xbf16> -> tensor<32x1xbf16>
+    %79 = tt.expand_dims %25 {axis = 0 : i32} : tensor<64xbf16> -> tensor<1x64xbf16>
+    %80 = tt.broadcast %78 : tensor<32x1xbf16> -> tensor<32x64xbf16>
+    %81 = tt.broadcast %79 : tensor<1x64xbf16> -> tensor<32x64xbf16>
+    %82 = arith.subf %80, %81 : tensor<32x64xbf16>
+    %83 = arith.extf %82 : tensor<32x64xbf16> to tensor<32x64xf32>
+    %84 = math.exp %83 : tensor<32x64xf32>
+    %85 = memref_ext.alloc_workspace() : memref<64x64xf32>
+    bufferization.materialize_in_destination %77 in writable %85 : (tensor<64x64xf32>, memref<64x64xf32>) -> ()
+    %subview_10 = memref.subview %85[%2, 0] [32, 64] [1, 1] : memref<64x64xf32> to memref<32x64xf32, strided<[64, 1], offset: ?>>
+    %alloc_11 = memref.alloc() : memref<32x64xf32>
+    memref.copy %subview_10, %alloc_11 : memref<32x64xf32, strided<[64, 1], offset: ?>> to memref<32x64xf32>
+    %86 = bufferization.to_tensor %alloc_11 restrict writable : memref<32x64xf32>
+    %87 = arith.mulf %86, %84 : tensor<32x64xf32>
+    %88 = arith.subf %cst, %87 : tensor<32x64xf32>
+    %89 = arith.select %63, %88, %cst : tensor<32x64xi1>, tensor<32x64xf32>
+    %90 = arith.truncf %89 : tensor<32x64xf32> to tensor<32x64xbf16>
+    gpu.barrier
+    %91:2 = scf.for %arg12 = %c0_i32 to %c2_i32 step %c1_i32 iter_args(%arg13 = %cst_1, %arg14 = %47#1) -> (tensor<64x64xf32>, tensor<32xf32>)  : i32 {
+      %109 = arith.muli %arg12, %c64_i32 : i32
+      %110 = tt.make_tensor_ptr %28, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%12, %109] {order = array<i32: 1, 0>} : <tensor<64x64xbf16>>
+      %111 = tt.make_tensor_ptr %28, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%14, %109] {order = array<i32: 1, 0>} : <tensor<32x64xbf16>>
+      %112 = tt.make_tensor_ptr %29, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%14, %109] {order = array<i32: 1, 0>} : <tensor<32x64xbf16>>
+      %113 = tt.make_tensor_ptr %29, [%13, %c128_i64], [%c4096_i64, %c1_i64], [%14, %109] {order = array<i32: 1, 0>, tiled_op} : <tensor<32x64xbf16>>
+      %114 = tt.load %111 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<32x64xbf16>>
+      %115 = tt.load %110 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<64x64xbf16>>
+      %116 = tt.trans %115 {order = array<i32: 1, 0>} : tensor<64x64xbf16> -> tensor<64x64xbf16>
+      %117 = arith.mulf %114, %44 : tensor<32x64xbf16>
+      %118 = tt.dot %115, %116, %arg13 {tiled_op, triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+      %119 = memref_ext.alloc_workspace() : memref<64x64xbf16>
+      %subview_17 = memref.subview %119[%2, 0] [32, 64] [1, 1] : memref<64x64xbf16> to memref<32x64xbf16, strided<[64, 1], offset: ?>>
+      bufferization.materialize_in_destination %90 in writable %subview_17 : (tensor<32x64xbf16>, memref<32x64xbf16, strided<[64, 1], offset: ?>>) -> ()
+      %alloc_18 = memref.alloc() : memref<64x64xbf16>
+      memref.copy %119, %alloc_18 : memref<64x64xbf16> to memref<64x64xbf16>
+      %120 = bufferization.to_tensor %alloc_18 restrict writable : memref<64x64xbf16>
+      %121 = tt.dot %120, %115, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+      %122 = memref_ext.alloc_workspace() : memref<64x64xf32>
+      bufferization.materialize_in_destination %121 in writable %122 : (tensor<64x64xf32>, memref<64x64xf32>) -> ()
+      %subview_19 = memref.subview %122[%2, 0] [32, 64] [1, 1] : memref<64x64xf32> to memref<32x64xf32, strided<[64, 1], offset: ?>>
+      %alloc_20 = memref.alloc() : memref<32x64xf32>
+      memref.copy %subview_19, %alloc_20 : memref<32x64xf32, strided<[64, 1], offset: ?>> to memref<32x64xf32>
+      %123 = bufferization.to_tensor %alloc_20 restrict writable : memref<32x64xf32>
+      %124 = arith.extf %114 : tensor<32x64xbf16> to tensor<32x64xf32>
+      %125 = arith.mulf %123, %124 : tensor<32x64xf32>
+      %126 = "tt.reduce"(%125) <{axis = 1 : i32}> ({
+      ^bb0(%arg15: f32, %arg16: f32):
+        %141 = arith.addf %arg15, %arg16 : f32
+        tt.reduce.return %141 : f32
+      }) : (tensor<32x64xf32>) -> tensor<32xf32>
+      %127 = arith.addf %arg14, %126 : tensor<32xf32>
+      %128 = arith.mulf %123, %46 : tensor<32x64xf32>
+      %129 = memref_ext.alloc_workspace() : memref<64x64xbf16>
+      %subview_21 = memref.subview %129[%2, 0] [32, 64] [1, 1] : memref<64x64xbf16> to memref<32x64xbf16, strided<[64, 1], offset: ?>>
+      bufferization.materialize_in_destination %117 in writable %subview_21 : (tensor<32x64xbf16>, memref<32x64xbf16, strided<[64, 1], offset: ?>>) -> ()
+      %alloc_22 = memref.alloc() : memref<64x64xbf16>
+      memref.copy %129, %alloc_22 : memref<64x64xbf16> to memref<64x64xbf16>
+      %130 = bufferization.to_tensor %alloc_22 restrict writable : memref<64x64xbf16>
+      %131 = tt.trans %130 {order = array<i32: 1, 0>} : tensor<64x64xbf16> -> tensor<64x64xbf16>
+      %132 = tt.dot %131, %120, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x64xbf16> -> tensor<64x64xf32>
+      %133 = memref_ext.alloc_workspace() : memref<64x64xf32>
+      bufferization.materialize_in_destination %132 in writable %133 : (tensor<64x64xf32>, memref<64x64xf32>) -> ()
+      %subview_23 = memref.subview %133[0, %2] [64, 32] [1, 1] : memref<64x64xf32> to memref<64x32xf32, strided<[64, 1], offset: ?>>
+      %alloc_24 = memref.alloc() : memref<64x32xf32>
+      memref.copy %subview_23, %alloc_24 : memref<64x32xf32, strided<[64, 1], offset: ?>> to memref<64x32xf32>
+      %134 = bufferization.to_tensor %alloc_24 restrict writable : memref<64x32xf32>
+      %135 = tt.trans %134 {order = array<i32: 1, 0>} : tensor<64x32xf32> -> tensor<32x64xf32>
+      %136 = arith.addf %128, %135 : tensor<32x64xf32>
+      %137 = tt.load %112 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<32x64xbf16>>
+      %138 = arith.extf %137 : tensor<32x64xbf16> to tensor<32x64xf32>
+      %139 = arith.addf %136, %138 : tensor<32x64xf32>
+      %140 = arith.truncf %139 : tensor<32x64xf32> to tensor<32x64xbf16>
+      tt.store %113, %140 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<32x64xbf16>>
+      scf.yield %118, %127 : tensor<64x64xf32>, tensor<32xf32>
+    }
+    %92 = arith.truncf %91#1 : tensor<32xf32> to tensor<32xbf16>
+    tt.store %17, %92 {boundaryCheck = array<i32: 0>, tiled_op} : !tt.ptr<tensor<32xbf16>>
+    %93 = memref_ext.alloc_workspace() : memref<64x64xf32>
+    bufferization.materialize_in_destination %91#0 in writable %93 : (tensor<64x64xf32>, memref<64x64xf32>) -> ()
+    %subview_12 = memref.subview %93[%2, 0] [32, 64] [1, 1] : memref<64x64xf32> to memref<32x64xf32, strided<[64, 1], offset: ?>>
+    %alloc_13 = memref.alloc() : memref<32x64xf32>
+    memref.copy %subview_12, %alloc_13 : memref<32x64xf32, strided<[64, 1], offset: ?>> to memref<32x64xf32>
+    %94 = bufferization.to_tensor %alloc_13 restrict writable : memref<32x64xf32>
+    %95 = arith.mulf %94, %46 : tensor<32x64xf32>
+    %96 = arith.extf %90 : tensor<32x64xbf16> to tensor<32x64xf32>
+    %97 = arith.mulf %96, %95 : tensor<32x64xf32>
+    %98 = tt.addptr %arg10, %10 : !tt.ptr<bf16>, i32
+    %99 = tt.make_tensor_ptr %98, [%13], [%c32_i64], [%14] {order = array<i32: 0>, tiled_op} : <tensor<32xbf16>>
+    %100 = "tt.reduce"(%97) <{axis = 1 : i32}> ({
+    ^bb0(%arg12: f32, %arg13: f32):
+      %109 = arith.addf %arg12, %arg13 : f32
+      tt.reduce.return %109 : f32
+    }) : (tensor<32x64xf32>) -> tensor<32xf32>
+    %101 = "tt.reduce"(%97) <{axis = 0 : i32}> ({
+    ^bb0(%arg12: f32, %arg13: f32):
+      %109 = arith.addf %arg12, %arg13 : f32
+      tt.reduce.return %109 : f32
+    }) {tiled_op} : (tensor<32x64xf32>) -> tensor<64xf32>
+    %102 = tensor.empty() : tensor<2x64xf32>
+    %103 = memref_ext.alloc_workspace() : memref<2x64xf32>
+    %subview_14 = memref.subview %103[%1, 0] [1, 64] [1, 1] : memref<2x64xf32> to memref<1x64xf32, strided<[64, 1], offset: ?>>
+    %expanded = tensor.expand_shape %101 [[0, 1]] output_shape [1, 64] : tensor<64xf32> into tensor<1x64xf32>
+    bufferization.materialize_in_destination %expanded in writable %subview_14 : (tensor<1x64xf32>, memref<1x64xf32, strided<[64, 1], offset: ?>>) -> ()
+    hivm.hir.sync_block[<ALL_SUB_VECTOR>] tvector_pipe = <PIPE_ALL>
+    %subview_15 = memref.subview %103[0, %2] [2, 32] [1, 1] : memref<2x64xf32> to memref<2x32xf32, strided<[64, 1], offset: ?>>
+    %alloc_16 = memref.alloc() : memref<2x32xf32>
+    memref.copy %subview_15, %alloc_16 : memref<2x32xf32, strided<[64, 1], offset: ?>> to memref<2x32xf32>
+    %104 = bufferization.to_tensor %alloc_16 restrict writable : memref<2x32xf32>
+    %105 = "tt.reduce"(%104) <{axis = 0 : i32}> ({
+    ^bb0(%arg12: f32, %arg13: f32):
+      %109 = arith.addf %arg12, %arg13 : f32
+      tt.reduce.return %109 : f32
+    }) {tiled_op} : (tensor<2x32xf32>) -> tensor<32xf32>
+    %106 = arith.subf %100, %105 : tensor<32xf32>
+    %107 = arith.addf %39#2, %106 : tensor<32xf32>
+    %108 = arith.truncf %107 : tensor<32xf32> to tensor<32xbf16>
+    tt.store %99, %108 {boundaryCheck = array<i32: 0>, tiled_op} : !tt.ptr<tensor<32xbf16>>
+    tt.return
+  }
+}
 
 // -----
 // Source: gaoyou/0701/recompute_w_u/input.mlir
@@ -10359,7 +12015,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc47 = loc("/home/z00959232/Q2TritonKernel/src/kernels/fla/ops/gated_delta_rule/wy_fast.py":86:4)
 #loc48 = loc(callsite(#loc32 at #loc33))
 #loc49 = loc(callsite(#loc34 at #loc33))
-
 
 // -----
 // Source: gaoyou/0701/scaled_dot_kkt/input.mlir
@@ -10561,7 +12216,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc48 = loc("/home/z00959232/Q2TritonKernel/src/kernels/fla/ops/common/chunk_scaled_dot_kkt.py":78:4)
 #loc49 = loc(callsite(#loc30 at #loc31))
 #loc50 = loc(callsite(#loc32 at #loc31))
-
 
 // -----
 // Source: gaoyou/0701/sdpa_bwd/bwd_kv_input_false.mlir
@@ -10986,7 +12640,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc97 = loc("/home/z00959232/Q2TritonKernel/tests/mojo_opset/../../src/kernels/sdpa.py":772:25)
 #loc98 = loc("/home/z00959232/Q2TritonKernel/tests/mojo_opset/../../src/kernels/sdpa.py":675:4)
 
-
 // -----
 // Source: gaoyou/0701/sdpa_bwd/bwd_kv_input_true.mlir
 // CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
@@ -11410,7 +13063,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc97 = loc("/home/z00959232/Q2TritonKernel/tests/mojo_opset/../../src/kernels/sdpa.py":772:25)
 #loc98 = loc("/home/z00959232/Q2TritonKernel/tests/mojo_opset/../../src/kernels/sdpa.py":675:4)
 
-
 // -----
 // Source: gaoyou/0701/sdpa_bwd/bwd_q_input_false.mlir
 // CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
@@ -11806,7 +13458,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc89 = loc("/home/z00959232/Q2TritonKernel/tests/mojo_opset/../../src/kernels/sdpa.py":619:25)
 #loc90 = loc("/home/z00959232/Q2TritonKernel/tests/mojo_opset/../../src/kernels/sdpa.py":542:4)
 
-
 // -----
 // Source: gaoyou/0701/sdpa_bwd/bwd_q_input_true.mlir
 // CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
@@ -12201,7 +13852,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc88 = loc("/home/z00959232/Q2TritonKernel/tests/mojo_opset/../../src/kernels/sdpa.py":619:37)
 #loc89 = loc("/home/z00959232/Q2TritonKernel/tests/mojo_opset/../../src/kernels/sdpa.py":619:25)
 #loc90 = loc("/home/z00959232/Q2TritonKernel/tests/mojo_opset/../../src/kernels/sdpa.py":542:4)
-
 
 // -----
 // Source: gaoyou/0701/sdpa_fwd/input_false.mlir
@@ -12599,7 +14249,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc99 = loc(callsite(#loc95 at #loc67))
 #loc100 = loc(callsite(#loc98 at #loc77))
 
-
 // -----
 // Source: gaoyou/0701/sdpa_fwd/input_true.mlir
 // CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
@@ -12996,7 +14645,6 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc99 = loc(callsite(#loc95 at #loc67))
 #loc100 = loc(callsite(#loc98 at #loc77))
 
-
 // -----
 // Source: gaoyou/0701/sdpa_infer/input.mlir
 // CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
@@ -13340,249 +14988,1255 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc120 = loc(callsite(#loc118 at #loc5))
 
 // -----
-// Source: gaoyou/0701/solve_tril/input.mlir
+// Source: gaoyou/0701/simplicial_kv1/input.mlir
 // CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
-// CHECK-NEXT:   tt.func public @merge_16x16_to_64x64_inverse_kernel(%arg0: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg2: i32) attributes {noinline = false} {
-// CHECK-NEXT:     %c50_i32 = arith.constant 50 : i32
-// CHECK-NEXT:     %c34_i32 = arith.constant 34 : i32
-// CHECK-NEXT:     %c18_i32 = arith.constant 18 : i32
-// CHECK-NEXT:     %c2048_i32 = arith.constant 2048 : i32
-// CHECK-NEXT:     %c1_i32 = arith.constant 1 : i32
-// CHECK-NEXT:     %c2_i32 = arith.constant 2 : i32
-// CHECK-NEXT:     %cst = arith.constant dense<48> : tensor<16xi32>
-// CHECK-NEXT:     %cst_0 = arith.constant dense<32> : tensor<16xi32>
-// CHECK-NEXT:     %cst_1 = arith.constant dense<16> : tensor<16xi32>
-// CHECK-NEXT:     %cst_2 = arith.constant dense<0.000000e+00> : tensor<16xf32>
-// CHECK-NEXT:     %cst_3 = arith.constant dense<0.000000e+00> : tensor<16x16xf32>
-// CHECK-NEXT:     %c48_i32 = arith.constant 48 : i32
-// CHECK-NEXT:     %c16_i32 = arith.constant 16 : i32
-// CHECK-NEXT:     %c0_i32 = arith.constant 0 : i32
-// CHECK-NEXT:     %c1_i64 = arith.constant 1 : i64
-// CHECK-NEXT:     %c2048_i64 = arith.constant 2048 : i64
-// CHECK-NEXT:     %c64_i64 = arith.constant 64 : i64
-// CHECK-NEXT:     %c64_i32 = arith.constant 64 : i32
+// CHECK-NEXT:   tt.func public @simplicial_bwd_kv1_kernel(%arg0: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg2: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg3: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg4: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg5: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg6: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg7: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg8: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg9: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg10: i32, %arg11: i32 {tt.divisibility = 16 : i32}, %arg12: i32, %arg13: i32, %arg14: i32 {tt.divisibility = 16 : i32}, %arg15: i32 {tt.divisibility = 16 : i32}, %arg16: i32 {tt.divisibility = 16 : i32}, %arg17: i32 {tt.divisibility = 16 : i32}, %arg18: i32 {tt.divisibility = 16 : i32}, %arg19: i32 {tt.divisibility = 16 : i32}, %arg20: i32 {tt.divisibility = 16 : i32}, %arg21: i32 {tt.divisibility = 16 : i32}, %arg22: i32 {tt.divisibility = 16 : i32}, %arg23: i32 {tt.divisibility = 16 : i32}, %arg24: i32 {tt.divisibility = 16 : i32}, %arg25: i32 {tt.divisibility = 16 : i32}, %arg26: i32 {tt.divisibility = 16 : i32}, %arg27: i32 {tt.divisibility = 16 : i32}, %arg28: i32 {tt.divisibility = 16 : i32}, %arg29: i32 {tt.divisibility = 16 : i32}, %arg30: i32 {tt.divisibility = 16 : i32}, %arg31: i32 {tt.divisibility = 16 : i32}, %arg32: i32 {tt.divisibility = 16 : i32}, %arg33: i32 {tt.divisibility = 16 : i32}, %arg34: i32 {tt.divisibility = 16 : i32}, %arg35: i32 {tt.divisibility = 16 : i32}, %arg36: i32 {tt.divisibility = 16 : i32}, %arg37: i32 {tt.divisibility = 16 : i32}, %arg38: i32 {tt.divisibility = 16 : i32}, %arg39: i32 {tt.divisibility = 16 : i32}, %arg40: i32 {tt.divisibility = 16 : i32}, %arg41: i32 {tt.divisibility = 16 : i32}, %arg42: i32 {tt.divisibility = 16 : i32}, %arg43: i32 {tt.divisibility = 16 : i32}, %arg44: i32 {tt.divisibility = 16 : i32}, %arg45: i32 {tt.divisibility = 16 : i32}, %arg46: i32 {tt.divisibility = 16 : i32}) attributes {noinline = false} {
+// CHECK-NEXT:     %cst = arith.constant dense<0.000000e+00> : tensor<64x64xf32>
+// CHECK-NEXT:     %cst_0 = arith.constant dense<1.250000e-01> : tensor<64x32xbf16>
+// CHECK-NEXT:     %cst_1 = arith.constant dense<0.000000e+00> : tensor<32x64xbf16>
+// CHECK-NEXT:     %cst_2 = arith.constant dense<0.000000e+00> : tensor<64x32xbf16>
 // CHECK-NEXT:     %c32_i32 = arith.constant 32 : i32
+// CHECK-NEXT:     %cst_3 = arith.constant dense<1.250000e-01> : tensor<64x64xbf16>
+// CHECK-NEXT:     %c1_i32 = arith.constant 1 : i32
+// CHECK-NEXT:     %cst_4 = arith.constant dense<0.000000e+00> : tensor<64x64xbf16>
+// CHECK-NEXT:     %cst_5 = arith.constant dense<0.000000e+00> : tensor<32xf32>
+// CHECK-NEXT:     %cst_6 = arith.constant dense<0.000000e+00> : tensor<64x32xf32>
+// CHECK-NEXT:     %c0_i32 = arith.constant 0 : i32
+// CHECK-NEXT:     %c64_i32 = arith.constant 64 : i32
 // CHECK-NEXT:     %0 = tt.get_program_id x : i32
-// CHECK-NEXT:     %1 = tt.get_program_id y : i32
-// CHECK-NEXT:     %2 = arith.divsi %1, %c32_i32 : i32
-// CHECK-NEXT:     %3 = arith.remsi %1, %c32_i32 : i32
-// CHECK-NEXT:     %4 = arith.muli %2, %arg2 : i32
-// CHECK-NEXT:     %5 = tt.make_range {end = 16 : i32, start = 0 : i32} : tensor<16xi32>
-// CHECK-NEXT:     %6 = tt.expand_dims %5 {axis = 1 : i32} : tensor<16xi32> -> tensor<16x1xi32>
-// CHECK-NEXT:     %7 = tt.expand_dims %5 {axis = 0 : i32} : tensor<16xi32> -> tensor<1x16xi32>
-// CHECK-NEXT:     %8 = tt.broadcast %6 : tensor<16x1xi32> -> tensor<16x16xi32>
-// CHECK-NEXT:     %9 = tt.broadcast %7 : tensor<1x16xi32> -> tensor<16x16xi32>
-// CHECK-NEXT:     %10 = arith.cmpi sgt, %8, %9 : tensor<16x16xi32>
-// CHECK-NEXT:     %11 = arith.cmpi eq, %8, %9 : tensor<16x16xi32>
-// CHECK-NEXT:     %12 = arith.muli %4, %c32_i32 : i32
-// CHECK-NEXT:     %13 = arith.addi %12, %3 : i32
-// CHECK-NEXT:     %14 = arith.muli %13, %c64_i32 : i32
-// CHECK-NEXT:     %15 = tt.addptr %arg0, %14 : !tt.ptr<f32>, i32
-// CHECK-NEXT:     %16 = tt.addptr %arg1, %14 : !tt.ptr<f32>, i32
-// CHECK-NEXT:     %17 = arith.muli %0, %c64_i32 : i32
-// CHECK-NEXT:     %18 = arith.extsi %arg2 : i32 to i64
-// CHECK-NEXT:     %19 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%17, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %20 = arith.addi %17, %c16_i32 : i32
-// CHECK-NEXT:     %21 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%20, %c16_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %22 = arith.addi %17, %c32_i32 : i32
-// CHECK-NEXT:     %23 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%22, %c32_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %24 = arith.addi %17, %c48_i32 : i32
-// CHECK-NEXT:     %25 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%24, %c48_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %26 = tt.load %19 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     %27 = tt.load %21 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     %28 = tt.load %23 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     %29 = tt.load %25 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     %30 = arith.select %10, %26, %cst_3 : tensor<16x16xi1>, tensor<16x16xf32>
-// CHECK-NEXT:     %31 = arith.subf %cst_3, %30 : tensor<16x16xf32>
-// CHECK-NEXT:     %32 = arith.select %10, %27, %cst_3 : tensor<16x16xi1>, tensor<16x16xf32>
-// CHECK-NEXT:     %33 = arith.subf %cst_3, %32 : tensor<16x16xf32>
-// CHECK-NEXT:     %34 = arith.select %10, %28, %cst_3 : tensor<16x16xi1>, tensor<16x16xf32>
-// CHECK-NEXT:     %35 = arith.subf %cst_3, %34 : tensor<16x16xf32>
-// CHECK-NEXT:     %36 = arith.select %10, %29, %cst_3 : tensor<16x16xi1>, tensor<16x16xf32>
-// CHECK-NEXT:     %37 = arith.subf %cst_3, %36 : tensor<16x16xf32>
-// CHECK-NEXT:     %38 = arith.subi %arg2, %17 : i32
-// CHECK-NEXT:     %39 = arith.minsi %38, %c16_i32 : i32
-// CHECK-NEXT:     %40 = scf.for %arg3 = %c2_i32 to %39 step %c1_i32 iter_args(%arg4 = %31) -> (tensor<16x16xf32>)  : i32 {
-// CHECK-NEXT:       %96 = arith.addi %17, %arg3 : i32
-// CHECK-NEXT:       %97 = arith.muli %96, %c2048_i32 : i32
-// CHECK-NEXT:       %98 = tt.addptr %15, %97 : !tt.ptr<f32>, i32
-// CHECK-NEXT:       %99 = tt.splat %98 : !tt.ptr<f32> -> tensor<16x!tt.ptr<f32>>
-// CHECK-NEXT:       %100 = tt.addptr %99, %5 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
-// CHECK-NEXT:       %101 = tt.load %100 : tensor<16x!tt.ptr<f32>>
-// CHECK-NEXT:       %102 = arith.subf %cst_2, %101 : tensor<16xf32>
-// CHECK-NEXT:       %103 = tt.splat %arg3 : i32 -> tensor<16xi32>
-// CHECK-NEXT:       %104 = arith.cmpi slt, %5, %103 : tensor<16xi32>
-// CHECK-NEXT:       %105 = arith.select %104, %102, %cst_2 : tensor<16xi1>, tensor<16xf32>
-// CHECK-NEXT:       %106 = tt.expand_dims %105 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
-// CHECK-NEXT:       %107 = tt.broadcast %106 : tensor<16x1xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:       %108 = arith.mulf %107, %arg4 : tensor<16x16xf32>
-// CHECK-NEXT:       %109 = "tt.reduce"(%108) <{axis = 0 : i32}> ({
-// CHECK-NEXT:       ^bb0(%arg5: f32, %arg6: f32):
-// CHECK-NEXT:         %117 = arith.addf %arg5, %arg6 : f32
-// CHECK-NEXT:         tt.reduce.return %117 : f32
-// CHECK-NEXT:       }) : (tensor<16x16xf32>) -> tensor<16xf32>
-// CHECK-NEXT:       %110 = arith.addf %105, %109 : tensor<16xf32>
-// CHECK-NEXT:       %111 = arith.cmpi eq, %5, %103 : tensor<16xi32>
-// CHECK-NEXT:       %112 = tt.expand_dims %111 {axis = 1 : i32} : tensor<16xi1> -> tensor<16x1xi1>
-// CHECK-NEXT:       %113 = tt.expand_dims %110 {axis = 0 : i32} : tensor<16xf32> -> tensor<1x16xf32>
-// CHECK-NEXT:       %114 = tt.broadcast %113 : tensor<1x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:       %115 = tt.broadcast %112 : tensor<16x1xi1> -> tensor<16x16xi1>
-// CHECK-NEXT:       %116 = arith.select %115, %114, %arg4 : tensor<16x16xi1>, tensor<16x16xf32>
-// CHECK-NEXT:       scf.yield %116 : tensor<16x16xf32>
+// CHECK-NEXT:     %1 = arith.muli %0, %c64_i32 : i32
+// CHECK-NEXT:     %2 = arith.addi %1, %c64_i32 : i32
+// CHECK-NEXT:     %3 = tt.get_program_id y : i32
+// CHECK-NEXT:     %4 = arith.divsi %3, %arg12 : i32
+// CHECK-NEXT:     %5 = arith.remsi %3, %arg12 : i32
+// CHECK-NEXT:     %6 = arith.muli %4, %arg15 : i32
+// CHECK-NEXT:     %7 = arith.muli %5, %arg17 : i32
+// CHECK-NEXT:     %8 = arith.addi %6, %7 : i32
+// CHECK-NEXT:     %9 = tt.addptr %arg0, %8 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:     %10 = tt.addptr %arg1, %8 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:     %11 = tt.addptr %arg2, %8 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:     %12 = tt.addptr %arg3, %8 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:     %13 = tt.addptr %arg4, %8 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:     %14 = arith.muli %4, %arg30 : i32
+// CHECK-NEXT:     %15 = arith.muli %5, %arg32 : i32
+// CHECK-NEXT:     %16 = arith.addi %14, %15 : i32
+// CHECK-NEXT:     %17 = tt.addptr %arg5, %16 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:     %18 = arith.muli %4, %arg33 : i32
+// CHECK-NEXT:     %19 = arith.muli %5, %arg34 : i32
+// CHECK-NEXT:     %20 = arith.addi %18, %19 : i32
+// CHECK-NEXT:     %21 = tt.addptr %arg6, %20 : !tt.ptr<f32>, i32
+// CHECK-NEXT:     %22 = arith.muli %4, %arg35 : i32
+// CHECK-NEXT:     %23 = arith.muli %5, %arg36 : i32
+// CHECK-NEXT:     %24 = arith.addi %22, %23 : i32
+// CHECK-NEXT:     %25 = tt.addptr %arg7, %24 : !tt.ptr<f32>, i32
+// CHECK-NEXT:     %26 = arith.muli %4, %arg41 : i32
+// CHECK-NEXT:     %27 = arith.muli %5, %arg43 : i32
+// CHECK-NEXT:     %28 = arith.addi %26, %27 : i32
+// CHECK-NEXT:     %29 = tt.addptr %arg8, %28 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:     %30 = arith.muli %4, %arg44 : i32
+// CHECK-NEXT:     %31 = arith.muli %5, %arg46 : i32
+// CHECK-NEXT:     %32 = arith.addi %30, %31 : i32
+// CHECK-NEXT:     %33 = tt.addptr %arg9, %32 : !tt.ptr<bf16>, i32
+// CHECK-NEXT:     %34 = tt.make_range {end = 64 : i32, start = 0 : i32} : tensor<64xi32>
+// CHECK-NEXT:     %35 = tt.splat %1 : i32 -> tensor<64xi32>
+// CHECK-NEXT:     %36 = arith.addi %35, %34 : tensor<64xi32>
+// CHECK-NEXT:     %37 = tt.expand_dims %36 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32>
+// CHECK-NEXT:     %38 = tt.splat %arg19 : i32 -> tensor<64x1xi32>
+// CHECK-NEXT:     %39 = arith.muli %37, %38 : tensor<64x1xi32>
+// CHECK-NEXT:     %40 = tt.expand_dims %34 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32>
+// CHECK-NEXT:     %41 = tt.broadcast %39 : tensor<64x1xi32> -> tensor<64x64xi32>
+// CHECK-NEXT:     %42 = tt.broadcast %40 : tensor<1x64xi32> -> tensor<64x64xi32>
+// CHECK-NEXT:     %43 = arith.addi %41, %42 : tensor<64x64xi32>
+// CHECK-NEXT:     %44 = tt.splat %arg11 : i32 -> tensor<64x1xi32>
+// CHECK-NEXT:     %45 = arith.cmpi slt, %37, %44 : tensor<64x1xi32>
+// CHECK-NEXT:     %46 = tt.splat %10 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>>
+// CHECK-NEXT:     %47 = tt.addptr %46, %43 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32>
+// CHECK-NEXT:     %48 = tt.broadcast %45 : tensor<64x1xi1> -> tensor<64x64xi1>
+// CHECK-NEXT:     %49 = tt.load %47, %48, %cst_4 : tensor<64x64x!tt.ptr<bf16>>
+// CHECK-NEXT:     %50 = tt.splat %arg25 : i32 -> tensor<64x1xi32>
+// CHECK-NEXT:     %51 = arith.muli %37, %50 : tensor<64x1xi32>
+// CHECK-NEXT:     %52 = tt.broadcast %51 : tensor<64x1xi32> -> tensor<64x64xi32>
+// CHECK-NEXT:     %53 = arith.addi %52, %42 : tensor<64x64xi32>
+// CHECK-NEXT:     %54 = tt.splat %12 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>>
+// CHECK-NEXT:     %55 = tt.addptr %54, %53 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32>
+// CHECK-NEXT:     %56 = tt.load %55, %48, %cst_4 : tensor<64x64x!tt.ptr<bf16>>
+// CHECK-NEXT:     %57 = arith.subi %1, %arg14 : i32
+// CHECK-NEXT:     %58 = arith.maxsi %57, %c0_i32 : i32
+// CHECK-NEXT:     %59 = arith.addi %2, %arg13 : i32
+// CHECK-NEXT:     %60 = arith.minsi %arg11, %59 : i32
+// CHECK-NEXT:     %61 = tt.splat %11 : !tt.ptr<bf16> -> tensor<64x!tt.ptr<bf16>>
+// CHECK-NEXT:     %62 = tt.splat %13 : !tt.ptr<bf16> -> tensor<64x!tt.ptr<bf16>>
+// CHECK-NEXT:     %63 = tt.make_range {end = 32 : i32, start = 0 : i32} : tensor<32xi32>
+// CHECK-NEXT:     %64 = tt.splat %arg16 : i32 -> tensor<1x32xi32>
+// CHECK-NEXT:     %65 = tt.expand_dims %34 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32>
+// CHECK-NEXT:     %66 = tt.broadcast %65 : tensor<64x1xi32> -> tensor<64x32xi32>
+// CHECK-NEXT:     %67 = tt.splat %arg11 : i32 -> tensor<32xi32>
+// CHECK-NEXT:     %68 = tt.splat %9 : !tt.ptr<bf16> -> tensor<64x32x!tt.ptr<bf16>>
+// CHECK-NEXT:     %69 = tt.splat %21 : !tt.ptr<f32> -> tensor<32x!tt.ptr<f32>>
+// CHECK-NEXT:     %70 = tt.splat %25 : !tt.ptr<f32> -> tensor<32x!tt.ptr<f32>>
+// CHECK-NEXT:     %71 = tt.splat %arg31 : i32 -> tensor<32x1xi32>
+// CHECK-NEXT:     %72 = tt.broadcast %40 : tensor<1x64xi32> -> tensor<32x64xi32>
+// CHECK-NEXT:     %73 = tt.splat %17 : !tt.ptr<bf16> -> tensor<32x64x!tt.ptr<bf16>>
+// CHECK-NEXT:     %74 = tt.splat %arg13 : i32 -> tensor<1x32xi32>
+// CHECK-NEXT:     %75 = tt.broadcast %37 : tensor<64x1xi32> -> tensor<64x32xi32>
+// CHECK-NEXT:     %76 = tt.splat %arg14 : i32 -> tensor<32xi32>
+// CHECK-NEXT:     %alloca = memref.alloca() : memref<i32>
+// CHECK-NEXT:     memref.store %c0_i32, %alloca[] : memref<i32>
+// CHECK-NEXT:     %alloca_7 = memref.alloca() : memref<i32>
+// CHECK-NEXT:     memref.store %c0_i32, %alloca_7[] : memref<i32>
+// CHECK-NEXT:     %77:2 = scf.for %arg47 = %58 to %60 step %c1_i32 iter_args(%arg48 = %cst, %arg49 = %cst) -> (tensor<64x64xf32>, tensor<64x64xf32>)  : i32 {
+// CHECK-NEXT:       %98 = arith.muli %arg47, %arg22 : i32
+// CHECK-NEXT:       %99 = tt.splat %98 : i32 -> tensor<64xi32>
+// CHECK-NEXT:       %100 = arith.addi %99, %34 : tensor<64xi32>
+// CHECK-NEXT:       %101 = tt.addptr %61, %100 : tensor<64x!tt.ptr<bf16>>, tensor<64xi32>
+// CHECK-NEXT:       %102 = tt.load %101 : tensor<64x!tt.ptr<bf16>>
+// CHECK-NEXT:       %103 = tt.expand_dims %102 {axis = 0 : i32} : tensor<64xbf16> -> tensor<1x64xbf16>
+// CHECK-NEXT:       %104 = arith.muli %arg47, %arg28 : i32
+// CHECK-NEXT:       %105 = tt.splat %104 : i32 -> tensor<64xi32>
+// CHECK-NEXT:       %106 = arith.addi %105, %34 : tensor<64xi32>
+// CHECK-NEXT:       %107 = tt.addptr %62, %106 : tensor<64x!tt.ptr<bf16>>, tensor<64xi32>
+// CHECK-NEXT:       %108 = tt.load %107 : tensor<64x!tt.ptr<bf16>>
+// CHECK-NEXT:       %109 = tt.expand_dims %108 {axis = 0 : i32} : tensor<64xbf16> -> tensor<1x64xbf16>
+// CHECK-NEXT:       %110 = tt.broadcast %103 : tensor<1x64xbf16> -> tensor<64x64xbf16>
+// CHECK-NEXT:       %111 = arith.mulf %49, %110 : tensor<64x64xbf16>
+// CHECK-NEXT:       %112 = tt.broadcast %109 : tensor<1x64xbf16> -> tensor<64x64xbf16>
+// CHECK-NEXT:       %113 = arith.mulf %56, %112 : tensor<64x64xbf16>
+// CHECK-NEXT:       %114 = arith.mulf %111, %cst_3 : tensor<64x64xbf16>
+// CHECK-NEXT:       %115 = arith.maxsi %1, %arg47 : i32
+// CHECK-NEXT:       %116 = arith.addi %arg47, %arg14 : i32
+// CHECK-NEXT:       %117 = arith.minsi %59, %116 : i32
+// CHECK-NEXT:       %118 = arith.minsi %arg11, %117 : i32
+// CHECK-NEXT:       %119 = tt.splat %arg47 : i32 -> tensor<32xi32>
+// CHECK-NEXT:       %120:2 = scf.for %arg50 = %115 to %118 step %c32_i32 iter_args(%arg51 = %arg48, %arg52 = %arg49) -> (tensor<64x64xf32>, tensor<64x64xf32>)  : i32 {
+// CHECK-NEXT:         %121 = tt.splat %arg50 : i32 -> tensor<32xi32>
+// CHECK-NEXT:         %122 = arith.addi %121, %63 : tensor<32xi32>
+// CHECK-NEXT:         %123 = tt.expand_dims %122 {axis = 0 : i32} : tensor<32xi32> -> tensor<1x32xi32>
+// CHECK-NEXT:         %124 = arith.muli %123, %64 : tensor<1x32xi32>
+// CHECK-NEXT:         %125 = tt.broadcast %124 : tensor<1x32xi32> -> tensor<64x32xi32>
+// CHECK-NEXT:         %126 = arith.addi %125, %66 : tensor<64x32xi32>
+// CHECK-NEXT:         %127 = arith.cmpi slt, %122, %67 : tensor<32xi32>
+// CHECK-NEXT:         %128 = tt.expand_dims %127 {axis = 0 : i32} : tensor<32xi1> -> tensor<1x32xi1>
+// CHECK-NEXT:         %129 = tt.addptr %68, %126 : tensor<64x32x!tt.ptr<bf16>>, tensor<64x32xi32>
+// CHECK-NEXT:         %130 = tt.broadcast %128 : tensor<1x32xi1> -> tensor<64x32xi1>
+// CHECK-NEXT:         %131 = tt.load %129, %130, %cst_2 : tensor<64x32x!tt.ptr<bf16>>
+// CHECK-NEXT:         %132 = tt.addptr %69, %122 : tensor<32x!tt.ptr<f32>>, tensor<32xi32>
+// CHECK-NEXT:         %133 = tt.load %132, %127, %cst_5 : tensor<32x!tt.ptr<f32>>
+// CHECK-NEXT:         %134 = tt.expand_dims %133 {axis = 0 : i32} : tensor<32xf32> -> tensor<1x32xf32>
+// CHECK-NEXT:         %135 = tt.addptr %70, %122 : tensor<32x!tt.ptr<f32>>, tensor<32xi32>
+// CHECK-NEXT:         %136 = tt.load %135, %127, %cst_5 : tensor<32x!tt.ptr<f32>>
+// CHECK-NEXT:         %137 = tt.expand_dims %136 {axis = 0 : i32} : tensor<32xf32> -> tensor<1x32xf32>
+// CHECK-NEXT:         %138 = tt.expand_dims %122 {axis = 1 : i32} : tensor<32xi32> -> tensor<32x1xi32>
+// CHECK-NEXT:         %139 = arith.muli %138, %71 : tensor<32x1xi32>
+// CHECK-NEXT:         %140 = tt.broadcast %139 : tensor<32x1xi32> -> tensor<32x64xi32>
+// CHECK-NEXT:         %141 = arith.addi %140, %72 : tensor<32x64xi32>
+// CHECK-NEXT:         %142 = tt.expand_dims %127 {axis = 1 : i32} : tensor<32xi1> -> tensor<32x1xi1>
+// CHECK-NEXT:         %143 = tt.addptr %73, %141 : tensor<32x64x!tt.ptr<bf16>>, tensor<32x64xi32>
+// CHECK-NEXT:         %144 = tt.broadcast %142 : tensor<32x1xi1> -> tensor<32x64xi1>
+// CHECK-NEXT:         %145 = tt.load %143, %144, %cst_1 : tensor<32x64x!tt.ptr<bf16>>
+// CHECK-NEXT:         %146 = tt.dot %114, %131, %cst_6 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x32xbf16> -> tensor<64x32xf32>
+// CHECK-NEXT:         %147 = arith.subi %123, %74 : tensor<1x32xi32>
+// CHECK-NEXT:         %148 = tt.broadcast %147 : tensor<1x32xi32> -> tensor<64x32xi32>
+// CHECK-NEXT:         %149 = arith.cmpi slt, %148, %75 : tensor<64x32xi32>
+// CHECK-NEXT:         %150 = tt.broadcast %123 : tensor<1x32xi32> -> tensor<64x32xi32>
+// CHECK-NEXT:         %151 = arith.cmpi sle, %75, %150 : tensor<64x32xi32>
+// CHECK-NEXT:         %152 = arith.andi %149, %151 : tensor<64x32xi1>
+// CHECK-NEXT:         %153 = arith.subi %122, %76 : tensor<32xi32>
+// CHECK-NEXT:         %154 = arith.cmpi slt, %153, %119 : tensor<32xi32>
+// CHECK-NEXT:         %155 = arith.cmpi sle, %119, %122 : tensor<32xi32>
+// CHECK-NEXT:         %156 = arith.andi %154, %155 : tensor<32xi1>
+// CHECK-NEXT:         %157 = tt.expand_dims %156 {axis = 0 : i32} : tensor<32xi1> -> tensor<1x32xi1>
+// CHECK-NEXT:         %158 = tt.broadcast %157 : tensor<1x32xi1> -> tensor<64x32xi1>
+// CHECK-NEXT:         %159 = arith.andi %152, %158 : tensor<64x32xi1>
+// CHECK-NEXT:         %160 = tt.reshape %159 allow_reorder : tensor<64x32xi1> -> tensor<2048xi1>
+// CHECK-NEXT:         %161 = "tt.reduce"(%160) <{axis = 0 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg53: i1, %arg54: i1):
+// CHECK-NEXT:           %165 = arith.addi %arg53, %arg54 : i1
+// CHECK-NEXT:           tt.reduce.return %165 : i1
+// CHECK-NEXT:         }) : (tensor<2048xi1>) -> i1
+// CHECK-NEXT:         %162 = arith.extui %161 : i1 to i32
+// CHECK-NEXT:         %163 = arith.cmpi sgt, %162, %c0_i32 : i32
+// CHECK-NEXT:         %164:2 = scf.if %163 -> (tensor<64x64xf32>, tensor<64x64xf32>) {
+// CHECK-NEXT:           %165 = tt.broadcast %134 : tensor<1x32xf32> -> tensor<64x32xf32>
+// CHECK-NEXT:           %166 = arith.subf %146, %165 : tensor<64x32xf32>
+// CHECK-NEXT:           %167 = math.exp %166 : tensor<64x32xf32>
+// CHECK-NEXT:           %168 = arith.select %159, %167, %cst_6 : tensor<64x32xi1>, tensor<64x32xf32>
+// CHECK-NEXT:           %169 = tt.broadcast %109 : tensor<1x64xbf16> -> tensor<32x64xbf16>
+// CHECK-NEXT:           %170 = arith.mulf %145, %169 : tensor<32x64xbf16>
+// CHECK-NEXT:           %171 = arith.truncf %168 : tensor<64x32xf32> to tensor<64x32xbf16>
+// CHECK-NEXT:           %172 = tt.dot %171, %170, %arg51 {triton_cv12.normalized_dot} : tensor<64x32xbf16> * tensor<32x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:           %173 = memref.load %alloca[] : memref<i32>
+// CHECK-NEXT:           %174 = arith.addi %173, %c1_i32 : i32
+// CHECK-NEXT:           memref.store %174, %alloca[] : memref<i32>
+// CHECK-NEXT:           %175 = tt.trans %145 {order = array<i32: 1, 0>} : tensor<32x64xbf16> -> tensor<64x32xbf16>
+// CHECK-NEXT:           %176 = tt.dot %113, %175, %cst_6 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x32xbf16> -> tensor<64x32xf32>
+// CHECK-NEXT:           %177 = arith.subf %cst_6, %168 : tensor<64x32xf32>
+// CHECK-NEXT:           %178 = tt.broadcast %137 : tensor<1x32xf32> -> tensor<64x32xf32>
+// CHECK-NEXT:           %179 = arith.mulf %177, %178 : tensor<64x32xf32>
+// CHECK-NEXT:           %180 = math.fma %168, %176, %179 : tensor<64x32xf32>
+// CHECK-NEXT:           %181 = arith.truncf %180 : tensor<64x32xf32> to tensor<64x32xbf16>
+// CHECK-NEXT:           %182 = arith.mulf %181, %cst_0 : tensor<64x32xbf16>
+// CHECK-NEXT:           %183 = tt.trans %131 {order = array<i32: 1, 0>} : tensor<64x32xbf16> -> tensor<32x64xbf16>
+// CHECK-NEXT:           %184 = tt.broadcast %103 : tensor<1x64xbf16> -> tensor<32x64xbf16>
+// CHECK-NEXT:           %185 = arith.mulf %183, %184 : tensor<32x64xbf16>
+// CHECK-NEXT:           %186 = tt.dot %182, %185, %arg52 {triton_cv12.normalized_dot} : tensor<64x32xbf16> * tensor<32x64xbf16> -> tensor<64x64xf32>
+// CHECK-NEXT:           %187 = memref.load %alloca_7[] : memref<i32>
+// CHECK-NEXT:           %188 = arith.addi %187, %c1_i32 : i32
+// CHECK-NEXT:           memref.store %188, %alloca_7[] : memref<i32>
+// CHECK-NEXT:           scf.yield %172, %186 : tensor<64x64xf32>, tensor<64x64xf32>
+// CHECK-NEXT:         } else {
+// CHECK-NEXT:           scf.yield %arg51, %arg52 : tensor<64x64xf32>, tensor<64x64xf32>
+// CHECK-NEXT:         } {hivm.matmul_limited_in_cube}
+// CHECK-NEXT:         scf.yield %164#0, %164#1 : tensor<64x64xf32>, tensor<64x64xf32>
+// CHECK-NEXT:       } {tt.num_stages = 1 : i32}
+// CHECK-NEXT:       scf.yield %120#0, %120#1 : tensor<64x64xf32>, tensor<64x64xf32>
+// CHECK-NEXT:     } {hivm.matmul_limited_in_cube}
+// CHECK-NEXT:     %78 = memref.load %alloca_7[] : memref<i32>
+// CHECK-NEXT:     %79 = arith.cmpi ne, %78, %c0_i32 : i32
+// CHECK-NEXT:     %80 = scf.if %79 -> (tensor<64x64xf32>) {
+// CHECK-NEXT:       scf.yield %77#1 : tensor<64x64xf32>
+// CHECK-NEXT:     } else {
+// CHECK-NEXT:       scf.yield %cst : tensor<64x64xf32>
 // CHECK-NEXT:     }
-// CHECK-NEXT:     %41 = arith.minsi %38, %c32_i32 : i32
-// CHECK-NEXT:     %42 = scf.for %arg3 = %c18_i32 to %41 step %c1_i32 iter_args(%arg4 = %33) -> (tensor<16x16xf32>)  : i32 {
-// CHECK-NEXT:       %96 = arith.addi %17, %arg3 : i32
-// CHECK-NEXT:       %97 = arith.muli %96, %c2048_i32 : i32
-// CHECK-NEXT:       %98 = tt.addptr %15, %97 : !tt.ptr<f32>, i32
-// CHECK-NEXT:       %99 = tt.splat %98 : !tt.ptr<f32> -> tensor<16x!tt.ptr<f32>>
-// CHECK-NEXT:       %100 = tt.addptr %99, %5 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
-// CHECK-NEXT:       %101 = tt.addptr %100, %cst_1 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
-// CHECK-NEXT:       %102 = tt.load %101 : tensor<16x!tt.ptr<f32>>
-// CHECK-NEXT:       %103 = arith.subf %cst_2, %102 : tensor<16xf32>
-// CHECK-NEXT:       %104 = arith.subi %arg3, %c16_i32 : i32
-// CHECK-NEXT:       %105 = tt.splat %104 : i32 -> tensor<16xi32>
-// CHECK-NEXT:       %106 = arith.cmpi slt, %5, %105 : tensor<16xi32>
-// CHECK-NEXT:       %107 = arith.select %106, %103, %cst_2 : tensor<16xi1>, tensor<16xf32>
-// CHECK-NEXT:       %108 = tt.expand_dims %107 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
-// CHECK-NEXT:       %109 = tt.broadcast %108 : tensor<16x1xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:       %110 = arith.mulf %109, %arg4 : tensor<16x16xf32>
-// CHECK-NEXT:       %111 = "tt.reduce"(%110) <{axis = 0 : i32}> ({
-// CHECK-NEXT:       ^bb0(%arg5: f32, %arg6: f32):
-// CHECK-NEXT:         %119 = arith.addf %arg5, %arg6 : f32
-// CHECK-NEXT:         tt.reduce.return %119 : f32
-// CHECK-NEXT:       }) : (tensor<16x16xf32>) -> tensor<16xf32>
-// CHECK-NEXT:       %112 = arith.addf %107, %111 : tensor<16xf32>
-// CHECK-NEXT:       %113 = arith.cmpi eq, %5, %105 : tensor<16xi32>
-// CHECK-NEXT:       %114 = tt.expand_dims %113 {axis = 1 : i32} : tensor<16xi1> -> tensor<16x1xi1>
-// CHECK-NEXT:       %115 = tt.expand_dims %112 {axis = 0 : i32} : tensor<16xf32> -> tensor<1x16xf32>
-// CHECK-NEXT:       %116 = tt.broadcast %115 : tensor<1x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:       %117 = tt.broadcast %114 : tensor<16x1xi1> -> tensor<16x16xi1>
-// CHECK-NEXT:       %118 = arith.select %117, %116, %arg4 : tensor<16x16xi1>, tensor<16x16xf32>
-// CHECK-NEXT:       scf.yield %118 : tensor<16x16xf32>
+// CHECK-NEXT:     %81 = memref.load %alloca[] : memref<i32>
+// CHECK-NEXT:     %82 = arith.cmpi ne, %81, %c0_i32 : i32
+// CHECK-NEXT:     %83 = scf.if %82 -> (tensor<64x64xf32>) {
+// CHECK-NEXT:       scf.yield %77#0 : tensor<64x64xf32>
+// CHECK-NEXT:     } else {
+// CHECK-NEXT:       scf.yield %cst : tensor<64x64xf32>
 // CHECK-NEXT:     }
-// CHECK-NEXT:     %43 = arith.minsi %38, %c48_i32 : i32
-// CHECK-NEXT:     %44 = scf.for %arg3 = %c34_i32 to %43 step %c1_i32 iter_args(%arg4 = %35) -> (tensor<16x16xf32>)  : i32 {
-// CHECK-NEXT:       %96 = arith.addi %17, %arg3 : i32
-// CHECK-NEXT:       %97 = arith.muli %96, %c2048_i32 : i32
-// CHECK-NEXT:       %98 = tt.addptr %15, %97 : !tt.ptr<f32>, i32
-// CHECK-NEXT:       %99 = tt.splat %98 : !tt.ptr<f32> -> tensor<16x!tt.ptr<f32>>
-// CHECK-NEXT:       %100 = tt.addptr %99, %5 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
-// CHECK-NEXT:       %101 = tt.addptr %100, %cst_0 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
-// CHECK-NEXT:       %102 = tt.load %101 : tensor<16x!tt.ptr<f32>>
-// CHECK-NEXT:       %103 = arith.subf %cst_2, %102 : tensor<16xf32>
-// CHECK-NEXT:       %104 = arith.subi %arg3, %c32_i32 : i32
-// CHECK-NEXT:       %105 = tt.splat %104 : i32 -> tensor<16xi32>
-// CHECK-NEXT:       %106 = arith.cmpi slt, %5, %105 : tensor<16xi32>
-// CHECK-NEXT:       %107 = arith.select %106, %103, %cst_2 : tensor<16xi1>, tensor<16xf32>
-// CHECK-NEXT:       %108 = tt.expand_dims %107 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
-// CHECK-NEXT:       %109 = tt.broadcast %108 : tensor<16x1xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:       %110 = arith.mulf %109, %arg4 : tensor<16x16xf32>
-// CHECK-NEXT:       %111 = "tt.reduce"(%110) <{axis = 0 : i32}> ({
-// CHECK-NEXT:       ^bb0(%arg5: f32, %arg6: f32):
-// CHECK-NEXT:         %119 = arith.addf %arg5, %arg6 : f32
-// CHECK-NEXT:         tt.reduce.return %119 : f32
-// CHECK-NEXT:       }) : (tensor<16x16xf32>) -> tensor<16xf32>
-// CHECK-NEXT:       %112 = arith.addf %107, %111 : tensor<16xf32>
-// CHECK-NEXT:       %113 = arith.cmpi eq, %5, %105 : tensor<16xi32>
-// CHECK-NEXT:       %114 = tt.expand_dims %113 {axis = 1 : i32} : tensor<16xi1> -> tensor<16x1xi1>
-// CHECK-NEXT:       %115 = tt.expand_dims %112 {axis = 0 : i32} : tensor<16xf32> -> tensor<1x16xf32>
-// CHECK-NEXT:       %116 = tt.broadcast %115 : tensor<1x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:       %117 = tt.broadcast %114 : tensor<16x1xi1> -> tensor<16x16xi1>
-// CHECK-NEXT:       %118 = arith.select %117, %116, %arg4 : tensor<16x16xi1>, tensor<16x16xf32>
-// CHECK-NEXT:       scf.yield %118 : tensor<16x16xf32>
-// CHECK-NEXT:     }
-// CHECK-NEXT:     %45 = arith.minsi %38, %c64_i32 : i32
-// CHECK-NEXT:     %46 = scf.for %arg3 = %c50_i32 to %45 step %c1_i32 iter_args(%arg4 = %37) -> (tensor<16x16xf32>)  : i32 {
-// CHECK-NEXT:       %96 = arith.addi %17, %arg3 : i32
-// CHECK-NEXT:       %97 = arith.muli %96, %c2048_i32 : i32
-// CHECK-NEXT:       %98 = tt.addptr %15, %97 : !tt.ptr<f32>, i32
-// CHECK-NEXT:       %99 = tt.splat %98 : !tt.ptr<f32> -> tensor<16x!tt.ptr<f32>>
-// CHECK-NEXT:       %100 = tt.addptr %99, %5 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
-// CHECK-NEXT:       %101 = tt.addptr %100, %cst : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
-// CHECK-NEXT:       %102 = tt.load %101 : tensor<16x!tt.ptr<f32>>
-// CHECK-NEXT:       %103 = arith.subf %cst_2, %102 : tensor<16xf32>
-// CHECK-NEXT:       %104 = arith.subi %arg3, %c48_i32 : i32
-// CHECK-NEXT:       %105 = tt.splat %104 : i32 -> tensor<16xi32>
-// CHECK-NEXT:       %106 = arith.cmpi slt, %5, %105 : tensor<16xi32>
-// CHECK-NEXT:       %107 = arith.select %106, %103, %cst_2 : tensor<16xi1>, tensor<16xf32>
-// CHECK-NEXT:       %108 = tt.expand_dims %107 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
-// CHECK-NEXT:       %109 = tt.broadcast %108 : tensor<16x1xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:       %110 = arith.mulf %109, %arg4 : tensor<16x16xf32>
-// CHECK-NEXT:       %111 = "tt.reduce"(%110) <{axis = 0 : i32}> ({
-// CHECK-NEXT:       ^bb0(%arg5: f32, %arg6: f32):
-// CHECK-NEXT:         %119 = arith.addf %arg5, %arg6 : f32
-// CHECK-NEXT:         tt.reduce.return %119 : f32
-// CHECK-NEXT:       }) : (tensor<16x16xf32>) -> tensor<16xf32>
-// CHECK-NEXT:       %112 = arith.addf %107, %111 : tensor<16xf32>
-// CHECK-NEXT:       %113 = arith.cmpi eq, %5, %105 : tensor<16xi32>
-// CHECK-NEXT:       %114 = tt.expand_dims %113 {axis = 1 : i32} : tensor<16xi1> -> tensor<16x1xi1>
-// CHECK-NEXT:       %115 = tt.expand_dims %112 {axis = 0 : i32} : tensor<16xf32> -> tensor<1x16xf32>
-// CHECK-NEXT:       %116 = tt.broadcast %115 : tensor<1x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:       %117 = tt.broadcast %114 : tensor<16x1xi1> -> tensor<16x16xi1>
-// CHECK-NEXT:       %118 = arith.select %117, %116, %arg4 : tensor<16x16xi1>, tensor<16x16xf32>
-// CHECK-NEXT:       scf.yield %118 : tensor<16x16xf32>
-// CHECK-NEXT:     }
-// CHECK-NEXT:     %47 = arith.uitofp %11 : tensor<16x16xi1> to tensor<16x16xf32>
-// CHECK-NEXT:     %48 = arith.addf %40, %47 : tensor<16x16xf32>
-// CHECK-NEXT:     %49 = arith.addf %42, %47 : tensor<16x16xf32>
-// CHECK-NEXT:     %50 = arith.addf %44, %47 : tensor<16x16xf32>
-// CHECK-NEXT:     %51 = arith.addf %46, %47 : tensor<16x16xf32>
-// CHECK-NEXT:     %52 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%20, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %53 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%22, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %54 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%22, %c16_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %55 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%24, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %56 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%24, %c16_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %57 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%24, %c32_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %58 = tt.load %52 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     %59 = tt.load %53 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     %60 = tt.load %54 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     %61 = tt.load %55 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     %62 = tt.load %56 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     %63 = tt.load %57 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     %64 = tt.dot %49, %58, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:     %65 = tt.dot %64, %48, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:     %66 = arith.subf %cst_3, %65 : tensor<16x16xf32>
-// CHECK-NEXT:     %67 = tt.dot %50, %60, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:     %68 = tt.dot %67, %49, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:     %69 = arith.subf %cst_3, %68 : tensor<16x16xf32>
-// CHECK-NEXT:     %70 = tt.dot %51, %63, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:     %71 = tt.dot %70, %50, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:     %72 = arith.subf %cst_3, %71 : tensor<16x16xf32>
-// CHECK-NEXT:     %73 = tt.dot %59, %48, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:     %74 = tt.dot %60, %66, %73 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:     %75 = tt.dot %50, %74, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:     %76 = arith.subf %cst_3, %75 : tensor<16x16xf32>
-// CHECK-NEXT:     %77 = tt.dot %62, %49, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:     %78 = tt.dot %63, %69, %77 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:     %79 = tt.dot %51, %78, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:     %80 = arith.subf %cst_3, %79 : tensor<16x16xf32>
-// CHECK-NEXT:     %81 = tt.dot %61, %48, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:     %82 = tt.dot %62, %66, %81 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:     %83 = tt.dot %63, %76, %82 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:     %84 = tt.dot %51, %83, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
-// CHECK-NEXT:     %85 = arith.subf %cst_3, %84 : tensor<16x16xf32>
-// CHECK-NEXT:     %86 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%17, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %87 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%20, %c16_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %88 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%22, %c32_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %89 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%24, %c48_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %90 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%20, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %91 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%22, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %92 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%22, %c16_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %93 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%24, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %94 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%24, %c16_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     %95 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%24, %c32_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
-// CHECK-NEXT:     tt.store %86, %48 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     tt.store %87, %49 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     tt.store %88, %50 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     tt.store %89, %51 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     tt.store %90, %66 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     tt.store %91, %76 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     tt.store %92, %69 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     tt.store %93, %85 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     tt.store %94, %80 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
-// CHECK-NEXT:     tt.store %95, %72 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:     %84 = tt.splat %arg45 : i32 -> tensor<64x1xi32>
+// CHECK-NEXT:     %85 = arith.muli %37, %84 : tensor<64x1xi32>
+// CHECK-NEXT:     %86 = tt.broadcast %85 : tensor<64x1xi32> -> tensor<64x64xi32>
+// CHECK-NEXT:     %87 = arith.addi %86, %42 : tensor<64x64xi32>
+// CHECK-NEXT:     %88 = tt.splat %arg42 : i32 -> tensor<64x1xi32>
+// CHECK-NEXT:     %89 = arith.muli %37, %88 : tensor<64x1xi32>
+// CHECK-NEXT:     %90 = tt.broadcast %89 : tensor<64x1xi32> -> tensor<64x64xi32>
+// CHECK-NEXT:     %91 = arith.addi %90, %42 : tensor<64x64xi32>
+// CHECK-NEXT:     %92 = tt.splat %33 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>>
+// CHECK-NEXT:     %93 = tt.addptr %92, %87 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32>
+// CHECK-NEXT:     %94 = arith.truncf %83 : tensor<64x64xf32> to tensor<64x64xbf16>
+// CHECK-NEXT:     tt.store %93, %94, %48 : tensor<64x64x!tt.ptr<bf16>>
+// CHECK-NEXT:     %95 = tt.splat %29 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>>
+// CHECK-NEXT:     %96 = tt.addptr %95, %91 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32>
+// CHECK-NEXT:     %97 = arith.truncf %80 : tensor<64x64xf32> to tensor<64x64xbf16>
+// CHECK-NEXT:     tt.store %96, %97, %48 : tensor<64x64x!tt.ptr<bf16>>
 // CHECK-NEXT:     tt.return
+// CHECK-NEXT:   }
+// CHECK-NEXT: }
+
+#loc = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0)
+#loc1 = loc(unknown)
+#loc106 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":220:27)
+#loc141 = loc(callsite(#loc1 at #loc106))
+module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
+  tt.func public @simplicial_bwd_kv1_kernel(%arg0: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg1: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg2: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg3: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg4: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg5: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg6: !tt.ptr<f32> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg7: !tt.ptr<f32> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg8: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg9: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg10: i32 loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg11: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg12: i32 loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg13: i32 loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg14: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg15: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg16: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg17: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg18: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg19: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg20: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg21: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg22: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg23: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg24: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg25: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg26: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg27: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg28: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg29: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg30: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg31: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg32: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg33: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg34: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg35: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg36: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg37: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg38: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg39: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg40: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg41: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg42: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg43: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg44: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg45: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg46: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0)) attributes {noinline = false} {
+    %cst = arith.constant dense<1.250000e-01> : tensor<64x32xbf16> loc(#loc1)
+    %cst_0 = arith.constant dense<0.000000e+00> : tensor<32x64xbf16> loc(#loc1)
+    %cst_1 = arith.constant dense<0.000000e+00> : tensor<64x32xbf16> loc(#loc1)
+    %c32_i32 = arith.constant 32 : i32 loc(#loc1)
+    %cst_2 = arith.constant dense<1.250000e-01> : tensor<64x64xbf16> loc(#loc1)
+    %c1_i32 = arith.constant 1 : i32 loc(#loc1)
+    %cst_3 = arith.constant dense<0.000000e+00> : tensor<64x64xbf16> loc(#loc1)
+    %cst_4 = arith.constant dense<0.000000e+00> : tensor<32xf32> loc(#loc1)
+    %cst_5 = arith.constant dense<0.000000e+00> : tensor<64x32xf32> loc(#loc1)
+    %c0_i32 = arith.constant 0 : i32 loc(#loc1)
+    %cst_6 = arith.constant dense<0.000000e+00> : tensor<64x64xf32> loc(#loc1)
+    %c64_i32 = arith.constant 64 : i32 loc(#loc1)
+    %0 = tt.get_program_id x : i32 loc(#loc2)
+    %1 = arith.muli %0, %c64_i32 : i32 loc(#loc3)
+    %2 = arith.addi %1, %c64_i32 : i32 loc(#loc4)
+    %3 = tt.get_program_id y : i32 loc(#loc5)
+    %4 = arith.divsi %3, %arg12 : i32 loc(#loc6)
+    %5 = arith.remsi %3, %arg12 : i32 loc(#loc7)
+    %6 = arith.muli %4, %arg15 : i32 loc(#loc8)
+    %7 = arith.muli %5, %arg17 : i32 loc(#loc9)
+    %8 = arith.addi %6, %7 : i32 loc(#loc10)
+    %9 = tt.addptr %arg0, %8 : !tt.ptr<bf16>, i32 loc(#loc11)
+    %10 = tt.addptr %arg1, %8 : !tt.ptr<bf16>, i32 loc(#loc12)
+    %11 = tt.addptr %arg2, %8 : !tt.ptr<bf16>, i32 loc(#loc13)
+    %12 = tt.addptr %arg3, %8 : !tt.ptr<bf16>, i32 loc(#loc14)
+    %13 = tt.addptr %arg4, %8 : !tt.ptr<bf16>, i32 loc(#loc15)
+    %14 = arith.muli %4, %arg30 : i32 loc(#loc16)
+    %15 = arith.muli %5, %arg32 : i32 loc(#loc17)
+    %16 = arith.addi %14, %15 : i32 loc(#loc18)
+    %17 = tt.addptr %arg5, %16 : !tt.ptr<bf16>, i32 loc(#loc19)
+    %18 = arith.muli %4, %arg33 : i32 loc(#loc20)
+    %19 = arith.muli %5, %arg34 : i32 loc(#loc21)
+    %20 = arith.addi %18, %19 : i32 loc(#loc22)
+    %21 = tt.addptr %arg6, %20 : !tt.ptr<f32>, i32 loc(#loc23)
+    %22 = arith.muli %4, %arg35 : i32 loc(#loc24)
+    %23 = arith.muli %5, %arg36 : i32 loc(#loc25)
+    %24 = arith.addi %22, %23 : i32 loc(#loc26)
+    %25 = tt.addptr %arg7, %24 : !tt.ptr<f32>, i32 loc(#loc27)
+    %26 = arith.muli %4, %arg41 : i32 loc(#loc28)
+    %27 = arith.muli %5, %arg43 : i32 loc(#loc29)
+    %28 = arith.addi %26, %27 : i32 loc(#loc30)
+    %29 = tt.addptr %arg8, %28 : !tt.ptr<bf16>, i32 loc(#loc31)
+    %30 = arith.muli %4, %arg44 : i32 loc(#loc32)
+    %31 = arith.muli %5, %arg46 : i32 loc(#loc33)
+    %32 = arith.addi %30, %31 : i32 loc(#loc34)
+    %33 = tt.addptr %arg9, %32 : !tt.ptr<bf16>, i32 loc(#loc35)
+    %34 = tt.make_range {end = 64 : i32, start = 0 : i32} : tensor<64xi32> loc(#loc36)
+    %35 = tt.splat %1 : i32 -> tensor<64xi32> loc(#loc37)
+    %36 = arith.addi %35, %34 : tensor<64xi32> loc(#loc37)
+    %37 = tt.expand_dims %36 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32> loc(#loc38)
+    %38 = tt.splat %arg19 : i32 -> tensor<64x1xi32> loc(#loc39)
+    %39 = arith.muli %37, %38 : tensor<64x1xi32> loc(#loc39)
+    %40 = tt.expand_dims %34 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32> loc(#loc40)
+    %41 = tt.broadcast %39 : tensor<64x1xi32> -> tensor<64x64xi32> loc(#loc41)
+    %42 = tt.broadcast %40 : tensor<1x64xi32> -> tensor<64x64xi32> loc(#loc41)
+    %43 = arith.addi %41, %42 : tensor<64x64xi32> loc(#loc41)
+    %44 = tt.splat %arg11 : i32 -> tensor<64x1xi32> loc(#loc42)
+    %45 = arith.cmpi slt, %37, %44 : tensor<64x1xi32> loc(#loc42)
+    %46 = tt.splat %10 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>> loc(#loc43)
+    %47 = tt.addptr %46, %43 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32> loc(#loc43)
+    %48 = tt.broadcast %45 : tensor<64x1xi1> -> tensor<64x64xi1> loc(#loc44)
+    %49 = tt.load %47, %48, %cst_3 : tensor<64x64x!tt.ptr<bf16>> loc(#loc44)
+    %50 = tt.splat %arg25 : i32 -> tensor<64x1xi32> loc(#loc45)
+    %51 = arith.muli %37, %50 : tensor<64x1xi32> loc(#loc45)
+    %52 = tt.broadcast %51 : tensor<64x1xi32> -> tensor<64x64xi32> loc(#loc46)
+    %53 = arith.addi %52, %42 : tensor<64x64xi32> loc(#loc46)
+    %54 = tt.splat %12 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>> loc(#loc47)
+    %55 = tt.addptr %54, %53 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32> loc(#loc47)
+    %56 = tt.load %55, %48, %cst_3 : tensor<64x64x!tt.ptr<bf16>> loc(#loc48)
+    %57 = arith.subi %1, %arg14 : i32 loc(#loc49)
+    %58 = arith.maxsi %57, %c0_i32 : i32 loc(#loc50)
+    %59 = arith.addi %2, %arg13 : i32 loc(#loc51)
+    %60 = arith.minsi %arg11, %59 : i32 loc(#loc52)
+    %61 = tt.splat %11 : !tt.ptr<bf16> -> tensor<64x!tt.ptr<bf16>> loc(#loc53)
+    %62 = tt.splat %13 : !tt.ptr<bf16> -> tensor<64x!tt.ptr<bf16>> loc(#loc54)
+    %63 = tt.make_range {end = 32 : i32, start = 0 : i32} : tensor<32xi32> loc(#loc55)
+    %64 = tt.splat %arg16 : i32 -> tensor<1x32xi32> loc(#loc56)
+    %65 = tt.expand_dims %34 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32> loc(#loc57)
+    %66 = tt.broadcast %65 : tensor<64x1xi32> -> tensor<64x32xi32> loc(#loc58)
+    %67 = tt.splat %arg11 : i32 -> tensor<32xi32> loc(#loc59)
+    %68 = tt.splat %9 : !tt.ptr<bf16> -> tensor<64x32x!tt.ptr<bf16>> loc(#loc60)
+    %69 = tt.splat %21 : !tt.ptr<f32> -> tensor<32x!tt.ptr<f32>> loc(#loc61)
+    %70 = tt.splat %25 : !tt.ptr<f32> -> tensor<32x!tt.ptr<f32>> loc(#loc62)
+    %71 = tt.splat %arg31 : i32 -> tensor<32x1xi32> loc(#loc63)
+    %72 = tt.broadcast %40 : tensor<1x64xi32> -> tensor<32x64xi32> loc(#loc64)
+    %73 = tt.splat %17 : !tt.ptr<bf16> -> tensor<32x64x!tt.ptr<bf16>> loc(#loc65)
+    %74 = tt.splat %arg13 : i32 -> tensor<1x32xi32> loc(#loc66)
+    %75 = tt.broadcast %37 : tensor<64x1xi32> -> tensor<64x32xi32> loc(#loc67)
+    %76 = tt.splat %arg14 : i32 -> tensor<32xi32> loc(#loc68)
+    %77:2 = scf.for %arg47 = %58 to %60 step %c1_i32 iter_args(%arg48 = %cst_6, %arg49 = %cst_6) -> (tensor<64x64xf32>, tensor<64x64xf32>)  : i32 {
+      %92 = arith.muli %arg47, %arg22 : i32 loc(#loc70)
+      %93 = tt.splat %92 : i32 -> tensor<64xi32> loc(#loc71)
+      %94 = arith.addi %93, %34 : tensor<64xi32> loc(#loc71)
+      %95 = tt.addptr %61, %94 : tensor<64x!tt.ptr<bf16>>, tensor<64xi32> loc(#loc53)
+      %96 = tt.load %95 : tensor<64x!tt.ptr<bf16>> loc(#loc72)
+      %97 = tt.expand_dims %96 {axis = 0 : i32} : tensor<64xbf16> -> tensor<1x64xbf16> loc(#loc73)
+      %98 = arith.muli %arg47, %arg28 : i32 loc(#loc74)
+      %99 = tt.splat %98 : i32 -> tensor<64xi32> loc(#loc75)
+      %100 = arith.addi %99, %34 : tensor<64xi32> loc(#loc75)
+      %101 = tt.addptr %62, %100 : tensor<64x!tt.ptr<bf16>>, tensor<64xi32> loc(#loc54)
+      %102 = tt.load %101 : tensor<64x!tt.ptr<bf16>> loc(#loc76)
+      %103 = tt.expand_dims %102 {axis = 0 : i32} : tensor<64xbf16> -> tensor<1x64xbf16> loc(#loc77)
+      %104 = tt.broadcast %97 : tensor<1x64xbf16> -> tensor<64x64xbf16> loc(#loc78)
+      %105 = arith.mulf %49, %104 : tensor<64x64xbf16> loc(#loc78)
+      %106 = tt.broadcast %103 : tensor<1x64xbf16> -> tensor<64x64xbf16> loc(#loc79)
+      %107 = arith.mulf %56, %106 : tensor<64x64xbf16> loc(#loc79)
+      %108 = arith.mulf %105, %cst_2 : tensor<64x64xbf16> loc(#loc80)
+      %109 = arith.maxsi %1, %arg47 : i32 loc(#loc81)
+      %110 = arith.addi %arg47, %arg14 : i32 loc(#loc82)
+      %111 = arith.minsi %59, %110 : i32 loc(#loc83)
+      %112 = arith.minsi %arg11, %111 : i32 loc(#loc84)
+      %113 = tt.splat %arg47 : i32 -> tensor<32xi32> loc(#loc85)
+      %114:2 = scf.for %arg50 = %109 to %112 step %c32_i32 iter_args(%arg51 = %arg48, %arg52 = %arg49) -> (tensor<64x64xf32>, tensor<64x64xf32>)  : i32 {
+        %115 = tt.splat %arg50 : i32 -> tensor<32xi32> loc(#loc87)
+        %116 = arith.addi %115, %63 : tensor<32xi32> loc(#loc87)
+        %117 = tt.expand_dims %116 {axis = 0 : i32} : tensor<32xi32> -> tensor<1x32xi32> loc(#loc88)
+        %118 = arith.muli %117, %64 : tensor<1x32xi32> loc(#loc56)
+        %119 = tt.broadcast %118 : tensor<1x32xi32> -> tensor<64x32xi32> loc(#loc58)
+        %120 = arith.addi %119, %66 : tensor<64x32xi32> loc(#loc58)
+        %121 = arith.cmpi slt, %116, %67 : tensor<32xi32> loc(#loc59)
+        %122 = tt.expand_dims %121 {axis = 0 : i32} : tensor<32xi1> -> tensor<1x32xi1> loc(#loc89)
+        %123 = tt.addptr %68, %120 : tensor<64x32x!tt.ptr<bf16>>, tensor<64x32xi32> loc(#loc60)
+        %124 = tt.broadcast %122 : tensor<1x32xi1> -> tensor<64x32xi1> loc(#loc90)
+        %125 = tt.load %123, %124, %cst_1 : tensor<64x32x!tt.ptr<bf16>> loc(#loc90)
+        %126 = tt.addptr %69, %116 : tensor<32x!tt.ptr<f32>>, tensor<32xi32> loc(#loc61)
+        %127 = tt.load %126, %121, %cst_4 : tensor<32x!tt.ptr<f32>> loc(#loc91)
+        %128 = tt.expand_dims %127 {axis = 0 : i32} : tensor<32xf32> -> tensor<1x32xf32> loc(#loc92)
+        %129 = tt.addptr %70, %116 : tensor<32x!tt.ptr<f32>>, tensor<32xi32> loc(#loc62)
+        %130 = tt.load %129, %121, %cst_4 : tensor<32x!tt.ptr<f32>> loc(#loc93)
+        %131 = tt.expand_dims %130 {axis = 0 : i32} : tensor<32xf32> -> tensor<1x32xf32> loc(#loc94)
+        %132 = tt.expand_dims %116 {axis = 1 : i32} : tensor<32xi32> -> tensor<32x1xi32> loc(#loc95)
+        %133 = arith.muli %132, %71 : tensor<32x1xi32> loc(#loc63)
+        %134 = tt.broadcast %133 : tensor<32x1xi32> -> tensor<32x64xi32> loc(#loc64)
+        %135 = arith.addi %134, %72 : tensor<32x64xi32> loc(#loc64)
+        %136 = tt.expand_dims %121 {axis = 1 : i32} : tensor<32xi1> -> tensor<32x1xi1> loc(#loc96)
+        %137 = tt.addptr %73, %135 : tensor<32x64x!tt.ptr<bf16>>, tensor<32x64xi32> loc(#loc65)
+        %138 = tt.broadcast %136 : tensor<32x1xi1> -> tensor<32x64xi1> loc(#loc97)
+        %139 = tt.load %137, %138, %cst_0 : tensor<32x64x!tt.ptr<bf16>> loc(#loc97)
+        %140 = tt.dot %108, %125, %cst_5 : tensor<64x64xbf16> * tensor<64x32xbf16> -> tensor<64x32xf32> loc(#loc98)
+        %141 = arith.subi %117, %74 : tensor<1x32xi32> loc(#loc66)
+        %142 = tt.broadcast %141 : tensor<1x32xi32> -> tensor<64x32xi32> loc(#loc67)
+        %143 = arith.cmpi slt, %142, %75 : tensor<64x32xi32> loc(#loc67)
+        %144 = tt.broadcast %117 : tensor<1x32xi32> -> tensor<64x32xi32> loc(#loc99)
+        %145 = arith.cmpi sle, %75, %144 : tensor<64x32xi32> loc(#loc99)
+        %146 = arith.andi %143, %145 : tensor<64x32xi1> loc(#loc100)
+        %147 = arith.subi %116, %76 : tensor<32xi32> loc(#loc68)
+        %148 = arith.cmpi slt, %147, %113 : tensor<32xi32> loc(#loc85)
+        %149 = arith.cmpi sle, %113, %116 : tensor<32xi32> loc(#loc101)
+        %150 = arith.andi %148, %149 : tensor<32xi1> loc(#loc102)
+        %151 = tt.expand_dims %150 {axis = 0 : i32} : tensor<32xi1> -> tensor<1x32xi1> loc(#loc103)
+        %152 = tt.broadcast %151 : tensor<1x32xi1> -> tensor<64x32xi1> loc(#loc104)
+        %153 = arith.andi %146, %152 : tensor<64x32xi1> loc(#loc104)
+        %154 = tt.reshape %153 allow_reorder : tensor<64x32xi1> -> tensor<2048xi1> loc(#loc140)
+        %155 = "tt.reduce"(%154) <{axis = 0 : i32}> ({
+        ^bb0(%arg53: i1 loc(callsite(#loc1 at #loc106)), %arg54: i1 loc(callsite(#loc1 at #loc106))):
+          %159 = arith.addi %arg53, %arg54 : i1 loc(#loc143)
+          tt.reduce.return %159 : i1 loc(#loc140)
+        }) : (tensor<2048xi1>) -> i1 loc(#loc140)
+        %156 = arith.extui %155 : i1 to i32 loc(#loc108)
+        %157 = arith.cmpi sgt, %156, %c0_i32 : i32 loc(#loc108)
+        %158:2 = scf.if %157 -> (tensor<64x64xf32>, tensor<64x64xf32>) {
+          %159 = tt.broadcast %128 : tensor<1x32xf32> -> tensor<64x32xf32> loc(#loc110)
+          %160 = arith.subf %140, %159 : tensor<64x32xf32> loc(#loc110)
+          %161 = math.exp %160 : tensor<64x32xf32> loc(#loc111)
+          %162 = arith.select %153, %161, %cst_5 : tensor<64x32xi1>, tensor<64x32xf32> loc(#loc112)
+          %163 = tt.broadcast %103 : tensor<1x64xbf16> -> tensor<32x64xbf16> loc(#loc113)
+          %164 = arith.mulf %139, %163 : tensor<32x64xbf16> loc(#loc113)
+          %165 = arith.truncf %162 : tensor<64x32xf32> to tensor<64x32xbf16> loc(#loc114)
+          %166 = tt.dot %165, %164, %arg51 : tensor<64x32xbf16> * tensor<32x64xbf16> -> tensor<64x64xf32> loc(#loc115)
+          %167 = tt.trans %139 {order = array<i32: 1, 0>} : tensor<32x64xbf16> -> tensor<64x32xbf16> loc(#loc116)
+          %168 = tt.dot %107, %167, %cst_5 : tensor<64x64xbf16> * tensor<64x32xbf16> -> tensor<64x32xf32> loc(#loc117)
+          %169 = arith.subf %cst_5, %162 : tensor<64x32xf32> loc(#loc118)
+          %170 = tt.broadcast %131 : tensor<1x32xf32> -> tensor<64x32xf32> loc(#loc119)
+          %171 = arith.mulf %169, %170 : tensor<64x32xf32> loc(#loc119)
+          %172 = math.fma %162, %168, %171 : tensor<64x32xf32> loc(#loc120)
+          %173 = arith.truncf %172 : tensor<64x32xf32> to tensor<64x32xbf16> loc(#loc121)
+          %174 = arith.mulf %173, %cst : tensor<64x32xbf16> loc(#loc122)
+          %175 = tt.trans %125 {order = array<i32: 1, 0>} : tensor<64x32xbf16> -> tensor<32x64xbf16> loc(#loc123)
+          %176 = tt.broadcast %97 : tensor<1x64xbf16> -> tensor<32x64xbf16> loc(#loc124)
+          %177 = arith.mulf %175, %176 : tensor<32x64xbf16> loc(#loc124)
+          %178 = tt.dot %174, %177, %arg52 : tensor<64x32xbf16> * tensor<32x64xbf16> -> tensor<64x64xf32> loc(#loc125)
+          scf.yield %166, %178 : tensor<64x64xf32>, tensor<64x64xf32> loc(#loc126)
+        } else {
+          scf.yield %arg51, %arg52 : tensor<64x64xf32>, tensor<64x64xf32> loc(#loc1)
+        } loc(#loc109)
+        scf.yield %158#0, %158#1 : tensor<64x64xf32>, tensor<64x64xf32> loc(#loc127)
+      } {tt.num_stages = 1 : i32} loc(#loc86)
+      scf.yield %114#0, %114#1 : tensor<64x64xf32>, tensor<64x64xf32> loc(#loc128)
+    } loc(#loc69)
+    %78 = tt.splat %arg45 : i32 -> tensor<64x1xi32> loc(#loc129)
+    %79 = arith.muli %37, %78 : tensor<64x1xi32> loc(#loc129)
+    %80 = tt.broadcast %79 : tensor<64x1xi32> -> tensor<64x64xi32> loc(#loc130)
+    %81 = arith.addi %80, %42 : tensor<64x64xi32> loc(#loc130)
+    %82 = tt.splat %arg42 : i32 -> tensor<64x1xi32> loc(#loc131)
+    %83 = arith.muli %37, %82 : tensor<64x1xi32> loc(#loc131)
+    %84 = tt.broadcast %83 : tensor<64x1xi32> -> tensor<64x64xi32> loc(#loc132)
+    %85 = arith.addi %84, %42 : tensor<64x64xi32> loc(#loc132)
+    %86 = tt.splat %33 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>> loc(#loc133)
+    %87 = tt.addptr %86, %81 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32> loc(#loc133)
+    %88 = arith.truncf %77#0 : tensor<64x64xf32> to tensor<64x64xbf16> loc(#loc134)
+    tt.store %87, %88, %48 : tensor<64x64x!tt.ptr<bf16>> loc(#loc135)
+    %89 = tt.splat %29 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>> loc(#loc136)
+    %90 = tt.addptr %89, %85 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32> loc(#loc136)
+    %91 = arith.truncf %77#1 : tensor<64x64xf32> to tensor<64x64xbf16> loc(#loc137)
+    tt.store %90, %91, %48 : tensor<64x64x!tt.ptr<bf16>> loc(#loc138)
+    tt.return loc(#loc139)
+  } loc(#loc)
+} loc(#loc)
+#loc2 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":129:30)
+#loc3 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":129:35)
+#loc4 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":130:26)
+#loc5 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":131:23)
+#loc6 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":132:19)
+#loc7 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":133:18)
+#loc8 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":135:27)
+#loc9 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":135:49)
+#loc10 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":135:40)
+#loc11 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":136:13)
+#loc12 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":137:14)
+#loc13 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":138:14)
+#loc14 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":139:14)
+#loc15 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":140:14)
+#loc16 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":142:23)
+#loc17 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":142:46)
+#loc18 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":142:37)
+#loc19 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":142:14)
+#loc20 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":143:22)
+#loc21 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":143:44)
+#loc22 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":143:35)
+#loc23 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":143:13)
+#loc24 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":144:22)
+#loc25 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":144:44)
+#loc26 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":144:35)
+#loc27 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":144:13)
+#loc28 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":145:24)
+#loc29 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":145:48)
+#loc30 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":145:39)
+#loc31 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":145:15)
+#loc32 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":146:24)
+#loc33 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":146:48)
+#loc34 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":146:39)
+#loc35 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":146:15)
+#loc36 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":149:30)
+#loc37 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":151:29)
+#loc38 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":153:25)
+#loc39 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":153:36)
+#loc40 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":153:61)
+#loc41 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":153:50)
+#loc42 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":154:37)
+#loc43 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":155:31)
+#loc44 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":155:22)
+#loc45 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":158:36)
+#loc46 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":158:50)
+#loc47 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":159:31)
+#loc48 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":159:22)
+#loc49 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":167:34)
+#loc50 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":167:22)
+#loc51 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":167:69)
+#loc52 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":167:59)
+#loc53 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":170:36)
+#loc54 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":172:36)
+#loc55 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":184:44)
+#loc56 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":185:41)
+#loc57 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":185:65)
+#loc58 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":185:54)
+#loc59 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":186:34)
+#loc60 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":188:24)
+#loc61 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":191:37)
+#loc62 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":195:37)
+#loc63 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":199:36)
+#loc64 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":199:50)
+#loc65 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":202:25)
+#loc66 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":212:51)
+#loc67 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":212:57)
+#loc68 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":215:42)
+#loc69 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":167:39)
+#loc70 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":169:28)
+#loc71 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":169:42)
+#loc72 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":170:27)
+#loc73 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":170:61)
+#loc74 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":171:28)
+#loc75 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":171:42)
+#loc76 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":172:27)
+#loc77 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":172:61)
+#loc78 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":173:25)
+#loc79 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":174:25)
+#loc80 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":175:29)
+#loc81 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":178:40)
+#loc82 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":179:71)
+#loc83 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":179:61)
+#loc84 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":179:36)
+#loc85 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":215:48)
+#loc86 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":182:60)
+#loc87 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":184:31)
+#loc88 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":185:30)
+#loc89 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":188:46)
+#loc90 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":188:16)
+#loc91 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":191:29)
+#loc92 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":192:16)
+#loc93 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":195:29)
+#loc94 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":196:16)
+#loc95 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":199:25)
+#loc96 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":202:48)
+#loc97 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":202:16)
+#loc98 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":208:29)
+#loc99 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":213:39)
+#loc100 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":213:16)
+#loc101 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":215:71)
+#loc102 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":215:60)
+#loc103 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":217:48)
+#loc104 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":217:33)
+#loc105 = loc("/usr/local/python3.11.0/lib/python3.11/site-packages/triton/language/standard.py":282:36)
+#loc107 = loc("/usr/local/python3.11.0/lib/python3.11/site-packages/triton/language/standard.py":271:15)
+#loc108 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":220:41)
+#loc109 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":221:15)
+#loc110 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":222:35)
+#loc111 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":222:28)
+#loc112 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":223:46)
+#loc113 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":225:33)
+#loc114 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":227:26)
+#loc115 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":227:39)
+#loc116 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":232:35)
+#loc117 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":232:26)
+#loc118 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":234:39)
+#loc119 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":234:44)
+#loc120 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":234:38)
+#loc121 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":236:36)
+#loc122 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":236:50)
+#loc123 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":239:37)
+#loc124 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":239:48)
+#loc125 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":241:42)
+#loc126 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":241:23)
+#loc127 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":221:12)
+#loc128 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":182:8)
+#loc129 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":242:37)
+#loc130 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":242:52)
+#loc131 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":243:37)
+#loc132 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":243:52)
+#loc133 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":244:23)
+#loc134 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":244:40)
+#loc135 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":244:33)
+#loc136 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":245:23)
+#loc137 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":245:40)
+#loc138 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":245:33)
+#loc139 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":245:4)
+#loc140 = loc(callsite(#loc105 at #loc106))
+#loc142 = loc(callsite(#loc107 at #loc105))
+#loc143 = loc(callsite(#loc142 at #loc106))
+
+// -----
+// Source: gaoyou/0701/solve_tril/input.mlir
+// CHECK: #map = affine_map<()[s0] -> (s0 * 8)>
+// CHECK-NEXT: module {
+// CHECK-NEXT:   module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
+// CHECK-NEXT:     tt.func public @merge_16x16_to_64x64_inverse_kernel(%arg0: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg2: i32) attributes {noinline = false} {
+// CHECK-NEXT:       %c50_i32 = arith.constant 50 : i32
+// CHECK-NEXT:       %c34_i32 = arith.constant 34 : i32
+// CHECK-NEXT:       %c18_i32 = arith.constant 18 : i32
+// CHECK-NEXT:       %c2048_i32 = arith.constant 2048 : i32
+// CHECK-NEXT:       %c1_i32 = arith.constant 1 : i32
+// CHECK-NEXT:       %c2_i32 = arith.constant 2 : i32
+// CHECK-NEXT:       %cst = arith.constant dense<48> : tensor<16xi32>
+// CHECK-NEXT:       %cst_0 = arith.constant dense<32> : tensor<16xi32>
+// CHECK-NEXT:       %cst_1 = arith.constant dense<16> : tensor<16xi32>
+// CHECK-NEXT:       %cst_2 = arith.constant dense<0.000000e+00> : tensor<16xf32>
+// CHECK-NEXT:       %cst_3 = arith.constant dense<0.000000e+00> : tensor<16x16xf32>
+// CHECK-NEXT:       %c48_i32 = arith.constant 48 : i32
+// CHECK-NEXT:       %c16_i32 = arith.constant 16 : i32
+// CHECK-NEXT:       %c0_i32 = arith.constant 0 : i32
+// CHECK-NEXT:       %c1_i64 = arith.constant 1 : i64
+// CHECK-NEXT:       %c2048_i64 = arith.constant 2048 : i64
+// CHECK-NEXT:       %c64_i64 = arith.constant 64 : i64
+// CHECK-NEXT:       %c64_i32 = arith.constant 64 : i32
+// CHECK-NEXT:       %c32_i32 = arith.constant 32 : i32
+// CHECK-NEXT:       %0 = tt.get_program_id x : i32
+// CHECK-NEXT:       %1 = tt.get_program_id y : i32
+// CHECK-NEXT:       %2 = arith.divsi %1, %c32_i32 : i32
+// CHECK-NEXT:       %3 = arith.remsi %1, %c32_i32 : i32
+// CHECK-NEXT:       %4 = arith.muli %2, %arg2 : i32
+// CHECK-NEXT:       %5 = tt.make_range {end = 16 : i32, start = 0 : i32} : tensor<16xi32>
+// CHECK-NEXT:       %6 = tt.expand_dims %5 {axis = 1 : i32} : tensor<16xi32> -> tensor<16x1xi32>
+// CHECK-NEXT:       %7 = tt.expand_dims %5 {axis = 0 : i32} : tensor<16xi32> -> tensor<1x16xi32>
+// CHECK-NEXT:       %8 = tt.broadcast %6 : tensor<16x1xi32> -> tensor<16x16xi32>
+// CHECK-NEXT:       %9 = tt.broadcast %7 : tensor<1x16xi32> -> tensor<16x16xi32>
+// CHECK-NEXT:       %10 = arith.cmpi sgt, %8, %9 : tensor<16x16xi32>
+// CHECK-NEXT:       %11 = arith.cmpi eq, %8, %9 : tensor<16x16xi32>
+// CHECK-NEXT:       %12 = arith.muli %4, %c32_i32 : i32
+// CHECK-NEXT:       %13 = arith.addi %12, %3 : i32
+// CHECK-NEXT:       %14 = arith.muli %13, %c64_i32 : i32
+// CHECK-NEXT:       %15 = tt.addptr %arg0, %14 : !tt.ptr<f32>, i32
+// CHECK-NEXT:       %16 = tt.addptr %arg1, %14 : !tt.ptr<f32>, i32
+// CHECK-NEXT:       %17 = arith.muli %0, %c64_i32 : i32
+// CHECK-NEXT:       %18 = arith.extsi %arg2 : i32 to i64
+// CHECK-NEXT:       %19 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%17, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %20 = arith.addi %17, %c16_i32 : i32
+// CHECK-NEXT:       %21 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%20, %c16_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %22 = arith.addi %17, %c32_i32 : i32
+// CHECK-NEXT:       %23 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%22, %c32_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %24 = arith.addi %17, %c48_i32 : i32
+// CHECK-NEXT:       %25 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%24, %c48_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %26 = tt.load %19 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       %27 = tt.load %21 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       %28 = tt.load %23 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       %29 = tt.load %25 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       %30 = arith.select %10, %26, %cst_3 : tensor<16x16xi1>, tensor<16x16xf32>
+// CHECK-NEXT:       %31 = arith.subf %cst_3, %30 : tensor<16x16xf32>
+// CHECK-NEXT:       %32 = arith.select %10, %27, %cst_3 : tensor<16x16xi1>, tensor<16x16xf32>
+// CHECK-NEXT:       %33 = arith.subf %cst_3, %32 : tensor<16x16xf32>
+// CHECK-NEXT:       %34 = arith.select %10, %28, %cst_3 : tensor<16x16xi1>, tensor<16x16xf32>
+// CHECK-NEXT:       %35 = arith.subf %cst_3, %34 : tensor<16x16xf32>
+// CHECK-NEXT:       %36 = arith.select %10, %29, %cst_3 : tensor<16x16xi1>, tensor<16x16xf32>
+// CHECK-NEXT:       %37 = arith.subf %cst_3, %36 : tensor<16x16xf32>
+// CHECK-NEXT:       %38 = arith.subi %arg2, %17 : i32
+// CHECK-NEXT:       %39 = arith.minsi %38, %c16_i32 : i32
+// CHECK-NEXT:       %40 = scf.for %arg3 = %c2_i32 to %39 step %c1_i32 iter_args(%arg4 = %31) -> (tensor<16x16xf32>)  : i32 {
+// CHECK-NEXT:         %96 = arith.addi %17, %arg3 : i32
+// CHECK-NEXT:         %97 = arith.muli %96, %c2048_i32 : i32
+// CHECK-NEXT:         %98 = tt.addptr %15, %97 : !tt.ptr<f32>, i32
+// CHECK-NEXT:         %99 = tt.splat %98 : !tt.ptr<f32> -> tensor<16x!tt.ptr<f32>>
+// CHECK-NEXT:         %100 = tt.addptr %99, %5 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+// CHECK-NEXT:         %101 = tt.load %100 : tensor<16x!tt.ptr<f32>>
+// CHECK-NEXT:         %102 = arith.subf %cst_2, %101 : tensor<16xf32>
+// CHECK-NEXT:         %103 = tt.splat %arg3 : i32 -> tensor<16xi32>
+// CHECK-NEXT:         %104 = arith.cmpi slt, %5, %103 : tensor<16xi32>
+// CHECK-NEXT:         %105 = arith.select %104, %102, %cst_2 : tensor<16xi1>, tensor<16xf32>
+// CHECK-NEXT:         %106 = tt.expand_dims %105 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
+// CHECK-NEXT:         %107 = tt.broadcast %106 : tensor<16x1xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:         %108 = arith.mulf %107, %arg4 : tensor<16x16xf32>
+// CHECK-NEXT:         %109 = "tt.reduce"(%108) <{axis = 0 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg5: f32, %arg6: f32):
+// CHECK-NEXT:           %117 = arith.addf %arg5, %arg6 : f32
+// CHECK-NEXT:           tt.reduce.return %117 : f32
+// CHECK-NEXT:         }) : (tensor<16x16xf32>) -> tensor<16xf32>
+// CHECK-NEXT:         %110 = arith.addf %105, %109 : tensor<16xf32>
+// CHECK-NEXT:         %111 = arith.cmpi eq, %5, %103 : tensor<16xi32>
+// CHECK-NEXT:         %112 = tt.expand_dims %111 {axis = 1 : i32} : tensor<16xi1> -> tensor<16x1xi1>
+// CHECK-NEXT:         %113 = tt.expand_dims %110 {axis = 0 : i32} : tensor<16xf32> -> tensor<1x16xf32>
+// CHECK-NEXT:         %114 = tt.broadcast %113 : tensor<1x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:         %115 = tt.broadcast %112 : tensor<16x1xi1> -> tensor<16x16xi1>
+// CHECK-NEXT:         %116 = arith.select %115, %114, %arg4 : tensor<16x16xi1>, tensor<16x16xf32>
+// CHECK-NEXT:         scf.yield %116 : tensor<16x16xf32>
+// CHECK-NEXT:       }
+// CHECK-NEXT:       %41 = arith.minsi %38, %c32_i32 : i32
+// CHECK-NEXT:       %42 = scf.for %arg3 = %c18_i32 to %41 step %c1_i32 iter_args(%arg4 = %33) -> (tensor<16x16xf32>)  : i32 {
+// CHECK-NEXT:         %96 = arith.addi %17, %arg3 : i32
+// CHECK-NEXT:         %97 = arith.muli %96, %c2048_i32 : i32
+// CHECK-NEXT:         %98 = tt.addptr %15, %97 : !tt.ptr<f32>, i32
+// CHECK-NEXT:         %99 = tt.splat %98 : !tt.ptr<f32> -> tensor<16x!tt.ptr<f32>>
+// CHECK-NEXT:         %100 = tt.addptr %99, %5 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+// CHECK-NEXT:         %101 = tt.addptr %100, %cst_1 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+// CHECK-NEXT:         %102 = tt.load %101 : tensor<16x!tt.ptr<f32>>
+// CHECK-NEXT:         %103 = arith.subf %cst_2, %102 : tensor<16xf32>
+// CHECK-NEXT:         %104 = arith.subi %arg3, %c16_i32 : i32
+// CHECK-NEXT:         %105 = tt.splat %104 : i32 -> tensor<16xi32>
+// CHECK-NEXT:         %106 = arith.cmpi slt, %5, %105 : tensor<16xi32>
+// CHECK-NEXT:         %107 = arith.select %106, %103, %cst_2 : tensor<16xi1>, tensor<16xf32>
+// CHECK-NEXT:         %108 = tt.expand_dims %107 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
+// CHECK-NEXT:         %109 = tt.broadcast %108 : tensor<16x1xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:         %110 = arith.mulf %109, %arg4 : tensor<16x16xf32>
+// CHECK-NEXT:         %111 = "tt.reduce"(%110) <{axis = 0 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg5: f32, %arg6: f32):
+// CHECK-NEXT:           %119 = arith.addf %arg5, %arg6 : f32
+// CHECK-NEXT:           tt.reduce.return %119 : f32
+// CHECK-NEXT:         }) : (tensor<16x16xf32>) -> tensor<16xf32>
+// CHECK-NEXT:         %112 = arith.addf %107, %111 : tensor<16xf32>
+// CHECK-NEXT:         %113 = arith.cmpi eq, %5, %105 : tensor<16xi32>
+// CHECK-NEXT:         %114 = tt.expand_dims %113 {axis = 1 : i32} : tensor<16xi1> -> tensor<16x1xi1>
+// CHECK-NEXT:         %115 = tt.expand_dims %112 {axis = 0 : i32} : tensor<16xf32> -> tensor<1x16xf32>
+// CHECK-NEXT:         %116 = tt.broadcast %115 : tensor<1x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:         %117 = tt.broadcast %114 : tensor<16x1xi1> -> tensor<16x16xi1>
+// CHECK-NEXT:         %118 = arith.select %117, %116, %arg4 : tensor<16x16xi1>, tensor<16x16xf32>
+// CHECK-NEXT:         scf.yield %118 : tensor<16x16xf32>
+// CHECK-NEXT:       }
+// CHECK-NEXT:       %43 = arith.minsi %38, %c48_i32 : i32
+// CHECK-NEXT:       %44 = scf.for %arg3 = %c34_i32 to %43 step %c1_i32 iter_args(%arg4 = %35) -> (tensor<16x16xf32>)  : i32 {
+// CHECK-NEXT:         %96 = arith.addi %17, %arg3 : i32
+// CHECK-NEXT:         %97 = arith.muli %96, %c2048_i32 : i32
+// CHECK-NEXT:         %98 = tt.addptr %15, %97 : !tt.ptr<f32>, i32
+// CHECK-NEXT:         %99 = tt.splat %98 : !tt.ptr<f32> -> tensor<16x!tt.ptr<f32>>
+// CHECK-NEXT:         %100 = tt.addptr %99, %5 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+// CHECK-NEXT:         %101 = tt.addptr %100, %cst_0 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+// CHECK-NEXT:         %102 = tt.load %101 : tensor<16x!tt.ptr<f32>>
+// CHECK-NEXT:         %103 = arith.subf %cst_2, %102 : tensor<16xf32>
+// CHECK-NEXT:         %104 = arith.subi %arg3, %c32_i32 : i32
+// CHECK-NEXT:         %105 = tt.splat %104 : i32 -> tensor<16xi32>
+// CHECK-NEXT:         %106 = arith.cmpi slt, %5, %105 : tensor<16xi32>
+// CHECK-NEXT:         %107 = arith.select %106, %103, %cst_2 : tensor<16xi1>, tensor<16xf32>
+// CHECK-NEXT:         %108 = tt.expand_dims %107 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
+// CHECK-NEXT:         %109 = tt.broadcast %108 : tensor<16x1xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:         %110 = arith.mulf %109, %arg4 : tensor<16x16xf32>
+// CHECK-NEXT:         %111 = "tt.reduce"(%110) <{axis = 0 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg5: f32, %arg6: f32):
+// CHECK-NEXT:           %119 = arith.addf %arg5, %arg6 : f32
+// CHECK-NEXT:           tt.reduce.return %119 : f32
+// CHECK-NEXT:         }) : (tensor<16x16xf32>) -> tensor<16xf32>
+// CHECK-NEXT:         %112 = arith.addf %107, %111 : tensor<16xf32>
+// CHECK-NEXT:         %113 = arith.cmpi eq, %5, %105 : tensor<16xi32>
+// CHECK-NEXT:         %114 = tt.expand_dims %113 {axis = 1 : i32} : tensor<16xi1> -> tensor<16x1xi1>
+// CHECK-NEXT:         %115 = tt.expand_dims %112 {axis = 0 : i32} : tensor<16xf32> -> tensor<1x16xf32>
+// CHECK-NEXT:         %116 = tt.broadcast %115 : tensor<1x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:         %117 = tt.broadcast %114 : tensor<16x1xi1> -> tensor<16x16xi1>
+// CHECK-NEXT:         %118 = arith.select %117, %116, %arg4 : tensor<16x16xi1>, tensor<16x16xf32>
+// CHECK-NEXT:         scf.yield %118 : tensor<16x16xf32>
+// CHECK-NEXT:       }
+// CHECK-NEXT:       %45 = arith.minsi %38, %c64_i32 : i32
+// CHECK-NEXT:       %46 = scf.for %arg3 = %c50_i32 to %45 step %c1_i32 iter_args(%arg4 = %37) -> (tensor<16x16xf32>)  : i32 {
+// CHECK-NEXT:         %96 = arith.addi %17, %arg3 : i32
+// CHECK-NEXT:         %97 = arith.muli %96, %c2048_i32 : i32
+// CHECK-NEXT:         %98 = tt.addptr %15, %97 : !tt.ptr<f32>, i32
+// CHECK-NEXT:         %99 = tt.splat %98 : !tt.ptr<f32> -> tensor<16x!tt.ptr<f32>>
+// CHECK-NEXT:         %100 = tt.addptr %99, %5 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+// CHECK-NEXT:         %101 = tt.addptr %100, %cst : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+// CHECK-NEXT:         %102 = tt.load %101 : tensor<16x!tt.ptr<f32>>
+// CHECK-NEXT:         %103 = arith.subf %cst_2, %102 : tensor<16xf32>
+// CHECK-NEXT:         %104 = arith.subi %arg3, %c48_i32 : i32
+// CHECK-NEXT:         %105 = tt.splat %104 : i32 -> tensor<16xi32>
+// CHECK-NEXT:         %106 = arith.cmpi slt, %5, %105 : tensor<16xi32>
+// CHECK-NEXT:         %107 = arith.select %106, %103, %cst_2 : tensor<16xi1>, tensor<16xf32>
+// CHECK-NEXT:         %108 = tt.expand_dims %107 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
+// CHECK-NEXT:         %109 = tt.broadcast %108 : tensor<16x1xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:         %110 = arith.mulf %109, %arg4 : tensor<16x16xf32>
+// CHECK-NEXT:         %111 = "tt.reduce"(%110) <{axis = 0 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg5: f32, %arg6: f32):
+// CHECK-NEXT:           %119 = arith.addf %arg5, %arg6 : f32
+// CHECK-NEXT:           tt.reduce.return %119 : f32
+// CHECK-NEXT:         }) : (tensor<16x16xf32>) -> tensor<16xf32>
+// CHECK-NEXT:         %112 = arith.addf %107, %111 : tensor<16xf32>
+// CHECK-NEXT:         %113 = arith.cmpi eq, %5, %105 : tensor<16xi32>
+// CHECK-NEXT:         %114 = tt.expand_dims %113 {axis = 1 : i32} : tensor<16xi1> -> tensor<16x1xi1>
+// CHECK-NEXT:         %115 = tt.expand_dims %112 {axis = 0 : i32} : tensor<16xf32> -> tensor<1x16xf32>
+// CHECK-NEXT:         %116 = tt.broadcast %115 : tensor<1x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:         %117 = tt.broadcast %114 : tensor<16x1xi1> -> tensor<16x16xi1>
+// CHECK-NEXT:         %118 = arith.select %117, %116, %arg4 : tensor<16x16xi1>, tensor<16x16xf32>
+// CHECK-NEXT:         scf.yield %118 : tensor<16x16xf32>
+// CHECK-NEXT:       }
+// CHECK-NEXT:       %47 = arith.uitofp %11 : tensor<16x16xi1> to tensor<16x16xf32>
+// CHECK-NEXT:       %48 = arith.addf %40, %47 : tensor<16x16xf32>
+// CHECK-NEXT:       %49 = arith.addf %42, %47 : tensor<16x16xf32>
+// CHECK-NEXT:       %50 = arith.addf %44, %47 : tensor<16x16xf32>
+// CHECK-NEXT:       %51 = arith.addf %46, %47 : tensor<16x16xf32>
+// CHECK-NEXT:       %52 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%20, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %53 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%22, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %54 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%22, %c16_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %55 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%24, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %56 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%24, %c16_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %57 = tt.make_tensor_ptr %15, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%24, %c32_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %58 = tt.load %52 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       %59 = tt.load %53 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       %60 = tt.load %54 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       %61 = tt.load %55 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       %62 = tt.load %56 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       %63 = tt.load %57 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       %64 = tt.dot %49, %58, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %65 = tt.dot %64, %48, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %66 = arith.subf %cst_3, %65 : tensor<16x16xf32>
+// CHECK-NEXT:       %67 = tt.dot %50, %60, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %68 = tt.dot %67, %49, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %69 = arith.subf %cst_3, %68 : tensor<16x16xf32>
+// CHECK-NEXT:       %70 = tt.dot %51, %63, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %71 = tt.dot %70, %50, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %72 = arith.subf %cst_3, %71 : tensor<16x16xf32>
+// CHECK-NEXT:       %73 = tt.dot %59, %48, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %74 = tt.dot %60, %66, %73 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %75 = tt.dot %50, %74, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %76 = arith.subf %cst_3, %75 : tensor<16x16xf32>
+// CHECK-NEXT:       %77 = tt.dot %62, %49, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %78 = tt.dot %63, %69, %77 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %79 = tt.dot %51, %78, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %80 = arith.subf %cst_3, %79 : tensor<16x16xf32>
+// CHECK-NEXT:       %81 = tt.dot %61, %48, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %82 = tt.dot %62, %66, %81 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %83 = tt.dot %63, %76, %82 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %84 = tt.dot %51, %83, %cst_3 {triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %85 = arith.subf %cst_3, %84 : tensor<16x16xf32>
+// CHECK-NEXT:       %86 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%17, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %87 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%20, %c16_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %88 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%22, %c32_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %89 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%24, %c48_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %90 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%20, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %91 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%22, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %92 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%22, %c16_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %93 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%24, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %94 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%24, %c16_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %95 = tt.make_tensor_ptr %16, [%18, %c64_i64], [%c2048_i64, %c1_i64], [%24, %c32_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       tt.store %86, %48 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       tt.store %87, %49 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       tt.store %88, %50 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       tt.store %89, %51 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       tt.store %90, %66 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       tt.store %91, %76 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       tt.store %92, %69 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       tt.store %93, %85 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       tt.store %94, %80 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       tt.store %95, %72 {boundaryCheck = array<i32: 0, 1>} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       tt.return
+// CHECK-NEXT:     }
+// CHECK-NEXT:   }
+// CHECK-NEXT:   module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">, hivm.disable_auto_tile_and_bind_subblock} {
+// CHECK-NEXT:     tt.func public @merge_16x16_to_64x64_inverse_kernel(%arg0: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg2: i32) attributes {noinline = false} {
+// CHECK-NEXT:       %cst = arith.constant dense<0.000000e+00> : tensor<8x16xf32>
+// CHECK-NEXT:       %cst_0 = arith.constant dense<0.000000e+00> : tensor<16x8xf32>
+// CHECK-NEXT:       %c32_i32 = arith.constant 32 : i32
+// CHECK-NEXT:       %c64_i32 = arith.constant 64 : i32
+// CHECK-NEXT:       %c64_i64 = arith.constant 64 : i64
+// CHECK-NEXT:       %c2048_i64 = arith.constant 2048 : i64
+// CHECK-NEXT:       %c1_i64 = arith.constant 1 : i64
+// CHECK-NEXT:       %c0_i32 = arith.constant 0 : i32
+// CHECK-NEXT:       %c16_i32 = arith.constant 16 : i32
+// CHECK-NEXT:       %c48_i32 = arith.constant 48 : i32
+// CHECK-NEXT:       %cst_1 = arith.constant dense<0.000000e+00> : tensor<16x16xf32>
+// CHECK-NEXT:       %cst_2 = arith.constant dense<0.000000e+00> : tensor<16xf32>
+// CHECK-NEXT:       %cst_3 = arith.constant dense<16> : tensor<16xi32>
+// CHECK-NEXT:       %cst_4 = arith.constant dense<32> : tensor<16xi32>
+// CHECK-NEXT:       %cst_5 = arith.constant dense<48> : tensor<16xi32>
+// CHECK-NEXT:       %c2_i32 = arith.constant 2 : i32
+// CHECK-NEXT:       %c1_i32 = arith.constant 1 : i32
+// CHECK-NEXT:       %c2048_i32 = arith.constant 2048 : i32
+// CHECK-NEXT:       %c18_i32 = arith.constant 18 : i32
+// CHECK-NEXT:       %c34_i32 = arith.constant 34 : i32
+// CHECK-NEXT:       %c50_i32 = arith.constant 50 : i32
+// CHECK-NEXT:       %0 = hivm.hir.get_sub_block_idx -> i64
+// CHECK-NEXT:       %1 = arith.index_cast %0 : i64 to index
+// CHECK-NEXT:       %2 = affine.apply #map()[%1]
+// CHECK-NEXT:       %3 = arith.index_cast %2 : index to i32
+// CHECK-NEXT:       %4 = tt.get_program_id x : i32
+// CHECK-NEXT:       %5 = tt.get_program_id y : i32
+// CHECK-NEXT:       %6 = arith.divsi %5, %c32_i32 : i32
+// CHECK-NEXT:       %7 = arith.remsi %5, %c32_i32 : i32
+// CHECK-NEXT:       %8 = arith.muli %6, %arg2 : i32
+// CHECK-NEXT:       %9 = tt.make_range {end = 16 : i32, start = 0 : i32} : tensor<16xi32>
+// CHECK-NEXT:       %10 = tt.expand_dims %9 {axis = 1 : i32} : tensor<16xi32> -> tensor<16x1xi32>
+// CHECK-NEXT:       %extracted_slice = tensor.extract_slice %9[%2] [8] [1] {should_kept_slice} : tensor<16xi32> to tensor<8xi32>
+// CHECK-NEXT:       %11 = tt.expand_dims %extracted_slice {axis = 0 : i32} : tensor<8xi32> -> tensor<1x8xi32>
+// CHECK-NEXT:       %12 = tt.broadcast %10 : tensor<16x1xi32> -> tensor<16x8xi32>
+// CHECK-NEXT:       %13 = tt.broadcast %11 : tensor<1x8xi32> -> tensor<16x8xi32>
+// CHECK-NEXT:       %14 = arith.cmpi sgt, %12, %13 : tensor<16x8xi32>
+// CHECK-NEXT:       %15 = arith.cmpi eq, %12, %13 : tensor<16x8xi32>
+// CHECK-NEXT:       %16 = arith.muli %8, %c32_i32 : i32
+// CHECK-NEXT:       %17 = arith.addi %16, %7 : i32
+// CHECK-NEXT:       %18 = arith.muli %17, %c64_i32 : i32
+// CHECK-NEXT:       %19 = tt.addptr %arg0, %18 : !tt.ptr<f32>, i32
+// CHECK-NEXT:       %20 = tt.addptr %arg1, %18 : !tt.ptr<f32>, i32
+// CHECK-NEXT:       %21 = arith.muli %4, %c64_i32 : i32
+// CHECK-NEXT:       %22 = arith.extsi %arg2 : i32 to i64
+// CHECK-NEXT:       %23 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%21, %3] {order = array<i32: 1, 0>} : <tensor<16x8xf32>>
+// CHECK-NEXT:       %24 = arith.addi %21, %c16_i32 : i32
+// CHECK-NEXT:       %25 = arith.addi %3, %c16_i32 : i32
+// CHECK-NEXT:       %26 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%24, %25] {order = array<i32: 1, 0>} : <tensor<16x8xf32>>
+// CHECK-NEXT:       %27 = arith.addi %21, %c32_i32 : i32
+// CHECK-NEXT:       %28 = arith.addi %3, %c32_i32 : i32
+// CHECK-NEXT:       %29 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%27, %28] {order = array<i32: 1, 0>} : <tensor<16x8xf32>>
+// CHECK-NEXT:       %30 = arith.addi %21, %c48_i32 : i32
+// CHECK-NEXT:       %31 = arith.addi %3, %c48_i32 : i32
+// CHECK-NEXT:       %32 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%30, %31] {order = array<i32: 1, 0>} : <tensor<16x8xf32>>
+// CHECK-NEXT:       %33 = tt.load %23 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x8xf32>>
+// CHECK-NEXT:       %34 = tt.load %26 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x8xf32>>
+// CHECK-NEXT:       %35 = tt.load %29 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x8xf32>>
+// CHECK-NEXT:       %36 = tt.load %32 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x8xf32>>
+// CHECK-NEXT:       %37 = arith.select %14, %33, %cst_0 : tensor<16x8xi1>, tensor<16x8xf32>
+// CHECK-NEXT:       %38 = arith.subf %cst_0, %37 : tensor<16x8xf32>
+// CHECK-NEXT:       %39 = arith.select %14, %34, %cst_0 : tensor<16x8xi1>, tensor<16x8xf32>
+// CHECK-NEXT:       %40 = arith.subf %cst_0, %39 : tensor<16x8xf32>
+// CHECK-NEXT:       %41 = arith.select %14, %35, %cst_0 : tensor<16x8xi1>, tensor<16x8xf32>
+// CHECK-NEXT:       %42 = arith.subf %cst_0, %41 : tensor<16x8xf32>
+// CHECK-NEXT:       %43 = arith.select %14, %36, %cst_0 : tensor<16x8xi1>, tensor<16x8xf32>
+// CHECK-NEXT:       %44 = arith.subf %cst_0, %43 : tensor<16x8xf32>
+// CHECK-NEXT:       %45 = arith.subi %arg2, %21 : i32
+// CHECK-NEXT:       %46 = arith.minsi %45, %c16_i32 : i32
+// CHECK-NEXT:       %47 = scf.for %arg3 = %c2_i32 to %46 step %c1_i32 iter_args(%arg4 = %38) -> (tensor<16x8xf32>)  : i32 {
+// CHECK-NEXT:         %156 = arith.addi %21, %arg3 : i32
+// CHECK-NEXT:         %157 = arith.muli %156, %c2048_i32 : i32
+// CHECK-NEXT:         %158 = tt.addptr %19, %157 : !tt.ptr<f32>, i32
+// CHECK-NEXT:         %159 = tt.splat %158 : !tt.ptr<f32> -> tensor<16x!tt.ptr<f32>>
+// CHECK-NEXT:         %160 = tt.addptr %159, %9 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+// CHECK-NEXT:         %161 = tt.load %160 : tensor<16x!tt.ptr<f32>>
+// CHECK-NEXT:         %162 = arith.subf %cst_2, %161 : tensor<16xf32>
+// CHECK-NEXT:         %163 = tt.splat %arg3 : i32 -> tensor<16xi32>
+// CHECK-NEXT:         %164 = arith.cmpi slt, %9, %163 : tensor<16xi32>
+// CHECK-NEXT:         %165 = arith.select %164, %162, %cst_2 : tensor<16xi1>, tensor<16xf32>
+// CHECK-NEXT:         %166 = tt.expand_dims %165 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
+// CHECK-NEXT:         %167 = tt.broadcast %166 : tensor<16x1xf32> -> tensor<16x8xf32>
+// CHECK-NEXT:         %168 = arith.mulf %167, %arg4 : tensor<16x8xf32>
+// CHECK-NEXT:         %169 = "tt.reduce"(%168) <{axis = 0 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg5: f32, %arg6: f32):
+// CHECK-NEXT:           %177 = arith.addf %arg5, %arg6 : f32
+// CHECK-NEXT:           tt.reduce.return %177 : f32
+// CHECK-NEXT:         }) : (tensor<16x8xf32>) -> tensor<8xf32>
+// CHECK-NEXT:         %extracted_slice_54 = tensor.extract_slice %165[%2] [8] [1] {should_kept_slice} : tensor<16xf32> to tensor<8xf32>
+// CHECK-NEXT:         %170 = arith.addf %extracted_slice_54, %169 : tensor<8xf32>
+// CHECK-NEXT:         %171 = arith.cmpi eq, %9, %163 : tensor<16xi32>
+// CHECK-NEXT:         %172 = tt.expand_dims %171 {axis = 1 : i32} : tensor<16xi1> -> tensor<16x1xi1>
+// CHECK-NEXT:         %173 = tt.expand_dims %170 {axis = 0 : i32} : tensor<8xf32> -> tensor<1x8xf32>
+// CHECK-NEXT:         %174 = tt.broadcast %173 : tensor<1x8xf32> -> tensor<16x8xf32>
+// CHECK-NEXT:         %175 = tt.broadcast %172 : tensor<16x1xi1> -> tensor<16x8xi1>
+// CHECK-NEXT:         %176 = arith.select %175, %174, %arg4 : tensor<16x8xi1>, tensor<16x8xf32>
+// CHECK-NEXT:         scf.yield %176 : tensor<16x8xf32>
+// CHECK-NEXT:       }
+// CHECK-NEXT:       %48 = arith.minsi %45, %c32_i32 : i32
+// CHECK-NEXT:       %49 = scf.for %arg3 = %c18_i32 to %48 step %c1_i32 iter_args(%arg4 = %40) -> (tensor<16x8xf32>)  : i32 {
+// CHECK-NEXT:         %156 = arith.addi %21, %arg3 : i32
+// CHECK-NEXT:         %157 = arith.muli %156, %c2048_i32 : i32
+// CHECK-NEXT:         %158 = tt.addptr %19, %157 : !tt.ptr<f32>, i32
+// CHECK-NEXT:         %159 = tt.splat %158 : !tt.ptr<f32> -> tensor<16x!tt.ptr<f32>>
+// CHECK-NEXT:         %160 = tt.addptr %159, %9 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+// CHECK-NEXT:         %161 = tt.addptr %160, %cst_3 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+// CHECK-NEXT:         %162 = tt.load %161 : tensor<16x!tt.ptr<f32>>
+// CHECK-NEXT:         %163 = arith.subf %cst_2, %162 : tensor<16xf32>
+// CHECK-NEXT:         %164 = arith.subi %arg3, %c16_i32 : i32
+// CHECK-NEXT:         %165 = tt.splat %164 : i32 -> tensor<16xi32>
+// CHECK-NEXT:         %166 = arith.cmpi slt, %9, %165 : tensor<16xi32>
+// CHECK-NEXT:         %167 = arith.select %166, %163, %cst_2 : tensor<16xi1>, tensor<16xf32>
+// CHECK-NEXT:         %168 = tt.expand_dims %167 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
+// CHECK-NEXT:         %169 = tt.broadcast %168 : tensor<16x1xf32> -> tensor<16x8xf32>
+// CHECK-NEXT:         %170 = arith.mulf %169, %arg4 : tensor<16x8xf32>
+// CHECK-NEXT:         %171 = "tt.reduce"(%170) <{axis = 0 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg5: f32, %arg6: f32):
+// CHECK-NEXT:           %179 = arith.addf %arg5, %arg6 : f32
+// CHECK-NEXT:           tt.reduce.return %179 : f32
+// CHECK-NEXT:         }) : (tensor<16x8xf32>) -> tensor<8xf32>
+// CHECK-NEXT:         %extracted_slice_54 = tensor.extract_slice %167[%2] [8] [1] {should_kept_slice} : tensor<16xf32> to tensor<8xf32>
+// CHECK-NEXT:         %172 = arith.addf %extracted_slice_54, %171 : tensor<8xf32>
+// CHECK-NEXT:         %173 = arith.cmpi eq, %9, %165 : tensor<16xi32>
+// CHECK-NEXT:         %174 = tt.expand_dims %173 {axis = 1 : i32} : tensor<16xi1> -> tensor<16x1xi1>
+// CHECK-NEXT:         %175 = tt.expand_dims %172 {axis = 0 : i32} : tensor<8xf32> -> tensor<1x8xf32>
+// CHECK-NEXT:         %176 = tt.broadcast %175 : tensor<1x8xf32> -> tensor<16x8xf32>
+// CHECK-NEXT:         %177 = tt.broadcast %174 : tensor<16x1xi1> -> tensor<16x8xi1>
+// CHECK-NEXT:         %178 = arith.select %177, %176, %arg4 : tensor<16x8xi1>, tensor<16x8xf32>
+// CHECK-NEXT:         scf.yield %178 : tensor<16x8xf32>
+// CHECK-NEXT:       }
+// CHECK-NEXT:       %50 = arith.minsi %45, %c48_i32 : i32
+// CHECK-NEXT:       %51 = scf.for %arg3 = %c34_i32 to %50 step %c1_i32 iter_args(%arg4 = %42) -> (tensor<16x8xf32>)  : i32 {
+// CHECK-NEXT:         %156 = arith.addi %21, %arg3 : i32
+// CHECK-NEXT:         %157 = arith.muli %156, %c2048_i32 : i32
+// CHECK-NEXT:         %158 = tt.addptr %19, %157 : !tt.ptr<f32>, i32
+// CHECK-NEXT:         %159 = tt.splat %158 : !tt.ptr<f32> -> tensor<16x!tt.ptr<f32>>
+// CHECK-NEXT:         %160 = tt.addptr %159, %9 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+// CHECK-NEXT:         %161 = tt.addptr %160, %cst_4 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+// CHECK-NEXT:         %162 = tt.load %161 : tensor<16x!tt.ptr<f32>>
+// CHECK-NEXT:         %163 = arith.subf %cst_2, %162 : tensor<16xf32>
+// CHECK-NEXT:         %164 = arith.subi %arg3, %c32_i32 : i32
+// CHECK-NEXT:         %165 = tt.splat %164 : i32 -> tensor<16xi32>
+// CHECK-NEXT:         %166 = arith.cmpi slt, %9, %165 : tensor<16xi32>
+// CHECK-NEXT:         %167 = arith.select %166, %163, %cst_2 : tensor<16xi1>, tensor<16xf32>
+// CHECK-NEXT:         %168 = tt.expand_dims %167 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
+// CHECK-NEXT:         %169 = tt.broadcast %168 : tensor<16x1xf32> -> tensor<16x8xf32>
+// CHECK-NEXT:         %170 = arith.mulf %169, %arg4 : tensor<16x8xf32>
+// CHECK-NEXT:         %171 = "tt.reduce"(%170) <{axis = 0 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg5: f32, %arg6: f32):
+// CHECK-NEXT:           %179 = arith.addf %arg5, %arg6 : f32
+// CHECK-NEXT:           tt.reduce.return %179 : f32
+// CHECK-NEXT:         }) : (tensor<16x8xf32>) -> tensor<8xf32>
+// CHECK-NEXT:         %extracted_slice_54 = tensor.extract_slice %167[%2] [8] [1] {should_kept_slice} : tensor<16xf32> to tensor<8xf32>
+// CHECK-NEXT:         %172 = arith.addf %extracted_slice_54, %171 : tensor<8xf32>
+// CHECK-NEXT:         %173 = arith.cmpi eq, %9, %165 : tensor<16xi32>
+// CHECK-NEXT:         %174 = tt.expand_dims %173 {axis = 1 : i32} : tensor<16xi1> -> tensor<16x1xi1>
+// CHECK-NEXT:         %175 = tt.expand_dims %172 {axis = 0 : i32} : tensor<8xf32> -> tensor<1x8xf32>
+// CHECK-NEXT:         %176 = tt.broadcast %175 : tensor<1x8xf32> -> tensor<16x8xf32>
+// CHECK-NEXT:         %177 = tt.broadcast %174 : tensor<16x1xi1> -> tensor<16x8xi1>
+// CHECK-NEXT:         %178 = arith.select %177, %176, %arg4 : tensor<16x8xi1>, tensor<16x8xf32>
+// CHECK-NEXT:         scf.yield %178 : tensor<16x8xf32>
+// CHECK-NEXT:       }
+// CHECK-NEXT:       %52 = arith.minsi %45, %c64_i32 : i32
+// CHECK-NEXT:       %53 = scf.for %arg3 = %c50_i32 to %52 step %c1_i32 iter_args(%arg4 = %44) -> (tensor<16x8xf32>)  : i32 {
+// CHECK-NEXT:         %156 = arith.addi %21, %arg3 : i32
+// CHECK-NEXT:         %157 = arith.muli %156, %c2048_i32 : i32
+// CHECK-NEXT:         %158 = tt.addptr %19, %157 : !tt.ptr<f32>, i32
+// CHECK-NEXT:         %159 = tt.splat %158 : !tt.ptr<f32> -> tensor<16x!tt.ptr<f32>>
+// CHECK-NEXT:         %160 = tt.addptr %159, %9 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+// CHECK-NEXT:         %161 = tt.addptr %160, %cst_5 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+// CHECK-NEXT:         %162 = tt.load %161 : tensor<16x!tt.ptr<f32>>
+// CHECK-NEXT:         %163 = arith.subf %cst_2, %162 : tensor<16xf32>
+// CHECK-NEXT:         %164 = arith.subi %arg3, %c48_i32 : i32
+// CHECK-NEXT:         %165 = tt.splat %164 : i32 -> tensor<16xi32>
+// CHECK-NEXT:         %166 = arith.cmpi slt, %9, %165 : tensor<16xi32>
+// CHECK-NEXT:         %167 = arith.select %166, %163, %cst_2 : tensor<16xi1>, tensor<16xf32>
+// CHECK-NEXT:         %168 = tt.expand_dims %167 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
+// CHECK-NEXT:         %169 = tt.broadcast %168 : tensor<16x1xf32> -> tensor<16x8xf32>
+// CHECK-NEXT:         %170 = arith.mulf %169, %arg4 : tensor<16x8xf32>
+// CHECK-NEXT:         %171 = "tt.reduce"(%170) <{axis = 0 : i32}> ({
+// CHECK-NEXT:         ^bb0(%arg5: f32, %arg6: f32):
+// CHECK-NEXT:           %179 = arith.addf %arg5, %arg6 : f32
+// CHECK-NEXT:           tt.reduce.return %179 : f32
+// CHECK-NEXT:         }) : (tensor<16x8xf32>) -> tensor<8xf32>
+// CHECK-NEXT:         %extracted_slice_54 = tensor.extract_slice %167[%2] [8] [1] {should_kept_slice} : tensor<16xf32> to tensor<8xf32>
+// CHECK-NEXT:         %172 = arith.addf %extracted_slice_54, %171 : tensor<8xf32>
+// CHECK-NEXT:         %173 = arith.cmpi eq, %9, %165 : tensor<16xi32>
+// CHECK-NEXT:         %174 = tt.expand_dims %173 {axis = 1 : i32} : tensor<16xi1> -> tensor<16x1xi1>
+// CHECK-NEXT:         %175 = tt.expand_dims %172 {axis = 0 : i32} : tensor<8xf32> -> tensor<1x8xf32>
+// CHECK-NEXT:         %176 = tt.broadcast %175 : tensor<1x8xf32> -> tensor<16x8xf32>
+// CHECK-NEXT:         %177 = tt.broadcast %174 : tensor<16x1xi1> -> tensor<16x8xi1>
+// CHECK-NEXT:         %178 = arith.select %177, %176, %arg4 : tensor<16x8xi1>, tensor<16x8xf32>
+// CHECK-NEXT:         scf.yield %178 : tensor<16x8xf32>
+// CHECK-NEXT:       }
+// CHECK-NEXT:       %54 = arith.uitofp %15 : tensor<16x8xi1> to tensor<16x8xf32>
+// CHECK-NEXT:       %55 = arith.addf %47, %54 : tensor<16x8xf32>
+// CHECK-NEXT:       %56 = arith.addf %49, %54 : tensor<16x8xf32>
+// CHECK-NEXT:       %57 = arith.addf %51, %54 : tensor<16x8xf32>
+// CHECK-NEXT:       %58 = arith.addf %53, %54 : tensor<16x8xf32>
+// CHECK-NEXT:       %59 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%24, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %60 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%27, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %61 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%27, %c16_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %62 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%30, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %63 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%30, %c16_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %64 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%30, %c32_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+// CHECK-NEXT:       %65 = tt.load %59 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       %66 = tt.load %60 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       %67 = tt.load %61 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       %68 = tt.load %62 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       %69 = tt.load %63 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       %70 = tt.load %64 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+// CHECK-NEXT:       %71 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       %subview = memref.subview %71[0, %2] [16, 8] [1, 1] : memref<16x16xf32> to memref<16x8xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       bufferization.materialize_in_destination %56 in writable %subview : (tensor<16x8xf32>, memref<16x8xf32, strided<[16, 1], offset: ?>>) -> ()
+// CHECK-NEXT:       %alloc = memref.alloc() : memref<16x16xf32>
+// CHECK-NEXT:       memref.copy %71, %alloc : memref<16x16xf32> to memref<16x16xf32>
+// CHECK-NEXT:       %72 = bufferization.to_tensor %alloc restrict writable : memref<16x16xf32>
+// CHECK-NEXT:       %73 = tt.dot %72, %65, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %74 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       bufferization.materialize_in_destination %73 in writable %74 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+// CHECK-NEXT:       %subview_6 = memref.subview %74[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       %alloc_7 = memref.alloc() : memref<8x16xf32>
+// CHECK-NEXT:       memref.copy %subview_6, %alloc_7 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+// CHECK-NEXT:       %75 = bufferization.to_tensor %alloc_7 restrict writable : memref<8x16xf32>
+// CHECK-NEXT:       %76 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       %subview_8 = memref.subview %76[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       bufferization.materialize_in_destination %75 in writable %subview_8 : (tensor<8x16xf32>, memref<8x16xf32, strided<[16, 1], offset: ?>>) -> ()
+// CHECK-NEXT:       %alloc_9 = memref.alloc() : memref<16x16xf32>
+// CHECK-NEXT:       memref.copy %76, %alloc_9 : memref<16x16xf32> to memref<16x16xf32>
+// CHECK-NEXT:       %77 = bufferization.to_tensor %alloc_9 restrict writable : memref<16x16xf32>
+// CHECK-NEXT:       %78 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       %subview_10 = memref.subview %78[0, %2] [16, 8] [1, 1] : memref<16x16xf32> to memref<16x8xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       bufferization.materialize_in_destination %55 in writable %subview_10 : (tensor<16x8xf32>, memref<16x8xf32, strided<[16, 1], offset: ?>>) -> ()
+// CHECK-NEXT:       %alloc_11 = memref.alloc() : memref<16x16xf32>
+// CHECK-NEXT:       memref.copy %78, %alloc_11 : memref<16x16xf32> to memref<16x16xf32>
+// CHECK-NEXT:       %79 = bufferization.to_tensor %alloc_11 restrict writable : memref<16x16xf32>
+// CHECK-NEXT:       %80 = tt.dot %77, %79, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %81 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       bufferization.materialize_in_destination %80 in writable %81 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+// CHECK-NEXT:       %subview_12 = memref.subview %81[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       %alloc_13 = memref.alloc() : memref<8x16xf32>
+// CHECK-NEXT:       memref.copy %subview_12, %alloc_13 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+// CHECK-NEXT:       %82 = bufferization.to_tensor %alloc_13 restrict writable : memref<8x16xf32>
+// CHECK-NEXT:       %83 = arith.subf %cst, %82 : tensor<8x16xf32>
+// CHECK-NEXT:       %84 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       %subview_14 = memref.subview %84[0, %2] [16, 8] [1, 1] : memref<16x16xf32> to memref<16x8xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       bufferization.materialize_in_destination %57 in writable %subview_14 : (tensor<16x8xf32>, memref<16x8xf32, strided<[16, 1], offset: ?>>) -> ()
+// CHECK-NEXT:       %alloc_15 = memref.alloc() : memref<16x16xf32>
+// CHECK-NEXT:       memref.copy %84, %alloc_15 : memref<16x16xf32> to memref<16x16xf32>
+// CHECK-NEXT:       %85 = bufferization.to_tensor %alloc_15 restrict writable : memref<16x16xf32>
+// CHECK-NEXT:       %86 = tt.dot %85, %67, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %87 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       bufferization.materialize_in_destination %86 in writable %87 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+// CHECK-NEXT:       %subview_16 = memref.subview %87[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       %alloc_17 = memref.alloc() : memref<8x16xf32>
+// CHECK-NEXT:       memref.copy %subview_16, %alloc_17 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+// CHECK-NEXT:       %88 = bufferization.to_tensor %alloc_17 restrict writable : memref<8x16xf32>
+// CHECK-NEXT:       %89 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       %subview_18 = memref.subview %89[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       bufferization.materialize_in_destination %88 in writable %subview_18 : (tensor<8x16xf32>, memref<8x16xf32, strided<[16, 1], offset: ?>>) -> ()
+// CHECK-NEXT:       %alloc_19 = memref.alloc() : memref<16x16xf32>
+// CHECK-NEXT:       memref.copy %89, %alloc_19 : memref<16x16xf32> to memref<16x16xf32>
+// CHECK-NEXT:       %90 = bufferization.to_tensor %alloc_19 restrict writable : memref<16x16xf32>
+// CHECK-NEXT:       %91 = tt.dot %90, %72, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %92 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       bufferization.materialize_in_destination %91 in writable %92 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+// CHECK-NEXT:       %subview_20 = memref.subview %92[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       %alloc_21 = memref.alloc() : memref<8x16xf32>
+// CHECK-NEXT:       memref.copy %subview_20, %alloc_21 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+// CHECK-NEXT:       %93 = bufferization.to_tensor %alloc_21 restrict writable : memref<8x16xf32>
+// CHECK-NEXT:       %94 = arith.subf %cst, %93 : tensor<8x16xf32>
+// CHECK-NEXT:       %95 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       %subview_22 = memref.subview %95[0, %2] [16, 8] [1, 1] : memref<16x16xf32> to memref<16x8xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       bufferization.materialize_in_destination %58 in writable %subview_22 : (tensor<16x8xf32>, memref<16x8xf32, strided<[16, 1], offset: ?>>) -> ()
+// CHECK-NEXT:       %alloc_23 = memref.alloc() : memref<16x16xf32>
+// CHECK-NEXT:       memref.copy %95, %alloc_23 : memref<16x16xf32> to memref<16x16xf32>
+// CHECK-NEXT:       %96 = bufferization.to_tensor %alloc_23 restrict writable : memref<16x16xf32>
+// CHECK-NEXT:       %97 = tt.dot %96, %70, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %98 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       bufferization.materialize_in_destination %97 in writable %98 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+// CHECK-NEXT:       %subview_24 = memref.subview %98[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       %alloc_25 = memref.alloc() : memref<8x16xf32>
+// CHECK-NEXT:       memref.copy %subview_24, %alloc_25 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+// CHECK-NEXT:       %99 = bufferization.to_tensor %alloc_25 restrict writable : memref<8x16xf32>
+// CHECK-NEXT:       %100 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       %subview_26 = memref.subview %100[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       bufferization.materialize_in_destination %99 in writable %subview_26 : (tensor<8x16xf32>, memref<8x16xf32, strided<[16, 1], offset: ?>>) -> ()
+// CHECK-NEXT:       %alloc_27 = memref.alloc() : memref<16x16xf32>
+// CHECK-NEXT:       memref.copy %100, %alloc_27 : memref<16x16xf32> to memref<16x16xf32>
+// CHECK-NEXT:       %101 = bufferization.to_tensor %alloc_27 restrict writable : memref<16x16xf32>
+// CHECK-NEXT:       %102 = tt.dot %101, %85, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %103 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       bufferization.materialize_in_destination %102 in writable %103 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+// CHECK-NEXT:       %subview_28 = memref.subview %103[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       %alloc_29 = memref.alloc() : memref<8x16xf32>
+// CHECK-NEXT:       memref.copy %subview_28, %alloc_29 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+// CHECK-NEXT:       %104 = bufferization.to_tensor %alloc_29 restrict writable : memref<8x16xf32>
+// CHECK-NEXT:       %105 = arith.subf %cst, %104 : tensor<8x16xf32>
+// CHECK-NEXT:       %106 = tt.dot %66, %79, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %107 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       %subview_30 = memref.subview %107[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       bufferization.materialize_in_destination %83 in writable %subview_30 : (tensor<8x16xf32>, memref<8x16xf32, strided<[16, 1], offset: ?>>) -> ()
+// CHECK-NEXT:       %alloc_31 = memref.alloc() : memref<16x16xf32>
+// CHECK-NEXT:       memref.copy %107, %alloc_31 : memref<16x16xf32> to memref<16x16xf32>
+// CHECK-NEXT:       %108 = bufferization.to_tensor %alloc_31 restrict writable : memref<16x16xf32>
+// CHECK-NEXT:       %109 = tt.dot %67, %108, %106 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %110 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       bufferization.materialize_in_destination %109 in writable %110 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+// CHECK-NEXT:       %subview_32 = memref.subview %110[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       %alloc_33 = memref.alloc() : memref<8x16xf32>
+// CHECK-NEXT:       memref.copy %subview_32, %alloc_33 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+// CHECK-NEXT:       %111 = bufferization.to_tensor %alloc_33 restrict writable : memref<8x16xf32>
+// CHECK-NEXT:       %112 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       %subview_34 = memref.subview %112[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       bufferization.materialize_in_destination %111 in writable %subview_34 : (tensor<8x16xf32>, memref<8x16xf32, strided<[16, 1], offset: ?>>) -> ()
+// CHECK-NEXT:       %alloc_35 = memref.alloc() : memref<16x16xf32>
+// CHECK-NEXT:       memref.copy %112, %alloc_35 : memref<16x16xf32> to memref<16x16xf32>
+// CHECK-NEXT:       %113 = bufferization.to_tensor %alloc_35 restrict writable : memref<16x16xf32>
+// CHECK-NEXT:       %114 = tt.dot %85, %113, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %115 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       bufferization.materialize_in_destination %114 in writable %115 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+// CHECK-NEXT:       %subview_36 = memref.subview %115[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       %alloc_37 = memref.alloc() : memref<8x16xf32>
+// CHECK-NEXT:       memref.copy %subview_36, %alloc_37 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+// CHECK-NEXT:       %116 = bufferization.to_tensor %alloc_37 restrict writable : memref<8x16xf32>
+// CHECK-NEXT:       %117 = arith.subf %cst, %116 : tensor<8x16xf32>
+// CHECK-NEXT:       %118 = tt.dot %69, %72, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %119 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       %subview_38 = memref.subview %119[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       bufferization.materialize_in_destination %94 in writable %subview_38 : (tensor<8x16xf32>, memref<8x16xf32, strided<[16, 1], offset: ?>>) -> ()
+// CHECK-NEXT:       %alloc_39 = memref.alloc() : memref<16x16xf32>
+// CHECK-NEXT:       memref.copy %119, %alloc_39 : memref<16x16xf32> to memref<16x16xf32>
+// CHECK-NEXT:       %120 = bufferization.to_tensor %alloc_39 restrict writable : memref<16x16xf32>
+// CHECK-NEXT:       %121 = tt.dot %70, %120, %118 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %122 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       bufferization.materialize_in_destination %121 in writable %122 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+// CHECK-NEXT:       %subview_40 = memref.subview %122[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       %alloc_41 = memref.alloc() : memref<8x16xf32>
+// CHECK-NEXT:       memref.copy %subview_40, %alloc_41 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+// CHECK-NEXT:       %123 = bufferization.to_tensor %alloc_41 restrict writable : memref<8x16xf32>
+// CHECK-NEXT:       %124 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       %subview_42 = memref.subview %124[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       bufferization.materialize_in_destination %123 in writable %subview_42 : (tensor<8x16xf32>, memref<8x16xf32, strided<[16, 1], offset: ?>>) -> ()
+// CHECK-NEXT:       %alloc_43 = memref.alloc() : memref<16x16xf32>
+// CHECK-NEXT:       memref.copy %124, %alloc_43 : memref<16x16xf32> to memref<16x16xf32>
+// CHECK-NEXT:       %125 = bufferization.to_tensor %alloc_43 restrict writable : memref<16x16xf32>
+// CHECK-NEXT:       %126 = tt.dot %96, %125, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %127 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       bufferization.materialize_in_destination %126 in writable %127 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+// CHECK-NEXT:       %subview_44 = memref.subview %127[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       %alloc_45 = memref.alloc() : memref<8x16xf32>
+// CHECK-NEXT:       memref.copy %subview_44, %alloc_45 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+// CHECK-NEXT:       %128 = bufferization.to_tensor %alloc_45 restrict writable : memref<8x16xf32>
+// CHECK-NEXT:       %129 = arith.subf %cst, %128 : tensor<8x16xf32>
+// CHECK-NEXT:       %130 = tt.dot %68, %79, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %131 = tt.dot %69, %108, %130 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %132 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       %subview_46 = memref.subview %132[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       bufferization.materialize_in_destination %117 in writable %subview_46 : (tensor<8x16xf32>, memref<8x16xf32, strided<[16, 1], offset: ?>>) -> ()
+// CHECK-NEXT:       %alloc_47 = memref.alloc() : memref<16x16xf32>
+// CHECK-NEXT:       memref.copy %132, %alloc_47 : memref<16x16xf32> to memref<16x16xf32>
+// CHECK-NEXT:       %133 = bufferization.to_tensor %alloc_47 restrict writable : memref<16x16xf32>
+// CHECK-NEXT:       %134 = tt.dot %70, %133, %131 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %135 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       bufferization.materialize_in_destination %134 in writable %135 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+// CHECK-NEXT:       %subview_48 = memref.subview %135[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       %alloc_49 = memref.alloc() : memref<8x16xf32>
+// CHECK-NEXT:       memref.copy %subview_48, %alloc_49 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+// CHECK-NEXT:       %136 = bufferization.to_tensor %alloc_49 restrict writable : memref<8x16xf32>
+// CHECK-NEXT:       %137 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       %subview_50 = memref.subview %137[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       bufferization.materialize_in_destination %136 in writable %subview_50 : (tensor<8x16xf32>, memref<8x16xf32, strided<[16, 1], offset: ?>>) -> ()
+// CHECK-NEXT:       %alloc_51 = memref.alloc() : memref<16x16xf32>
+// CHECK-NEXT:       memref.copy %137, %alloc_51 : memref<16x16xf32> to memref<16x16xf32>
+// CHECK-NEXT:       %138 = bufferization.to_tensor %alloc_51 restrict writable : memref<16x16xf32>
+// CHECK-NEXT:       %139 = tt.dot %96, %138, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+// CHECK-NEXT:       %140 = memref_ext.alloc_workspace() : memref<16x16xf32>
+// CHECK-NEXT:       bufferization.materialize_in_destination %139 in writable %140 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+// CHECK-NEXT:       %subview_52 = memref.subview %140[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+// CHECK-NEXT:       %alloc_53 = memref.alloc() : memref<8x16xf32>
+// CHECK-NEXT:       memref.copy %subview_52, %alloc_53 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+// CHECK-NEXT:       %141 = bufferization.to_tensor %alloc_53 restrict writable : memref<8x16xf32>
+// CHECK-NEXT:       %142 = arith.subf %cst, %141 : tensor<8x16xf32>
+// CHECK-NEXT:       %143 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%21, %3] {order = array<i32: 1, 0>, tiled_op} : <tensor<16x8xf32>>
+// CHECK-NEXT:       %144 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%24, %25] {order = array<i32: 1, 0>, tiled_op} : <tensor<16x8xf32>>
+// CHECK-NEXT:       %145 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%27, %28] {order = array<i32: 1, 0>, tiled_op} : <tensor<16x8xf32>>
+// CHECK-NEXT:       %146 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%30, %31] {order = array<i32: 1, 0>, tiled_op} : <tensor<16x8xf32>>
+// CHECK-NEXT:       %147 = arith.addi %24, %3 : i32
+// CHECK-NEXT:       %148 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%147, %c0_i32] {order = array<i32: 1, 0>, tiled_op} : <tensor<8x16xf32>>
+// CHECK-NEXT:       %149 = arith.addi %27, %3 : i32
+// CHECK-NEXT:       %150 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%149, %c0_i32] {order = array<i32: 1, 0>, tiled_op} : <tensor<8x16xf32>>
+// CHECK-NEXT:       %151 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%149, %c16_i32] {order = array<i32: 1, 0>, tiled_op} : <tensor<8x16xf32>>
+// CHECK-NEXT:       %152 = arith.addi %30, %3 : i32
+// CHECK-NEXT:       %153 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%152, %c0_i32] {order = array<i32: 1, 0>, tiled_op} : <tensor<8x16xf32>>
+// CHECK-NEXT:       %154 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%152, %c16_i32] {order = array<i32: 1, 0>, tiled_op} : <tensor<8x16xf32>>
+// CHECK-NEXT:       %155 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%152, %c32_i32] {order = array<i32: 1, 0>, tiled_op} : <tensor<8x16xf32>>
+// CHECK-NEXT:       tt.store %143, %55 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<16x8xf32>>
+// CHECK-NEXT:       tt.store %144, %56 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<16x8xf32>>
+// CHECK-NEXT:       tt.store %145, %57 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<16x8xf32>>
+// CHECK-NEXT:       tt.store %146, %58 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<16x8xf32>>
+// CHECK-NEXT:       tt.store %148, %83 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<8x16xf32>>
+// CHECK-NEXT:       tt.store %150, %117 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<8x16xf32>>
+// CHECK-NEXT:       tt.store %151, %94 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<8x16xf32>>
+// CHECK-NEXT:       tt.store %153, %142 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<8x16xf32>>
+// CHECK-NEXT:       tt.store %154, %129 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<8x16xf32>>
+// CHECK-NEXT:       tt.store %155, %105 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<8x16xf32>>
+// CHECK-NEXT:       tt.return
+// CHECK-NEXT:     }
 // CHECK-NEXT:   }
 // CHECK-NEXT: }
 
@@ -14021,1600 +16675,417 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
 #loc188 = loc(callsite(#loc179 at #loc92))
 #loc189 = loc(callsite(#loc179 at #loc112))
 
-// -----
-// Source: gaoyou/sw/triton_ops/fa_bwd/input.mlir
-// CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
-// CHECK-NEXT:   tt.func public @_attn_bwd(%arg0: !tt.ptr<f16> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<f16> {tt.divisibility = 16 : i32}, %arg2: !tt.ptr<f16> {tt.divisibility = 16 : i32}, %arg3: !tt.ptr<f16> {tt.divisibility = 16 : i32}, %arg4: !tt.ptr<f16> {tt.divisibility = 16 : i32}, %arg5: !tt.ptr<f16> {tt.divisibility = 16 : i32}, %arg6: !tt.ptr<f16> {tt.divisibility = 16 : i32}, %arg7: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg8: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg9: f32) attributes {noinline = false} {
-// CHECK-NEXT:     %cst = arith.constant dense<0.000000e+00> : tensor<128x64xf32>
-// CHECK-NEXT:     %cst_0 = arith.constant dense<0.000000e+00> : tensor<128x128xf32>
-// CHECK-NEXT:     %cst_1 = arith.constant dense<0.000000e+00> : tensor<64x64xf32>
-// CHECK-NEXT:     %cst_2 = arith.constant dense<0.000000e+00> : tensor<64x128xf32>
-// CHECK-NEXT:     %c1_i32 = arith.constant 1 : i32
-// CHECK-NEXT:     %c0_i32 = arith.constant 0 : i32
-// CHECK-NEXT:     %c8128_i32 = arith.constant 8128 : i32
-// CHECK-NEXT:     %c28_i32 = arith.constant 28 : i32
-// CHECK-NEXT:     %c131072_i32 = arith.constant 131072 : i32
-// CHECK-NEXT:     %cst_3 = arith.constant dense<true> : tensor<128x128xi1>
-// CHECK-NEXT:     %cst_4 = arith.constant dense<128> : tensor<128x1xi32>
-// CHECK-NEXT:     %cst_5 = arith.constant dense<true> : tensor<64x128xi1>
-// CHECK-NEXT:     %cst_6 = arith.constant dense<128> : tensor<64x1xi32>
-// CHECK-NEXT:     %c64_i32 = arith.constant 64 : i32
-// CHECK-NEXT:     %c8388608_i32 = arith.constant 8388608 : i32
-// CHECK-NEXT:     %c1048576_i32 = arith.constant 1048576 : i32
-// CHECK-NEXT:     %c8_i32 = arith.constant 8 : i32
-// CHECK-NEXT:     %c8192_i32 = arith.constant 8192 : i32
-// CHECK-NEXT:     %c128_i32 = arith.constant 128 : i32
-// CHECK-NEXT:     %0 = tt.get_program_id x : i32
-// CHECK-NEXT:     %1 = tt.make_range {end = 128 : i32, start = 0 : i32} : tensor<128xi32>
-// CHECK-NEXT:     %2 = tt.make_range {end = 64 : i32, start = 0 : i32} : tensor<64xi32>
-// CHECK-NEXT:     %3 = tt.expand_dims %1 {axis = 0 : i32} : tensor<128xi32> -> tensor<1x128xi32>
-// CHECK-NEXT:     %4 = tt.broadcast %3 : tensor<1x128xi32> -> tensor<64x128xi32>
-// CHECK-NEXT:     %5 = tt.splat %arg9 : f32 -> tensor<64x64xf32>
-// CHECK-NEXT:     %6 = tt.broadcast %3 : tensor<1x128xi32> -> tensor<128x128xi32>
-// CHECK-NEXT:     %7 = tt.splat %arg9 : f32 -> tensor<128x64xf32>
-// CHECK-NEXT:     scf.for %arg10 = %0 to %c131072_i32 step %c28_i32  : i32 {
-// CHECK-NEXT:       %8 = arith.divsi %arg10, %c128_i32 : i32
-// CHECK-NEXT:       %9 = arith.muli %8, %c128_i32 : i32
-// CHECK-NEXT:       %10 = arith.subi %arg10, %9 : i32
-// CHECK-NEXT:       %11 = arith.muli %8, %c8192_i32 : i32
-// CHECK-NEXT:       %12 = arith.extsi %11 : i32 to i64
-// CHECK-NEXT:       %13 = arith.remsi %8, %c8_i32 : i32
-// CHECK-NEXT:       %14 = arith.muli %13, %c1048576_i32 : i32
-// CHECK-NEXT:       %15 = arith.divsi %8, %c8_i32 : i32
-// CHECK-NEXT:       %16 = arith.muli %15, %c8388608_i32 : i32
-// CHECK-NEXT:       %17 = arith.addi %14, %16 : i32
-// CHECK-NEXT:       %18 = arith.extsi %17 : i32 to i64
-// CHECK-NEXT:       %19 = tt.addptr %arg0, %18 : !tt.ptr<f16>, i64
-// CHECK-NEXT:       %20 = tt.addptr %arg1, %18 : !tt.ptr<f16>, i64
-// CHECK-NEXT:       %21 = tt.addptr %arg2, %18 : !tt.ptr<f16>, i64
-// CHECK-NEXT:       %22 = tt.addptr %arg3, %18 : !tt.ptr<f16>, i64
-// CHECK-NEXT:       %23 = tt.addptr %arg4, %18 : !tt.ptr<f16>, i64
-// CHECK-NEXT:       %24 = tt.addptr %arg5, %18 : !tt.ptr<f16>, i64
-// CHECK-NEXT:       %25 = tt.addptr %arg6, %18 : !tt.ptr<f16>, i64
-// CHECK-NEXT:       %26 = tt.addptr %arg7, %12 : !tt.ptr<f32>, i64
-// CHECK-NEXT:       %27 = tt.addptr %arg8, %12 : !tt.ptr<f32>, i64
-// CHECK-NEXT:       %28 = arith.muli %10, %c64_i32 : i32
-// CHECK-NEXT:       %29 = tt.splat %28 : i32 -> tensor<64xi32>
-// CHECK-NEXT:       %30 = arith.addi %29, %2 : tensor<64xi32>
-// CHECK-NEXT:       %31 = tt.expand_dims %30 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32>
-// CHECK-NEXT:       %32 = arith.muli %31, %cst_6 : tensor<64x1xi32>
-// CHECK-NEXT:       %33 = tt.splat %20 : !tt.ptr<f16> -> tensor<64x1x!tt.ptr<f16>>
-// CHECK-NEXT:       %34 = tt.addptr %33, %32 : tensor<64x1x!tt.ptr<f16>>, tensor<64x1xi32>
-// CHECK-NEXT:       %35 = tt.broadcast %34 : tensor<64x1x!tt.ptr<f16>> -> tensor<64x128x!tt.ptr<f16>>
-// CHECK-NEXT:       %36 = tt.addptr %35, %4 : tensor<64x128x!tt.ptr<f16>>, tensor<64x128xi32>
-// CHECK-NEXT:       %37 = tt.load %36 : tensor<64x128x!tt.ptr<f16>>
-// CHECK-NEXT:       %38 = tt.splat %21 : !tt.ptr<f16> -> tensor<64x1x!tt.ptr<f16>>
-// CHECK-NEXT:       %39 = tt.addptr %38, %32 : tensor<64x1x!tt.ptr<f16>>, tensor<64x1xi32>
-// CHECK-NEXT:       %40 = tt.broadcast %39 : tensor<64x1x!tt.ptr<f16>> -> tensor<64x128x!tt.ptr<f16>>
-// CHECK-NEXT:       %41 = tt.addptr %40, %4 : tensor<64x128x!tt.ptr<f16>>, tensor<64x128xi32>
-// CHECK-NEXT:       %42 = tt.load %41 : tensor<64x128x!tt.ptr<f16>>
-// CHECK-NEXT:       %43 = tt.splat %19 : !tt.ptr<f16> -> tensor<64x1x!tt.ptr<f16>>
-// CHECK-NEXT:       %44 = tt.addptr %43, %32 : tensor<64x1x!tt.ptr<f16>>, tensor<64x1xi32>
-// CHECK-NEXT:       %45 = tt.broadcast %44 : tensor<64x1x!tt.ptr<f16>> -> tensor<64x128x!tt.ptr<f16>>
-// CHECK-NEXT:       %46 = tt.addptr %45, %4 : tensor<64x128x!tt.ptr<f16>>, tensor<64x128xi32>
-// CHECK-NEXT:       %47 = tt.load %46 : tensor<64x128x!tt.ptr<f16>>
-// CHECK-NEXT:       %48 = tt.splat %22 : !tt.ptr<f16> -> tensor<64x1x!tt.ptr<f16>>
-// CHECK-NEXT:       %49 = tt.addptr %48, %32 : tensor<64x1x!tt.ptr<f16>>, tensor<64x1xi32>
-// CHECK-NEXT:       %50 = tt.broadcast %49 : tensor<64x1x!tt.ptr<f16>> -> tensor<64x128x!tt.ptr<f16>>
-// CHECK-NEXT:       %51 = tt.addptr %50, %4 : tensor<64x128x!tt.ptr<f16>>, tensor<64x128xi32>
-// CHECK-NEXT:       %52 = tt.load %51 : tensor<64x128x!tt.ptr<f16>>
-// CHECK-NEXT:       %53 = tt.splat %26 : !tt.ptr<f32> -> tensor<64x!tt.ptr<f32>>
-// CHECK-NEXT:       %54 = tt.addptr %53, %30 : tensor<64x!tt.ptr<f32>>, tensor<64xi32>
-// CHECK-NEXT:       %55 = tt.load %54 : tensor<64x!tt.ptr<f32>>
-// CHECK-NEXT:       %56 = tt.splat %27 : !tt.ptr<f32> -> tensor<64x!tt.ptr<f32>>
-// CHECK-NEXT:       %57 = tt.addptr %56, %30 : tensor<64x!tt.ptr<f32>>, tensor<64xi32>
-// CHECK-NEXT:       %58 = tt.load %57 : tensor<64x!tt.ptr<f32>>
-// CHECK-NEXT:       %59 = tt.trans %37 {order = array<i32: 1, 0>} : tensor<64x128xf16> -> tensor<128x64xf16>
-// CHECK-NEXT:       %60 = tt.dot %47, %59, %cst_1 {triton_cv12.normalized_dot} : tensor<64x128xf16> * tensor<128x64xf16> -> tensor<64x64xf32>
-// CHECK-NEXT:       %61 = arith.mulf %60, %5 : tensor<64x64xf32>
-// CHECK-NEXT:       %62 = tt.expand_dims %55 {axis = 1 : i32} : tensor<64xf32> -> tensor<64x1xf32>
-// CHECK-NEXT:       %63 = tt.broadcast %62 : tensor<64x1xf32> -> tensor<64x64xf32>
-// CHECK-NEXT:       %64 = arith.subf %61, %63 : tensor<64x64xf32>
-// CHECK-NEXT:       %65 = math.exp %64 : tensor<64x64xf32>
-// CHECK-NEXT:       %66 = tt.expand_dims %30 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32>
-// CHECK-NEXT:       %67 = tt.broadcast %31 : tensor<64x1xi32> -> tensor<64x64xi32>
-// CHECK-NEXT:       %68 = tt.broadcast %66 : tensor<1x64xi32> -> tensor<64x64xi32>
-// CHECK-NEXT:       %69 = arith.cmpi sge, %67, %68 : tensor<64x64xi32>
-// CHECK-NEXT:       %70 = arith.select %69, %65, %cst_1 : tensor<64x64xi1>, tensor<64x64xf32>
-// CHECK-NEXT:       %71 = arith.truncf %70 : tensor<64x64xf32> to tensor<64x64xf16>
-// CHECK-NEXT:       %72 = tt.trans %71 {order = array<i32: 1, 0>} : tensor<64x64xf16> -> tensor<64x64xf16>
-// CHECK-NEXT:       %73 = tt.dot %72, %52, %cst_2 {triton_cv12.normalized_dot} : tensor<64x64xf16> * tensor<64x128xf16> -> tensor<64x128xf32>
-// CHECK-NEXT:       %74 = tt.trans %42 {order = array<i32: 1, 0>} : tensor<64x128xf16> -> tensor<128x64xf16>
-// CHECK-NEXT:       %75 = tt.dot %52, %74, %cst_1 {triton_cv12.normalized_dot} : tensor<64x128xf16> * tensor<128x64xf16> -> tensor<64x64xf32>
-// CHECK-NEXT:       %76 = tt.expand_dims %58 {axis = 1 : i32} : tensor<64xf32> -> tensor<64x1xf32>
-// CHECK-NEXT:       %77 = tt.broadcast %76 : tensor<64x1xf32> -> tensor<64x64xf32>
-// CHECK-NEXT:       %78 = arith.subf %75, %77 : tensor<64x64xf32>
-// CHECK-NEXT:       %79 = arith.extf %71 : tensor<64x64xf16> to tensor<64x64xf32>
-// CHECK-NEXT:       %80 = arith.mulf %79, %78 : tensor<64x64xf32>
-// CHECK-NEXT:       %81 = arith.mulf %80, %5 : tensor<64x64xf32>
-// CHECK-NEXT:       %82 = arith.truncf %81 : tensor<64x64xf32> to tensor<64x64xf16>
-// CHECK-NEXT:       %83 = tt.trans %82 {order = array<i32: 1, 0>} : tensor<64x64xf16> -> tensor<64x64xf16>
-// CHECK-NEXT:       %84 = tt.dot %83, %47, %cst_2 {triton_cv12.normalized_dot} : tensor<64x64xf16> * tensor<64x128xf16> -> tensor<64x128xf32>
-// CHECK-NEXT:       %85 = tt.dot %82, %37, %cst_2 {triton_cv12.normalized_dot} : tensor<64x64xf16> * tensor<64x128xf16> -> tensor<64x128xf32>
-// CHECK-NEXT:       %86 = tt.splat %23 : !tt.ptr<f16> -> tensor<64x1x!tt.ptr<f16>>
-// CHECK-NEXT:       %87 = tt.addptr %86, %32 : tensor<64x1x!tt.ptr<f16>>, tensor<64x1xi32>
-// CHECK-NEXT:       %88 = tt.broadcast %87 : tensor<64x1x!tt.ptr<f16>> -> tensor<64x128x!tt.ptr<f16>>
-// CHECK-NEXT:       %89 = tt.addptr %88, %4 : tensor<64x128x!tt.ptr<f16>>, tensor<64x128xi32>
-// CHECK-NEXT:       %90 = arith.truncf %85 : tensor<64x128xf32> to tensor<64x128xf16>
-// CHECK-NEXT:       %91 = tt.atomic_rmw fadd, acq_rel, gpu, %89, %90, %cst_5 : (tensor<64x128x!tt.ptr<f16>>, tensor<64x128xf16>, tensor<64x128xi1>) -> tensor<64x128xf16>
-// CHECK-NEXT:       %92 = arith.addi %28, %c64_i32 : i32
-// CHECK-NEXT:       %93 = arith.subi %c8128_i32, %28 : i32
-// CHECK-NEXT:       %94 = arith.divsi %93, %c128_i32 : i32
-// CHECK-NEXT:       %95 = tt.splat %19 : !tt.ptr<f16> -> tensor<128x1x!tt.ptr<f16>>
-// CHECK-NEXT:       %96 = tt.splat %22 : !tt.ptr<f16> -> tensor<128x1x!tt.ptr<f16>>
-// CHECK-NEXT:       %97 = tt.splat %26 : !tt.ptr<f32> -> tensor<128x!tt.ptr<f32>>
-// CHECK-NEXT:       %98 = tt.splat %27 : !tt.ptr<f32> -> tensor<128x!tt.ptr<f32>>
-// CHECK-NEXT:       %99 = tt.splat %23 : !tt.ptr<f16> -> tensor<128x1x!tt.ptr<f16>>
-// CHECK-NEXT:       %100:2 = scf.for %arg11 = %c0_i32 to %94 step %c1_i32 iter_args(%arg12 = %84, %arg13 = %73) -> (tensor<64x128xf32>, tensor<64x128xf32>)  : i32 {
-// CHECK-NEXT:         %111 = arith.muli %arg11, %c128_i32 : i32
-// CHECK-NEXT:         %112 = arith.addi %92, %111 : i32
-// CHECK-NEXT:         %113 = tt.splat %112 : i32 -> tensor<128xi32>
-// CHECK-NEXT:         %114 = arith.addi %113, %1 : tensor<128xi32>
-// CHECK-NEXT:         %115 = tt.expand_dims %114 {axis = 1 : i32} : tensor<128xi32> -> tensor<128x1xi32>
-// CHECK-NEXT:         %116 = arith.muli %115, %cst_4 : tensor<128x1xi32>
-// CHECK-NEXT:         %117 = tt.addptr %95, %116 : tensor<128x1x!tt.ptr<f16>>, tensor<128x1xi32>
-// CHECK-NEXT:         %118 = tt.broadcast %117 : tensor<128x1x!tt.ptr<f16>> -> tensor<128x128x!tt.ptr<f16>>
-// CHECK-NEXT:         %119 = tt.addptr %118, %6 : tensor<128x128x!tt.ptr<f16>>, tensor<128x128xi32>
-// CHECK-NEXT:         %120 = tt.load %119 : tensor<128x128x!tt.ptr<f16>>
-// CHECK-NEXT:         %121 = tt.addptr %96, %116 : tensor<128x1x!tt.ptr<f16>>, tensor<128x1xi32>
-// CHECK-NEXT:         %122 = tt.broadcast %121 : tensor<128x1x!tt.ptr<f16>> -> tensor<128x128x!tt.ptr<f16>>
-// CHECK-NEXT:         %123 = tt.addptr %122, %6 : tensor<128x128x!tt.ptr<f16>>, tensor<128x128xi32>
-// CHECK-NEXT:         %124 = tt.load %123 : tensor<128x128x!tt.ptr<f16>>
-// CHECK-NEXT:         %125 = tt.addptr %97, %114 : tensor<128x!tt.ptr<f32>>, tensor<128xi32>
-// CHECK-NEXT:         %126 = tt.load %125 : tensor<128x!tt.ptr<f32>>
-// CHECK-NEXT:         %127 = tt.addptr %98, %114 : tensor<128x!tt.ptr<f32>>, tensor<128xi32>
-// CHECK-NEXT:         %128 = tt.load %127 : tensor<128x!tt.ptr<f32>>
-// CHECK-NEXT:         %129 = tt.dot %120, %59, %cst {triton_cv12.normalized_dot} : tensor<128x128xf16> * tensor<128x64xf16> -> tensor<128x64xf32>
-// CHECK-NEXT:         %130 = arith.mulf %129, %7 : tensor<128x64xf32>
-// CHECK-NEXT:         %131 = tt.expand_dims %126 {axis = 1 : i32} : tensor<128xf32> -> tensor<128x1xf32>
-// CHECK-NEXT:         %132 = tt.broadcast %131 : tensor<128x1xf32> -> tensor<128x64xf32>
-// CHECK-NEXT:         %133 = arith.subf %130, %132 : tensor<128x64xf32>
-// CHECK-NEXT:         %134 = math.exp %133 : tensor<128x64xf32>
-// CHECK-NEXT:         %135 = arith.truncf %134 : tensor<128x64xf32> to tensor<128x64xf16>
-// CHECK-NEXT:         %136 = tt.trans %135 {order = array<i32: 1, 0>} : tensor<128x64xf16> -> tensor<64x128xf16>
-// CHECK-NEXT:         %137 = tt.dot %136, %124, %arg13 {triton_cv12.normalized_dot} : tensor<64x128xf16> * tensor<128x128xf16> -> tensor<64x128xf32>
-// CHECK-NEXT:         %138 = tt.dot %124, %74, %cst {triton_cv12.normalized_dot} : tensor<128x128xf16> * tensor<128x64xf16> -> tensor<128x64xf32>
-// CHECK-NEXT:         %139 = tt.expand_dims %128 {axis = 1 : i32} : tensor<128xf32> -> tensor<128x1xf32>
-// CHECK-NEXT:         %140 = tt.broadcast %139 : tensor<128x1xf32> -> tensor<128x64xf32>
-// CHECK-NEXT:         %141 = arith.subf %138, %140 : tensor<128x64xf32>
-// CHECK-NEXT:         %142 = arith.extf %135 : tensor<128x64xf16> to tensor<128x64xf32>
-// CHECK-NEXT:         %143 = arith.mulf %142, %141 : tensor<128x64xf32>
-// CHECK-NEXT:         %144 = arith.mulf %143, %7 : tensor<128x64xf32>
-// CHECK-NEXT:         %145 = arith.truncf %144 : tensor<128x64xf32> to tensor<128x64xf16>
-// CHECK-NEXT:         %146 = tt.trans %145 {order = array<i32: 1, 0>} : tensor<128x64xf16> -> tensor<64x128xf16>
-// CHECK-NEXT:         %147 = tt.dot %146, %120, %arg12 {triton_cv12.normalized_dot} : tensor<64x128xf16> * tensor<128x128xf16> -> tensor<64x128xf32>
-// CHECK-NEXT:         %148 = tt.dot %145, %37, %cst_0 {triton_cv12.normalized_dot} : tensor<128x64xf16> * tensor<64x128xf16> -> tensor<128x128xf32>
-// CHECK-NEXT:         %149 = tt.addptr %99, %116 : tensor<128x1x!tt.ptr<f16>>, tensor<128x1xi32>
-// CHECK-NEXT:         %150 = tt.broadcast %149 : tensor<128x1x!tt.ptr<f16>> -> tensor<128x128x!tt.ptr<f16>>
-// CHECK-NEXT:         %151 = tt.addptr %150, %6 : tensor<128x128x!tt.ptr<f16>>, tensor<128x128xi32>
-// CHECK-NEXT:         %152 = arith.truncf %148 : tensor<128x128xf32> to tensor<128x128xf16>
-// CHECK-NEXT:         %153 = tt.atomic_rmw fadd, acq_rel, gpu, %151, %152, %cst_3 : (tensor<128x128x!tt.ptr<f16>>, tensor<128x128xf16>, tensor<128x128xi1>) -> tensor<128x128xf16>
-// CHECK-NEXT:         scf.yield %147, %137 : tensor<64x128xf32>, tensor<64x128xf32>
-// CHECK-NEXT:       }
-// CHECK-NEXT:       %101 = tt.splat %24 : !tt.ptr<f16> -> tensor<64x1x!tt.ptr<f16>>
-// CHECK-NEXT:       %102 = tt.addptr %101, %32 : tensor<64x1x!tt.ptr<f16>>, tensor<64x1xi32>
-// CHECK-NEXT:       %103 = tt.broadcast %102 : tensor<64x1x!tt.ptr<f16>> -> tensor<64x128x!tt.ptr<f16>>
-// CHECK-NEXT:       %104 = tt.addptr %103, %4 : tensor<64x128x!tt.ptr<f16>>, tensor<64x128xi32>
-// CHECK-NEXT:       %105 = arith.truncf %100#0 : tensor<64x128xf32> to tensor<64x128xf16>
-// CHECK-NEXT:       tt.store %104, %105 : tensor<64x128x!tt.ptr<f16>>
-// CHECK-NEXT:       %106 = tt.splat %25 : !tt.ptr<f16> -> tensor<64x1x!tt.ptr<f16>>
-// CHECK-NEXT:       %107 = tt.addptr %106, %32 : tensor<64x1x!tt.ptr<f16>>, tensor<64x1xi32>
-// CHECK-NEXT:       %108 = tt.broadcast %107 : tensor<64x1x!tt.ptr<f16>> -> tensor<64x128x!tt.ptr<f16>>
-// CHECK-NEXT:       %109 = tt.addptr %108, %4 : tensor<64x128x!tt.ptr<f16>>, tensor<64x128xi32>
-// CHECK-NEXT:       %110 = arith.truncf %100#1 : tensor<64x128xf32> to tensor<64x128xf16>
-// CHECK-NEXT:       tt.store %109, %110 : tensor<64x128x!tt.ptr<f16>>
-// CHECK-NEXT:     }
-// CHECK-NEXT:     tt.return
-// CHECK-NEXT:   }
-// CHECK-NEXT: }
-#loc = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":131:0)
-module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
-  tt.func public @_attn_bwd(%arg0: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":131:0), %arg1: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":131:0), %arg2: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":131:0), %arg3: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":131:0), %arg4: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":131:0), %arg5: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":131:0), %arg6: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":131:0), %arg7: !tt.ptr<f32> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":131:0), %arg8: !tt.ptr<f32> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":131:0), %arg9: f32 loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":131:0)) attributes {noinline = false} {
-    %cst = arith.constant dense<0.000000e+00> : tensor<128x64xf32> loc(#loc1)
-    %cst_0 = arith.constant dense<0.000000e+00> : tensor<128x128xf32> loc(#loc1)
-    %cst_1 = arith.constant dense<0.000000e+00> : tensor<64x64xf32> loc(#loc1)
-    %cst_2 = arith.constant dense<0.000000e+00> : tensor<64x128xf32> loc(#loc1)
-    %c1_i32 = arith.constant 1 : i32 loc(#loc1)
-    %c0_i32 = arith.constant 0 : i32 loc(#loc1)
-    %c8128_i32 = arith.constant 8128 : i32 loc(#loc1)
-    %c28_i32 = arith.constant 28 : i32 loc(#loc1)
-    %c131072_i32 = arith.constant 131072 : i32 loc(#loc1)
-    %cst_3 = arith.constant dense<true> : tensor<128x128xi1> loc(#loc1)
-    %cst_4 = arith.constant dense<128> : tensor<128x1xi32> loc(#loc1)
-    %cst_5 = arith.constant dense<true> : tensor<64x128xi1> loc(#loc1)
-    %cst_6 = arith.constant dense<128> : tensor<64x1xi32> loc(#loc1)
-    %c64_i32 = arith.constant 64 : i32 loc(#loc1)
-    %c8388608_i32 = arith.constant 8388608 : i32 loc(#loc1)
-    %c1048576_i32 = arith.constant 1048576 : i32 loc(#loc1)
-    %c8_i32 = arith.constant 8 : i32 loc(#loc1)
-    %c8192_i32 = arith.constant 8192 : i32 loc(#loc1)
-    %c128_i32 = arith.constant 128 : i32 loc(#loc1)
-    %0 = tt.get_program_id x : i32 loc(#loc2)
-    %1 = tt.make_range {end = 128 : i32, start = 0 : i32} : tensor<128xi32> loc(#loc3)
-    %2 = tt.make_range {end = 64 : i32, start = 0 : i32} : tensor<64xi32> loc(#loc4)
-    %3 = tt.expand_dims %1 {axis = 0 : i32} : tensor<128xi32> -> tensor<1x128xi32> loc(#loc5)
-    %4 = tt.broadcast %3 : tensor<1x128xi32> -> tensor<64x128xi32> loc(#loc6)
-    %5 = tt.splat %arg9 : f32 -> tensor<64x64xf32> loc(#loc97)
-    %6 = tt.broadcast %3 : tensor<1x128xi32> -> tensor<128x128xi32> loc(#loc9)
-    %7 = tt.splat %arg9 : f32 -> tensor<128x64xf32> loc(#loc98)
-    scf.for %arg10 = %0 to %c131072_i32 step %c28_i32  : i32 {
-      %8 = arith.divsi %arg10, %c128_i32 : i32 loc(#loc12)
-      %9 = arith.muli %8, %c128_i32 : i32 loc(#loc13)
-      %10 = arith.subi %arg10, %9 : i32 loc(#loc14)
-      %11 = arith.muli %8, %c8192_i32 : i32 loc(#loc15)
-      %12 = arith.extsi %11 : i32 to i64 loc(#loc16)
-      %13 = arith.remsi %8, %c8_i32 : i32 loc(#loc17)
-      %14 = arith.muli %13, %c1048576_i32 : i32 loc(#loc18)
-      %15 = arith.divsi %8, %c8_i32 : i32 loc(#loc19)
-      %16 = arith.muli %15, %c8388608_i32 : i32 loc(#loc20)
-      %17 = arith.addi %14, %16 : i32 loc(#loc21)
-      %18 = arith.extsi %17 : i32 to i64 loc(#loc22)
-      %19 = tt.addptr %arg0, %18 : !tt.ptr<f16>, i64 loc(#loc23)
-      %20 = tt.addptr %arg1, %18 : !tt.ptr<f16>, i64 loc(#loc24)
-      %21 = tt.addptr %arg2, %18 : !tt.ptr<f16>, i64 loc(#loc25)
-      %22 = tt.addptr %arg3, %18 : !tt.ptr<f16>, i64 loc(#loc26)
-      %23 = tt.addptr %arg4, %18 : !tt.ptr<f16>, i64 loc(#loc27)
-      %24 = tt.addptr %arg5, %18 : !tt.ptr<f16>, i64 loc(#loc28)
-      %25 = tt.addptr %arg6, %18 : !tt.ptr<f16>, i64 loc(#loc29)
-      %26 = tt.addptr %arg7, %12 : !tt.ptr<f32>, i64 loc(#loc30)
-      %27 = tt.addptr %arg8, %12 : !tt.ptr<f32>, i64 loc(#loc31)
-      %28 = arith.muli %10, %c64_i32 : i32 loc(#loc32)
-      %29 = tt.splat %28 : i32 -> tensor<64xi32> loc(#loc33)
-      %30 = arith.addi %29, %2 : tensor<64xi32> loc(#loc33)
-      %31 = tt.expand_dims %30 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32> loc(#loc34)
-      %32 = arith.muli %31, %cst_6 : tensor<64x1xi32> loc(#loc35)
-      %33 = tt.splat %20 : !tt.ptr<f16> -> tensor<64x1x!tt.ptr<f16>> loc(#loc36)
-      %34 = tt.addptr %33, %32 : tensor<64x1x!tt.ptr<f16>>, tensor<64x1xi32> loc(#loc36)
-      %35 = tt.broadcast %34 : tensor<64x1x!tt.ptr<f16>> -> tensor<64x128x!tt.ptr<f16>> loc(#loc6)
-      %36 = tt.addptr %35, %4 : tensor<64x128x!tt.ptr<f16>>, tensor<64x128xi32> loc(#loc6)
-      %37 = tt.load %36 : tensor<64x128x!tt.ptr<f16>> loc(#loc37)
-      %38 = tt.splat %21 : !tt.ptr<f16> -> tensor<64x1x!tt.ptr<f16>> loc(#loc38)
-      %39 = tt.addptr %38, %32 : tensor<64x1x!tt.ptr<f16>>, tensor<64x1xi32> loc(#loc38)
-      %40 = tt.broadcast %39 : tensor<64x1x!tt.ptr<f16>> -> tensor<64x128x!tt.ptr<f16>> loc(#loc39)
-      %41 = tt.addptr %40, %4 : tensor<64x128x!tt.ptr<f16>>, tensor<64x128xi32> loc(#loc39)
-      %42 = tt.load %41 : tensor<64x128x!tt.ptr<f16>> loc(#loc40)
-      %43 = tt.splat %19 : !tt.ptr<f16> -> tensor<64x1x!tt.ptr<f16>> loc(#loc41)
-      %44 = tt.addptr %43, %32 : tensor<64x1x!tt.ptr<f16>>, tensor<64x1xi32> loc(#loc41)
-      %45 = tt.broadcast %44 : tensor<64x1x!tt.ptr<f16>> -> tensor<64x128x!tt.ptr<f16>> loc(#loc42)
-      %46 = tt.addptr %45, %4 : tensor<64x128x!tt.ptr<f16>>, tensor<64x128xi32> loc(#loc42)
-      %47 = tt.load %46 : tensor<64x128x!tt.ptr<f16>> loc(#loc43)
-      %48 = tt.splat %22 : !tt.ptr<f16> -> tensor<64x1x!tt.ptr<f16>> loc(#loc99)
-      %49 = tt.addptr %48, %32 : tensor<64x1x!tt.ptr<f16>>, tensor<64x1xi32> loc(#loc99)
-      %50 = tt.broadcast %49 : tensor<64x1x!tt.ptr<f16>> -> tensor<64x128x!tt.ptr<f16>> loc(#loc100)
-      %51 = tt.addptr %50, %4 : tensor<64x128x!tt.ptr<f16>>, tensor<64x128xi32> loc(#loc100)
-      %52 = tt.load %51 : tensor<64x128x!tt.ptr<f16>> loc(#loc101)
-      %53 = tt.splat %26 : !tt.ptr<f32> -> tensor<64x!tt.ptr<f32>> loc(#loc102)
-      %54 = tt.addptr %53, %30 : tensor<64x!tt.ptr<f32>>, tensor<64xi32> loc(#loc102)
-      %55 = tt.load %54 : tensor<64x!tt.ptr<f32>> loc(#loc103)
-      %56 = tt.splat %27 : !tt.ptr<f32> -> tensor<64x!tt.ptr<f32>> loc(#loc104)
-      %57 = tt.addptr %56, %30 : tensor<64x!tt.ptr<f32>>, tensor<64xi32> loc(#loc104)
-      %58 = tt.load %57 : tensor<64x!tt.ptr<f32>> loc(#loc105)
-      %59 = tt.trans %37 {order = array<i32: 1, 0>} : tensor<64x128xf16> -> tensor<128x64xf16> loc(#loc106)
-      %60 = tt.dot %47, %59, %cst_1 : tensor<64x128xf16> * tensor<128x64xf16> -> tensor<64x64xf32> loc(#loc107)
-      %61 = arith.mulf %60, %5 : tensor<64x64xf32> loc(#loc97)
-      %62 = tt.expand_dims %55 {axis = 1 : i32} : tensor<64xf32> -> tensor<64x1xf32> loc(#loc108)
-      %63 = tt.broadcast %62 : tensor<64x1xf32> -> tensor<64x64xf32> loc(#loc109)
-      %64 = arith.subf %61, %63 : tensor<64x64xf32> loc(#loc109)
-      %65 = math.exp %64 : tensor<64x64xf32> loc(#loc110)
-      %66 = tt.expand_dims %30 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32> loc(#loc111)
-      %67 = tt.broadcast %31 : tensor<64x1xi32> -> tensor<64x64xi32> loc(#loc112)
-      %68 = tt.broadcast %66 : tensor<1x64xi32> -> tensor<64x64xi32> loc(#loc112)
-      %69 = arith.cmpi sge, %67, %68 : tensor<64x64xi32> loc(#loc112)
-      %70 = arith.select %69, %65, %cst_1 : tensor<64x64xi1>, tensor<64x64xf32> loc(#loc113)
-      %71 = arith.truncf %70 : tensor<64x64xf32> to tensor<64x64xf16> loc(#loc114)
-      %72 = tt.trans %71 {order = array<i32: 1, 0>} : tensor<64x64xf16> -> tensor<64x64xf16> loc(#loc115)
-      %73 = tt.dot %72, %52, %cst_2 : tensor<64x64xf16> * tensor<64x128xf16> -> tensor<64x128xf32> loc(#loc116)
-      %74 = tt.trans %42 {order = array<i32: 1, 0>} : tensor<64x128xf16> -> tensor<128x64xf16> loc(#loc117)
-      %75 = tt.dot %52, %74, %cst_1 : tensor<64x128xf16> * tensor<128x64xf16> -> tensor<64x64xf32> loc(#loc118)
-      %76 = tt.expand_dims %58 {axis = 1 : i32} : tensor<64xf32> -> tensor<64x1xf32> loc(#loc119)
-      %77 = tt.broadcast %76 : tensor<64x1xf32> -> tensor<64x64xf32> loc(#loc120)
-      %78 = arith.subf %75, %77 : tensor<64x64xf32> loc(#loc120)
-      %79 = arith.extf %71 : tensor<64x64xf16> to tensor<64x64xf32> loc(#loc121)
-      %80 = arith.mulf %79, %78 : tensor<64x64xf32> loc(#loc121)
-      %81 = arith.mulf %80, %5 : tensor<64x64xf32> loc(#loc122)
-      %82 = arith.truncf %81 : tensor<64x64xf32> to tensor<64x64xf16> loc(#loc123)
-      %83 = tt.trans %82 {order = array<i32: 1, 0>} : tensor<64x64xf16> -> tensor<64x64xf16> loc(#loc124)
-      %84 = tt.dot %83, %47, %cst_2 : tensor<64x64xf16> * tensor<64x128xf16> -> tensor<64x128xf32> loc(#loc125)
-      %85 = tt.dot %82, %37, %cst_2 : tensor<64x64xf16> * tensor<64x128xf16> -> tensor<64x128xf32> loc(#loc126)
-      %86 = tt.splat %23 : !tt.ptr<f16> -> tensor<64x1x!tt.ptr<f16>> loc(#loc72)
-      %87 = tt.addptr %86, %32 : tensor<64x1x!tt.ptr<f16>>, tensor<64x1xi32> loc(#loc72)
-      %88 = tt.broadcast %87 : tensor<64x1x!tt.ptr<f16>> -> tensor<64x128x!tt.ptr<f16>> loc(#loc73)
-      %89 = tt.addptr %88, %4 : tensor<64x128x!tt.ptr<f16>>, tensor<64x128xi32> loc(#loc73)
-      %90 = arith.truncf %85 : tensor<64x128xf32> to tensor<64x128xf16> loc(#loc74)
-      %91 = tt.atomic_rmw fadd, acq_rel, gpu, %89, %90, %cst_5 : (tensor<64x128x!tt.ptr<f16>>, tensor<64x128xf16>, tensor<64x128xi1>) -> tensor<64x128xf16> loc(#loc74)
-      %92 = arith.addi %28, %c64_i32 : i32 loc(#loc75)
-      %93 = arith.subi %c8128_i32, %28 : i32 loc(#loc76)
-      %94 = arith.divsi %93, %c128_i32 : i32 loc(#loc77)
-      %95 = tt.splat %19 : !tt.ptr<f16> -> tensor<128x1x!tt.ptr<f16>> loc(#loc78)
-      %96 = tt.splat %22 : !tt.ptr<f16> -> tensor<128x1x!tt.ptr<f16>> loc(#loc127)
-      %97 = tt.splat %26 : !tt.ptr<f32> -> tensor<128x!tt.ptr<f32>> loc(#loc128)
-      %98 = tt.splat %27 : !tt.ptr<f32> -> tensor<128x!tt.ptr<f32>> loc(#loc129)
-      %99 = tt.splat %23 : !tt.ptr<f16> -> tensor<128x1x!tt.ptr<f16>> loc(#loc79)
-      %100:2 = scf.for %arg11 = %c0_i32 to %94 step %c1_i32 iter_args(%arg12 = %84, %arg13 = %73) -> (tensor<64x128xf32>, tensor<64x128xf32>)  : i32 {
-        %111 = arith.muli %arg11, %c128_i32 : i32 loc(#loc81)
-        %112 = arith.addi %92, %111 : i32 loc(#loc82)
-        %113 = tt.splat %112 : i32 -> tensor<128xi32> loc(#loc83)
-        %114 = arith.addi %113, %1 : tensor<128xi32> loc(#loc83)
-        %115 = tt.expand_dims %114 {axis = 1 : i32} : tensor<128xi32> -> tensor<128x1xi32> loc(#loc84)
-        %116 = arith.muli %115, %cst_4 : tensor<128x1xi32> loc(#loc85)
-        %117 = tt.addptr %95, %116 : tensor<128x1x!tt.ptr<f16>>, tensor<128x1xi32> loc(#loc78)
-        %118 = tt.broadcast %117 : tensor<128x1x!tt.ptr<f16>> -> tensor<128x128x!tt.ptr<f16>> loc(#loc9)
-        %119 = tt.addptr %118, %6 : tensor<128x128x!tt.ptr<f16>>, tensor<128x128xi32> loc(#loc9)
-        %120 = tt.load %119 : tensor<128x128x!tt.ptr<f16>> loc(#loc86)
-        %121 = tt.addptr %96, %116 : tensor<128x1x!tt.ptr<f16>>, tensor<128x1xi32> loc(#loc127)
-        %122 = tt.broadcast %121 : tensor<128x1x!tt.ptr<f16>> -> tensor<128x128x!tt.ptr<f16>> loc(#loc130)
-        %123 = tt.addptr %122, %6 : tensor<128x128x!tt.ptr<f16>>, tensor<128x128xi32> loc(#loc130)
-        %124 = tt.load %123 : tensor<128x128x!tt.ptr<f16>> loc(#loc131)
-        %125 = tt.addptr %97, %114 : tensor<128x!tt.ptr<f32>>, tensor<128xi32> loc(#loc128)
-        %126 = tt.load %125 : tensor<128x!tt.ptr<f32>> loc(#loc132)
-        %127 = tt.addptr %98, %114 : tensor<128x!tt.ptr<f32>>, tensor<128xi32> loc(#loc129)
-        %128 = tt.load %127 : tensor<128x!tt.ptr<f32>> loc(#loc133)
-        %129 = tt.dot %120, %59, %cst : tensor<128x128xf16> * tensor<128x64xf16> -> tensor<128x64xf32> loc(#loc134)
-        %130 = arith.mulf %129, %7 : tensor<128x64xf32> loc(#loc98)
-        %131 = tt.expand_dims %126 {axis = 1 : i32} : tensor<128xf32> -> tensor<128x1xf32> loc(#loc135)
-        %132 = tt.broadcast %131 : tensor<128x1xf32> -> tensor<128x64xf32> loc(#loc136)
-        %133 = arith.subf %130, %132 : tensor<128x64xf32> loc(#loc136)
-        %134 = math.exp %133 : tensor<128x64xf32> loc(#loc137)
-        %135 = arith.truncf %134 : tensor<128x64xf32> to tensor<128x64xf16> loc(#loc138)
-        %136 = tt.trans %135 {order = array<i32: 1, 0>} : tensor<128x64xf16> -> tensor<64x128xf16> loc(#loc139)
-        %137 = tt.dot %136, %124, %arg13 : tensor<64x128xf16> * tensor<128x128xf16> -> tensor<64x128xf32> loc(#loc140)
-        %138 = tt.dot %124, %74, %cst : tensor<128x128xf16> * tensor<128x64xf16> -> tensor<128x64xf32> loc(#loc141)
-        %139 = tt.expand_dims %128 {axis = 1 : i32} : tensor<128xf32> -> tensor<128x1xf32> loc(#loc142)
-        %140 = tt.broadcast %139 : tensor<128x1xf32> -> tensor<128x64xf32> loc(#loc143)
-        %141 = arith.subf %138, %140 : tensor<128x64xf32> loc(#loc143)
-        %142 = arith.extf %135 : tensor<128x64xf16> to tensor<128x64xf32> loc(#loc144)
-        %143 = arith.mulf %142, %141 : tensor<128x64xf32> loc(#loc144)
-        %144 = arith.mulf %143, %7 : tensor<128x64xf32> loc(#loc145)
-        %145 = arith.truncf %144 : tensor<128x64xf32> to tensor<128x64xf16> loc(#loc146)
-        %146 = tt.trans %145 {order = array<i32: 1, 0>} : tensor<128x64xf16> -> tensor<64x128xf16> loc(#loc147)
-        %147 = tt.dot %146, %120, %arg12 : tensor<64x128xf16> * tensor<128x128xf16> -> tensor<64x128xf32> loc(#loc148)
-        %148 = tt.dot %145, %37, %cst_0 : tensor<128x64xf16> * tensor<64x128xf16> -> tensor<128x128xf32> loc(#loc149)
-        %149 = tt.addptr %99, %116 : tensor<128x1x!tt.ptr<f16>>, tensor<128x1xi32> loc(#loc79)
-        %150 = tt.broadcast %149 : tensor<128x1x!tt.ptr<f16>> -> tensor<128x128x!tt.ptr<f16>> loc(#loc87)
-        %151 = tt.addptr %150, %6 : tensor<128x128x!tt.ptr<f16>>, tensor<128x128xi32> loc(#loc87)
-        %152 = arith.truncf %148 : tensor<128x128xf32> to tensor<128x128xf16> loc(#loc88)
-        %153 = tt.atomic_rmw fadd, acq_rel, gpu, %151, %152, %cst_3 : (tensor<128x128x!tt.ptr<f16>>, tensor<128x128xf16>, tensor<128x128xi1>) -> tensor<128x128xf16> loc(#loc88)
-        scf.yield %147, %137 : tensor<64x128xf32>, tensor<64x128xf32> loc(#loc89)
-      } loc(#loc80)
-      %101 = tt.splat %24 : !tt.ptr<f16> -> tensor<64x1x!tt.ptr<f16>> loc(#loc90)
-      %102 = tt.addptr %101, %32 : tensor<64x1x!tt.ptr<f16>>, tensor<64x1xi32> loc(#loc90)
-      %103 = tt.broadcast %102 : tensor<64x1x!tt.ptr<f16>> -> tensor<64x128x!tt.ptr<f16>> loc(#loc91)
-      %104 = tt.addptr %103, %4 : tensor<64x128x!tt.ptr<f16>>, tensor<64x128xi32> loc(#loc91)
-      %105 = arith.truncf %100#0 : tensor<64x128xf32> to tensor<64x128xf16> loc(#loc92)
-      tt.store %104, %105 : tensor<64x128x!tt.ptr<f16>> loc(#loc92)
-      %106 = tt.splat %25 : !tt.ptr<f16> -> tensor<64x1x!tt.ptr<f16>> loc(#loc93)
-      %107 = tt.addptr %106, %32 : tensor<64x1x!tt.ptr<f16>>, tensor<64x1xi32> loc(#loc93)
-      %108 = tt.broadcast %107 : tensor<64x1x!tt.ptr<f16>> -> tensor<64x128x!tt.ptr<f16>> loc(#loc94)
-      %109 = tt.addptr %108, %4 : tensor<64x128x!tt.ptr<f16>>, tensor<64x128xi32> loc(#loc94)
-      %110 = arith.truncf %100#1 : tensor<64x128xf32> to tensor<64x128xf16> loc(#loc95)
-      tt.store %109, %110 : tensor<64x128x!tt.ptr<f16>> loc(#loc95)
-    } loc(#loc11)
-    tt.return loc(#loc96)
-  } loc(#loc)
-} loc(#loc)
-#loc1 = loc(unknown)
-#loc2 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":144:29)
-#loc3 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":150:26)
-#loc4 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":173:40)
-#loc5 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":176:62)
-#loc6 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":176:55)
-#loc7 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":98:25)
-#loc8 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":213:28)
-#loc9 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":231:63)
-#loc10 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":244:28)
-#loc11 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":152:43)
-#loc12 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":153:23)
-#loc13 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":154:28)
-#loc14 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":154:21)
-#loc15 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":156:26)
-#loc16 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":156:36)
-#loc17 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":157:34)
-#loc18 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":157:27)
-#loc19 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":157:59)
-#loc20 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":157:51)
-#loc21 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":157:39)
-#loc22 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":157:66)
-#loc23 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":160:23)
-#loc24 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":161:23)
-#loc25 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":162:23)
-#loc26 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":163:25)
-#loc27 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":164:25)
-#loc28 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":165:25)
-#loc29 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":166:25)
-#loc30 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":167:23)
-#loc31 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":168:23)
-#loc32 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":172:28)
-#loc33 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":173:27)
-#loc34 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":176:31)
-#loc35 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":176:42)
-#loc36 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":176:24)
-#loc37 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":176:20)
-#loc38 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":177:24)
-#loc39 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":177:55)
-#loc40 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":177:20)
-#loc41 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":200:32)
-#loc42 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":200:63)
-#loc43 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":200:28)
-#loc44 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":89:22)
-#loc45 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":89:53)
-#loc46 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":89:17)
-#loc47 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":90:20)
-#loc48 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":90:16)
-#loc49 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":91:21)
-#loc50 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":91:17)
-#loc51 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":94:18)
-#loc52 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":95:19)
-#loc53 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":98:38)
-#loc54 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":98:36)
-#loc55 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":98:20)
-#loc56 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":102:42)
-#loc57 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":102:35)
-#loc58 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":103:30)
-#loc59 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":107:13)
-#loc60 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":108:18)
-#loc61 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":109:21)
-#loc62 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":113:18)
-#loc63 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":114:20)
-#loc64 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":117:22)
-#loc65 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":117:19)
-#loc66 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":117:14)
-#loc67 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":117:34)
-#loc68 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":118:15)
-#loc69 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":121:19)
-#loc70 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":122:22)
-#loc71 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":126:21)
-#loc72 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":218:31)
-#loc73 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":218:62)
-#loc74 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":220:39)
-#loc75 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":223:32)
-#loc76 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":224:34)
-#loc77 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":224:46)
-#loc78 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":231:32)
-#loc79 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":249:31)
-#loc80 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":226:31)
-#loc81 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":227:43)
-#loc82 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":227:35)
-#loc83 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":228:34)
-#loc84 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":231:39)
-#loc85 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":231:50)
-#loc86 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":231:28)
-#loc87 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":249:62)
-#loc88 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":251:39)
-#loc89 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":251:16)
-#loc90 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":287:23)
-#loc91 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":287:54)
-#loc92 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":288:26)
-#loc93 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":290:23)
-#loc94 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":290:54)
-#loc95 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":291:26)
-#loc96 = loc("/home/z00959232/triton-ops/native/fa/test_fa_bwd.py":152:4)
-#loc97 = loc(callsite(#loc7 at #loc8))
-#loc98 = loc(callsite(#loc7 at #loc10))
-#loc99 = loc(callsite(#loc44 at #loc8))
-#loc100 = loc(callsite(#loc45 at #loc8))
-#loc101 = loc(callsite(#loc46 at #loc8))
-#loc102 = loc(callsite(#loc47 at #loc8))
-#loc103 = loc(callsite(#loc48 at #loc8))
-#loc104 = loc(callsite(#loc49 at #loc8))
-#loc105 = loc(callsite(#loc50 at #loc8))
-#loc106 = loc(callsite(#loc51 at #loc8))
-#loc107 = loc(callsite(#loc52 at #loc8))
-#loc108 = loc(callsite(#loc53 at #loc8))
-#loc109 = loc(callsite(#loc54 at #loc8))
-#loc110 = loc(callsite(#loc55 at #loc8))
-#loc111 = loc(callsite(#loc56 at #loc8))
-#loc112 = loc(callsite(#loc57 at #loc8))
-#loc113 = loc(callsite(#loc58 at #loc8))
-#loc114 = loc(callsite(#loc59 at #loc8))
-#loc115 = loc(callsite(#loc60 at #loc8))
-#loc116 = loc(callsite(#loc61 at #loc8))
-#loc117 = loc(callsite(#loc62 at #loc8))
-#loc118 = loc(callsite(#loc63 at #loc8))
-#loc119 = loc(callsite(#loc64 at #loc8))
-#loc120 = loc(callsite(#loc65 at #loc8))
-#loc121 = loc(callsite(#loc66 at #loc8))
-#loc122 = loc(callsite(#loc67 at #loc8))
-#loc123 = loc(callsite(#loc68 at #loc8))
-#loc124 = loc(callsite(#loc69 at #loc8))
-#loc125 = loc(callsite(#loc70 at #loc8))
-#loc126 = loc(callsite(#loc71 at #loc8))
-#loc127 = loc(callsite(#loc44 at #loc10))
-#loc128 = loc(callsite(#loc47 at #loc10))
-#loc129 = loc(callsite(#loc49 at #loc10))
-#loc130 = loc(callsite(#loc45 at #loc10))
-#loc131 = loc(callsite(#loc46 at #loc10))
-#loc132 = loc(callsite(#loc48 at #loc10))
-#loc133 = loc(callsite(#loc50 at #loc10))
-#loc134 = loc(callsite(#loc52 at #loc10))
-#loc135 = loc(callsite(#loc53 at #loc10))
-#loc136 = loc(callsite(#loc54 at #loc10))
-#loc137 = loc(callsite(#loc55 at #loc10))
-#loc138 = loc(callsite(#loc59 at #loc10))
-#loc139 = loc(callsite(#loc60 at #loc10))
-#loc140 = loc(callsite(#loc61 at #loc10))
-#loc141 = loc(callsite(#loc63 at #loc10))
-#loc142 = loc(callsite(#loc64 at #loc10))
-#loc143 = loc(callsite(#loc65 at #loc10))
-#loc144 = loc(callsite(#loc66 at #loc10))
-#loc145 = loc(callsite(#loc67 at #loc10))
-#loc146 = loc(callsite(#loc68 at #loc10))
-#loc147 = loc(callsite(#loc69 at #loc10))
-#loc148 = loc(callsite(#loc70 at #loc10))
-#loc149 = loc(callsite(#loc71 at #loc10))
-// -----
-// Source: gaoyou/sw/triton_ops/nsa_fa/bwd_dkdv.mlir
-// CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
-// CHECK-NEXT:   tt.func public @backward_dkdv(%arg0: !tt.ptr<f16> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<f16> {tt.divisibility = 16 : i32}, %arg2: !tt.ptr<f16> {tt.divisibility = 16 : i32}, %arg3: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg4: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg5: !tt.ptr<f16> {tt.divisibility = 16 : i32}, %arg6: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg7: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg8: !tt.ptr<i32> {tt.divisibility = 16 : i32}, %arg9: !tt.ptr<i32> {tt.divisibility = 16 : i32}, %arg10: i32 {tt.divisibility = 16 : i32}, %arg11: i32, %arg12: i32 {tt.divisibility = 16 : i32}, %arg13: i32 {tt.divisibility = 16 : i32}, %arg14: f32, %arg15: i1 {tt.divisibility = 16 : i32}, %arg16: i32 {tt.divisibility = 16 : i32}, %arg17: i32 {tt.divisibility = 16 : i32}, %arg18: i32 {tt.divisibility = 16 : i32}, %arg19: i32 {tt.divisibility = 16 : i32}, %arg20: i32 {tt.divisibility = 16 : i32}, %arg21: i32 {tt.divisibility = 16 : i32}, %arg22: i32, %arg23: i32, %arg24: i32 {tt.divisibility = 16 : i32}, %arg25: i32 {tt.divisibility = 16 : i32}, %arg26: i32 {tt.divisibility = 16 : i32}, %arg27: i32 {tt.divisibility = 16 : i32}, %arg28: i32 {tt.divisibility = 16 : i32}, %arg29: i32 {tt.divisibility = 16 : i32}, %arg30: i32 {tt.divisibility = 16 : i32}, %arg31: i32 {tt.divisibility = 16 : i32}, %arg32: i32, %arg33: i32 {tt.divisibility = 16 : i32}, %arg34: i32 {tt.divisibility = 16 : i32}) attributes {noinline = false} {
-// CHECK-NEXT:     %cst = arith.constant dense<0.000000e+00> : tensor<32x64xf32>
-// CHECK-NEXT:     %cst_0 = arith.constant dense<0xFF800000> : tensor<32x32xf32>
-// CHECK-NEXT:     %cst_1 = arith.constant dense<0.000000e+00> : tensor<32x32xf32>
-// CHECK-NEXT:     %c0_i32 = arith.constant 0 : i32
-// CHECK-NEXT:     %c1_i64 = arith.constant 1 : i64
-// CHECK-NEXT:     %c32_i32 = arith.constant 32 : i32
-// CHECK-NEXT:     %c1_i32 = arith.constant 1 : i32
-// CHECK-NEXT:     %cst_2 = arith.constant 1.44269502 : f32
-// CHECK-NEXT:     %0 = tt.get_program_id x : i32
-// CHECK-NEXT:     %1 = tt.get_num_programs x : i32
-// CHECK-NEXT:     %2 = arith.muli %arg32, %arg33 : i32
-// CHECK-NEXT:     %3 = arith.muli %2, %arg34 : i32
-// CHECK-NEXT:     %4 = arith.mulf %arg14, %cst_2 : f32
-// CHECK-NEXT:     scf.for %arg35 = %0 to %3 step %1  : i32 {
-// CHECK-NEXT:       %5 = arith.divsi %arg35, %arg34 : i32
-// CHECK-NEXT:       %6 = arith.divsi %5, %arg33 : i32
-// CHECK-NEXT:       %7 = arith.remsi %5, %arg33 : i32
-// CHECK-NEXT:       %8:2 = scf.if %arg15 -> (i32, i32) {
-// CHECK-NEXT:         %22 = arith.remsi %7, %arg11 : i32
-// CHECK-NEXT:         %23 = arith.divsi %7, %arg11 : i32
-// CHECK-NEXT:         scf.yield %22, %23 : i32, i32
-// CHECK-NEXT:       } else {
-// CHECK-NEXT:         %22 = arith.divsi %7, %arg11 : i32
-// CHECK-NEXT:         %23 = arith.remsi %7, %arg11 : i32
-// CHECK-NEXT:         scf.yield %22, %23 : i32, i32
-// CHECK-NEXT:       }
-// CHECK-NEXT:       %9 = arith.remsi %arg35, %arg34 : i32
-// CHECK-NEXT:       %10 = tt.addptr %arg8, %6 : !tt.ptr<i32>, i32
-// CHECK-NEXT:       %11 = tt.load %10 : !tt.ptr<i32>
-// CHECK-NEXT:       %12 = tt.addptr %10, %c1_i32 : !tt.ptr<i32>, i32
-// CHECK-NEXT:       %13 = tt.load %12 : !tt.ptr<i32>
-// CHECK-NEXT:       %14 = arith.subi %13, %11 : i32
-// CHECK-NEXT:       %15 = tt.addptr %arg9, %6 : !tt.ptr<i32>, i32
-// CHECK-NEXT:       %16 = tt.load %15 : !tt.ptr<i32>
-// CHECK-NEXT:       %17 = tt.addptr %15, %c1_i32 : !tt.ptr<i32>, i32
-// CHECK-NEXT:       %18 = tt.load %17 : !tt.ptr<i32>
-// CHECK-NEXT:       %19 = arith.subi %18, %16 : i32
-// CHECK-NEXT:       %20 = arith.muli %9, %c32_i32 : i32
-// CHECK-NEXT:       %21 = arith.cmpi slt, %20, %19 : i32
-// CHECK-NEXT:       scf.if %21 {
-// CHECK-NEXT:         %22 = arith.muli %16, %arg18 : i32
-// CHECK-NEXT:         %23 = tt.addptr %arg1, %22 : !tt.ptr<f16>, i32
-// CHECK-NEXT:         %24 = arith.muli %8#0, %arg19 : i32
-// CHECK-NEXT:         %25 = tt.addptr %23, %24 : !tt.ptr<f16>, i32
-// CHECK-NEXT:         %26 = arith.extsi %19 : i32 to i64
-// CHECK-NEXT:         %27 = arith.extsi %arg12 : i32 to i64
-// CHECK-NEXT:         %28 = arith.extsi %arg18 : i32 to i64
-// CHECK-NEXT:         %29 = tt.make_tensor_ptr %25, [%26, %27], [%28, %c1_i64], [%20, %c0_i32] {order = array<i32: 1, 0>} : <tensor<32x64xf16>>
-// CHECK-NEXT:         %30 = tt.make_range {end = 32 : i32, start = 0 : i32} : tensor<32xi32>
-// CHECK-NEXT:         %31 = tt.expand_dims %30 {axis = 1 : i32} : tensor<32xi32> -> tensor<32x1xi32>
-// CHECK-NEXT:         %32 = tt.splat %20 : i32 -> tensor<32x1xi32>
-// CHECK-NEXT:         %33 = arith.addi %32, %31 : tensor<32x1xi32>
-// CHECK-NEXT:         %34 = tt.make_range {end = 64 : i32, start = 0 : i32} : tensor<64xi32>
-// CHECK-NEXT:         %35 = tt.expand_dims %34 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32>
-// CHECK-NEXT:         %36 = tt.splat %19 : i32 -> tensor<32x1xi32>
-// CHECK-NEXT:         %37 = arith.cmpi slt, %33, %36 : tensor<32x1xi32>
-// CHECK-NEXT:         %38 = tt.splat %arg12 : i32 -> tensor<1x64xi32>
-// CHECK-NEXT:         %39 = arith.cmpi slt, %35, %38 : tensor<1x64xi32>
-// CHECK-NEXT:         %40 = tt.broadcast %37 : tensor<32x1xi1> -> tensor<32x64xi1>
-// CHECK-NEXT:         %41 = tt.broadcast %39 : tensor<1x64xi1> -> tensor<32x64xi1>
-// CHECK-NEXT:         %42 = arith.andi %40, %41 : tensor<32x64xi1>
-// CHECK-NEXT:         %43 = arith.muli %16, %arg27 : i32
-// CHECK-NEXT:         %44 = tt.addptr %arg6, %43 : !tt.ptr<f32>, i32
-// CHECK-NEXT:         %45 = arith.muli %8#0, %arg28 : i32
-// CHECK-NEXT:         %46 = tt.addptr %44, %45 : !tt.ptr<f32>, i32
-// CHECK-NEXT:         %47 = arith.muli %8#1, %arg26 : i32
-// CHECK-NEXT:         %48 = tt.addptr %46, %47 : !tt.ptr<f32>, i32
-// CHECK-NEXT:         %49 = tt.splat %arg27 : i32 -> tensor<32x1xi32>
-// CHECK-NEXT:         %50 = arith.muli %33, %49 : tensor<32x1xi32>
-// CHECK-NEXT:         %51 = tt.splat %48 : !tt.ptr<f32> -> tensor<32x1x!tt.ptr<f32>>
-// CHECK-NEXT:         %52 = tt.addptr %51, %50 : tensor<32x1x!tt.ptr<f32>>, tensor<32x1xi32>
-// CHECK-NEXT:         %53 = tt.broadcast %52 : tensor<32x1x!tt.ptr<f32>> -> tensor<32x64x!tt.ptr<f32>>
-// CHECK-NEXT:         %54 = tt.broadcast %35 : tensor<1x64xi32> -> tensor<32x64xi32>
-// CHECK-NEXT:         %55 = tt.addptr %53, %54 : tensor<32x64x!tt.ptr<f32>>, tensor<32x64xi32>
-// CHECK-NEXT:         %56 = arith.muli %16, %arg20 : i32
-// CHECK-NEXT:         %57 = tt.addptr %arg2, %56 : !tt.ptr<f16>, i32
-// CHECK-NEXT:         %58 = arith.muli %8#0, %arg21 : i32
-// CHECK-NEXT:         %59 = tt.addptr %57, %58 : !tt.ptr<f16>, i32
-// CHECK-NEXT:         %60 = arith.extsi %arg13 : i32 to i64
-// CHECK-NEXT:         %61 = arith.extsi %arg20 : i32 to i64
-// CHECK-NEXT:         %62 = tt.make_tensor_ptr %59, [%26, %60], [%61, %c1_i64], [%20, %c0_i32] {order = array<i32: 1, 0>} : <tensor<32x64xf16>>
-// CHECK-NEXT:         %63 = tt.splat %arg13 : i32 -> tensor<1x64xi32>
-// CHECK-NEXT:         %64 = arith.cmpi slt, %35, %63 : tensor<1x64xi32>
-// CHECK-NEXT:         %65 = tt.broadcast %64 : tensor<1x64xi1> -> tensor<32x64xi1>
-// CHECK-NEXT:         %66 = arith.andi %40, %65 : tensor<32x64xi1>
-// CHECK-NEXT:         %67 = arith.muli %16, %arg30 : i32
-// CHECK-NEXT:         %68 = tt.addptr %arg7, %67 : !tt.ptr<f32>, i32
-// CHECK-NEXT:         %69 = arith.muli %8#0, %arg31 : i32
-// CHECK-NEXT:         %70 = tt.addptr %68, %69 : !tt.ptr<f32>, i32
-// CHECK-NEXT:         %71 = arith.muli %8#1, %arg29 : i32
-// CHECK-NEXT:         %72 = tt.addptr %70, %71 : !tt.ptr<f32>, i32
-// CHECK-NEXT:         %73 = tt.splat %arg30 : i32 -> tensor<32x1xi32>
-// CHECK-NEXT:         %74 = arith.muli %33, %73 : tensor<32x1xi32>
-// CHECK-NEXT:         %75 = tt.splat %72 : !tt.ptr<f32> -> tensor<32x1x!tt.ptr<f32>>
-// CHECK-NEXT:         %76 = tt.addptr %75, %74 : tensor<32x1x!tt.ptr<f32>>, tensor<32x1xi32>
-// CHECK-NEXT:         %77 = tt.broadcast %76 : tensor<32x1x!tt.ptr<f32>> -> tensor<32x64x!tt.ptr<f32>>
-// CHECK-NEXT:         %78 = tt.addptr %77, %54 : tensor<32x64x!tt.ptr<f32>>, tensor<32x64xi32>
-// CHECK-NEXT:         %79 = tt.splat %20 : i32 -> tensor<32xi32>
-// CHECK-NEXT:         %80 = arith.addi %30, %79 : tensor<32xi32>
-// CHECK-NEXT:         %81 = tt.load %29 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<32x64xf16>>
-// CHECK-NEXT:         %82 = tt.load %62 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<32x64xf16>>
-// CHECK-NEXT:         %83 = arith.muli %11, %arg16 : i32
-// CHECK-NEXT:         %84 = tt.addptr %arg0, %83 : !tt.ptr<f16>, i32
-// CHECK-NEXT:         %85 = arith.muli %7, %arg17 : i32
-// CHECK-NEXT:         %86 = tt.addptr %84, %85 : !tt.ptr<f16>, i32
-// CHECK-NEXT:         %87 = arith.extsi %14 : i32 to i64
-// CHECK-NEXT:         %88 = arith.extsi %arg16 : i32 to i64
-// CHECK-NEXT:         %89 = tt.make_tensor_ptr %86, [%87, %27], [%88, %c1_i64], [%20, %c0_i32] {order = array<i32: 1, 0>} : <tensor<32x64xf16>>
-// CHECK-NEXT:         %90 = arith.muli %11, %arg24 : i32
-// CHECK-NEXT:         %91 = tt.addptr %arg5, %90 : !tt.ptr<f16>, i32
-// CHECK-NEXT:         %92 = arith.muli %7, %arg25 : i32
-// CHECK-NEXT:         %93 = tt.addptr %91, %92 : !tt.ptr<f16>, i32
-// CHECK-NEXT:         %94 = arith.extsi %arg24 : i32 to i64
-// CHECK-NEXT:         %95 = tt.make_tensor_ptr %93, [%87, %60], [%94, %c1_i64], [%20, %c0_i32] {order = array<i32: 1, 0>} : <tensor<32x64xf16>>
-// CHECK-NEXT:         %96 = tt.addptr %arg4, %11 : !tt.ptr<f32>, i32
-// CHECK-NEXT:         %97 = arith.muli %7, %arg23 : i32
-// CHECK-NEXT:         %98 = tt.addptr %96, %97 : !tt.ptr<f32>, i32
-// CHECK-NEXT:         %99 = tt.make_tensor_ptr %98, [%87], [%c1_i64], [%20] {order = array<i32: 0>} : <tensor<32xf32>>
-// CHECK-NEXT:         %100 = tt.addptr %arg3, %11 : !tt.ptr<f32>, i32
-// CHECK-NEXT:         %101 = arith.muli %7, %arg22 : i32
-// CHECK-NEXT:         %102 = tt.addptr %100, %101 : !tt.ptr<f32>, i32
-// CHECK-NEXT:         %103 = tt.make_tensor_ptr %102, [%87], [%c1_i64], [%20] {order = array<i32: 0>} : <tensor<32xf32>>
-// CHECK-NEXT:         %104 = tt.expand_dims %80 {axis = 0 : i32} : tensor<32xi32> -> tensor<1x32xi32>
-// CHECK-NEXT:         %105 = tt.broadcast %104 : tensor<1x32xi32> -> tensor<32x32xi32>
-// CHECK-NEXT:         %106 = tt.trans %81 {order = array<i32: 1, 0>} : tensor<32x64xf16> -> tensor<64x32xf16>
-// CHECK-NEXT:         %107 = tt.splat %4 : f32 -> tensor<32x32xf32>
-// CHECK-NEXT:         %108 = tt.trans %82 {order = array<i32: 1, 0>} : tensor<32x64xf16> -> tensor<64x32xf16>
-// CHECK-NEXT:         %109 = tt.splat %arg14 : f32 -> tensor<32x32xf32>
-// CHECK-NEXT:         %110:6 = scf.for %arg36 = %20 to %14 step %c32_i32 iter_args(%arg37 = %cst, %arg38 = %cst, %arg39 = %89, %arg40 = %95, %arg41 = %103, %arg42 = %99) -> (tensor<32x64xf32>, tensor<32x64xf32>, !tt.ptr<tensor<32x64xf16>>, !tt.ptr<tensor<32x64xf16>>, !tt.ptr<tensor<32xf32>>, !tt.ptr<tensor<32xf32>>)  : i32 {
-// CHECK-NEXT:           %115 = tt.load %arg39 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<32x64xf16>>
-// CHECK-NEXT:           %116 = tt.load %arg40 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<32x64xf16>>
-// CHECK-NEXT:           %117 = tt.load %arg41 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32xf32>>
-// CHECK-NEXT:           %118 = tt.expand_dims %117 {axis = 1 : i32} : tensor<32xf32> -> tensor<32x1xf32>
-// CHECK-NEXT:           %119 = tt.load %arg42 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32xf32>>
-// CHECK-NEXT:           %120 = tt.expand_dims %119 {axis = 1 : i32} : tensor<32xf32> -> tensor<32x1xf32>
-// CHECK-NEXT:           %121 = tt.splat %arg36 : i32 -> tensor<32xi32>
-// CHECK-NEXT:           %122 = arith.addi %30, %121 : tensor<32xi32>
-// CHECK-NEXT:           %123 = tt.expand_dims %122 {axis = 1 : i32} : tensor<32xi32> -> tensor<32x1xi32>
-// CHECK-NEXT:           %124 = tt.broadcast %123 : tensor<32x1xi32> -> tensor<32x32xi32>
-// CHECK-NEXT:           %125 = arith.cmpi sge, %124, %105 : tensor<32x32xi32>
-// CHECK-NEXT:           %126 = arith.select %125, %cst_1, %cst_0 : tensor<32x32xi1>, tensor<32x32xf32>
-// CHECK-NEXT:           %127 = tt.dot %115, %106, %cst_1 {triton_cv12.normalized_dot} : tensor<32x64xf16> * tensor<64x32xf16> -> tensor<32x32xf32>
-// CHECK-NEXT:           %128 = arith.mulf %127, %107 : tensor<32x32xf32>
-// CHECK-NEXT:           %129 = arith.addf %126, %128 : tensor<32x32xf32>
-// CHECK-NEXT:           %130 = tt.broadcast %118 : tensor<32x1xf32> -> tensor<32x32xf32>
-// CHECK-NEXT:           %131 = arith.subf %129, %130 : tensor<32x32xf32>
-// CHECK-NEXT:           %132 = math.exp2 %131 : tensor<32x32xf32>
-// CHECK-NEXT:           %133 = tt.dot %116, %108, %cst_1 {triton_cv12.normalized_dot} : tensor<32x64xf16> * tensor<64x32xf16> -> tensor<32x32xf32>
-// CHECK-NEXT:           %134 = arith.mulf %109, %132 : tensor<32x32xf32>
-// CHECK-NEXT:           %135 = tt.broadcast %120 : tensor<32x1xf32> -> tensor<32x32xf32>
-// CHECK-NEXT:           %136 = arith.subf %133, %135 : tensor<32x32xf32>
-// CHECK-NEXT:           %137 = arith.mulf %134, %136 : tensor<32x32xf32>
-// CHECK-NEXT:           %138 = arith.truncf %132 : tensor<32x32xf32> to tensor<32x32xf16>
-// CHECK-NEXT:           %139 = arith.truncf %137 : tensor<32x32xf32> to tensor<32x32xf16>
-// CHECK-NEXT:           %140 = tt.trans %139 {order = array<i32: 1, 0>} : tensor<32x32xf16> -> tensor<32x32xf16>
-// CHECK-NEXT:           %141 = tt.dot %140, %115, %arg37 {triton_cv12.normalized_dot} : tensor<32x32xf16> * tensor<32x64xf16> -> tensor<32x64xf32>
-// CHECK-NEXT:           %142 = tt.trans %138 {order = array<i32: 1, 0>} : tensor<32x32xf16> -> tensor<32x32xf16>
-// CHECK-NEXT:           %143 = tt.dot %142, %116, %arg38 {triton_cv12.normalized_dot} : tensor<32x32xf16> * tensor<32x64xf16> -> tensor<32x64xf32>
-// CHECK-NEXT:           %144 = tt.advance %arg39, [%c32_i32, %c0_i32] : <tensor<32x64xf16>>
-// CHECK-NEXT:           %145 = tt.advance %arg40, [%c32_i32, %c0_i32] : <tensor<32x64xf16>>
-// CHECK-NEXT:           %146 = tt.advance %arg41, [%c32_i32] : <tensor<32xf32>>
-// CHECK-NEXT:           %147 = tt.advance %arg42, [%c32_i32] : <tensor<32xf32>>
-// CHECK-NEXT:           scf.yield %141, %143, %144, %145, %146, %147 : tensor<32x64xf32>, tensor<32x64xf32>, !tt.ptr<tensor<32x64xf16>>, !tt.ptr<tensor<32x64xf16>>, !tt.ptr<tensor<32xf32>>, !tt.ptr<tensor<32xf32>>
-// CHECK-NEXT:         } {hivm.matmul_limited_in_cube}
-// CHECK-NEXT:         %111 = arith.cmpi sgt, %14, %20 : i32
-// CHECK-NEXT:         %112 = scf.if %111 -> (tensor<32x64xf32>) {
-// CHECK-NEXT:           scf.yield %110#1 : tensor<32x64xf32>
-// CHECK-NEXT:         } else {
-// CHECK-NEXT:           scf.yield %cst : tensor<32x64xf32>
-// CHECK-NEXT:         }
-// CHECK-NEXT:         %113 = arith.cmpi sgt, %14, %20 : i32
-// CHECK-NEXT:         %114 = scf.if %113 -> (tensor<32x64xf32>) {
-// CHECK-NEXT:           scf.yield %110#0 : tensor<32x64xf32>
-// CHECK-NEXT:         } else {
-// CHECK-NEXT:           scf.yield %cst : tensor<32x64xf32>
-// CHECK-NEXT:         }
-// CHECK-NEXT:         tt.store %55, %114, %42 : tensor<32x64x!tt.ptr<f32>>
-// CHECK-NEXT:         tt.store %78, %112, %66 : tensor<32x64x!tt.ptr<f32>>
-// CHECK-NEXT:       }
-// CHECK-NEXT:     }
-// CHECK-NEXT:     tt.return
-// CHECK-NEXT:   }
-// CHECK-NEXT: }
-#loc = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0)
-module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
-  tt.func public @backward_dkdv(%arg0: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg1: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg2: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg3: !tt.ptr<f32> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg4: !tt.ptr<f32> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg5: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg6: !tt.ptr<f32> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg7: !tt.ptr<f32> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg8: !tt.ptr<i32> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg9: !tt.ptr<i32> {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg10: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg11: i32 loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg12: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg13: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg14: f32 loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg15: i1 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg16: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg17: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg18: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg19: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg20: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg21: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg22: i32 loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg23: i32 loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg24: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg25: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg26: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg27: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg28: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg29: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg30: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg31: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg32: i32 loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg33: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0), %arg34: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":205:0)) attributes {noinline = false} {
-    %cst = arith.constant dense<0.000000e+00> : tensor<32x64xf32> loc(#loc1)
-    %cst_0 = arith.constant dense<0xFF800000> : tensor<32x32xf32> loc(#loc1)
-    %cst_1 = arith.constant dense<0.000000e+00> : tensor<32x32xf32> loc(#loc1)
-    %c0_i32 = arith.constant 0 : i32 loc(#loc1)
-    %c1_i64 = arith.constant 1 : i64 loc(#loc1)
-    %c32_i32 = arith.constant 32 : i32 loc(#loc1)
-    %c1_i32 = arith.constant 1 : i32 loc(#loc1)
-    %cst_2 = arith.constant 1.44269502 : f32 loc(#loc1)
-    %0 = tt.get_program_id x : i32 loc(#loc2)
-    %1 = tt.get_num_programs x : i32 loc(#loc3)
-    %2 = arith.muli %arg32, %arg33 : i32 loc(#loc4)
-    %3 = arith.muli %2, %arg34 : i32 loc(#loc5)
-    %4 = arith.mulf %arg14, %cst_2 : f32 loc(#loc6)
-    scf.for %arg35 = %0 to %3 step %1  : i32 {
-      %5 = arith.divsi %arg35, %arg34 : i32 loc(#loc8)
-      %6 = arith.divsi %5, %arg33 : i32 loc(#loc9)
-      %7 = arith.remsi %5, %arg33 : i32 loc(#loc10)
-      %8:2 = scf.if %arg15 -> (i32, i32) {
-        %22 = arith.remsi %7, %arg11 : i32 loc(#loc12)
-        %23 = arith.divsi %7, %arg11 : i32 loc(#loc13)
-        scf.yield %22, %23 : i32, i32 loc(#loc13)
-      } else {
-        %22 = arith.divsi %7, %arg11 : i32 loc(#loc14)
-        %23 = arith.remsi %7, %arg11 : i32 loc(#loc15)
-        scf.yield %22, %23 : i32, i32 loc(#loc15)
-      } loc(#loc11)
-      %9 = arith.remsi %arg35, %arg34 : i32 loc(#loc16)
-      %10 = tt.addptr %arg8, %6 : !tt.ptr<i32>, i32 loc(#loc17)
-      %11 = tt.load %10 : !tt.ptr<i32> loc(#loc18)
-      %12 = tt.addptr %10, %c1_i32 : !tt.ptr<i32>, i32 loc(#loc19)
-      %13 = tt.load %12 : !tt.ptr<i32> loc(#loc20)
-      %14 = arith.subi %13, %11 : i32 loc(#loc21)
-      %15 = tt.addptr %arg9, %6 : !tt.ptr<i32>, i32 loc(#loc22)
-      %16 = tt.load %15 : !tt.ptr<i32> loc(#loc23)
-      %17 = tt.addptr %15, %c1_i32 : !tt.ptr<i32>, i32 loc(#loc24)
-      %18 = tt.load %17 : !tt.ptr<i32> loc(#loc25)
-      %19 = arith.subi %18, %16 : i32 loc(#loc26)
-      %20 = arith.muli %9, %c32_i32 : i32 loc(#loc27)
-      %21 = arith.cmpi slt, %20, %19 : i32 loc(#loc28)
-      scf.if %21 {
-        %22 = arith.muli %16, %arg18 : i32 loc(#loc30)
-        %23 = tt.addptr %arg1, %22 : !tt.ptr<f16>, i32 loc(#loc31)
-        %24 = arith.muli %8#0, %arg19 : i32 loc(#loc32)
-        %25 = tt.addptr %23, %24 : !tt.ptr<f16>, i32 loc(#loc33)
-        %26 = arith.extsi %19 : i32 to i64 loc(#loc34)
-        %27 = arith.extsi %arg12 : i32 to i64 loc(#loc34)
-        %28 = arith.extsi %arg18 : i32 to i64 loc(#loc34)
-        %29 = tt.make_tensor_ptr %25, [%26, %27], [%28, %c1_i64], [%20, %c0_i32] {order = array<i32: 1, 0>} : <tensor<32x64xf16>> loc(#loc34)
-        %30 = tt.make_range {end = 32 : i32, start = 0 : i32} : tensor<32xi32> loc(#loc35)
-        %31 = tt.expand_dims %30 {axis = 1 : i32} : tensor<32xi32> -> tensor<32x1xi32> loc(#loc36)
-        %32 = tt.splat %20 : i32 -> tensor<32x1xi32> loc(#loc37)
-        %33 = arith.addi %32, %31 : tensor<32x1xi32> loc(#loc37)
-        %34 = tt.make_range {end = 64 : i32, start = 0 : i32} : tensor<64xi32> loc(#loc38)
-        %35 = tt.expand_dims %34 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32> loc(#loc39)
-        %36 = tt.splat %19 : i32 -> tensor<32x1xi32> loc(#loc40)
-        %37 = arith.cmpi slt, %33, %36 : tensor<32x1xi32> loc(#loc40)
-        %38 = tt.splat %arg12 : i32 -> tensor<1x64xi32> loc(#loc41)
-        %39 = arith.cmpi slt, %35, %38 : tensor<1x64xi32> loc(#loc41)
-        %40 = tt.broadcast %37 : tensor<32x1xi1> -> tensor<32x64xi1> loc(#loc42)
-        %41 = tt.broadcast %39 : tensor<1x64xi1> -> tensor<32x64xi1> loc(#loc42)
-        %42 = arith.andi %40, %41 : tensor<32x64xi1> loc(#loc42)
-        %43 = arith.muli %16, %arg27 : i32 loc(#loc43)
-        %44 = tt.addptr %arg6, %43 : !tt.ptr<f32>, i32 loc(#loc44)
-        %45 = arith.muli %8#0, %arg28 : i32 loc(#loc45)
-        %46 = tt.addptr %44, %45 : !tt.ptr<f32>, i32 loc(#loc46)
-        %47 = arith.muli %8#1, %arg26 : i32 loc(#loc47)
-        %48 = tt.addptr %46, %47 : !tt.ptr<f32>, i32 loc(#loc48)
-        %49 = tt.splat %arg27 : i32 -> tensor<32x1xi32> loc(#loc49)
-        %50 = arith.muli %33, %49 : tensor<32x1xi32> loc(#loc49)
-        %51 = tt.splat %48 : !tt.ptr<f32> -> tensor<32x1x!tt.ptr<f32>> loc(#loc50)
-        %52 = tt.addptr %51, %50 : tensor<32x1x!tt.ptr<f32>>, tensor<32x1xi32> loc(#loc50)
-        %53 = tt.broadcast %52 : tensor<32x1x!tt.ptr<f32>> -> tensor<32x64x!tt.ptr<f32>> loc(#loc51)
-        %54 = tt.broadcast %35 : tensor<1x64xi32> -> tensor<32x64xi32> loc(#loc51)
-        %55 = tt.addptr %53, %54 : tensor<32x64x!tt.ptr<f32>>, tensor<32x64xi32> loc(#loc51)
-        %56 = arith.muli %16, %arg20 : i32 loc(#loc52)
-        %57 = tt.addptr %arg2, %56 : !tt.ptr<f16>, i32 loc(#loc53)
-        %58 = arith.muli %8#0, %arg21 : i32 loc(#loc54)
-        %59 = tt.addptr %57, %58 : !tt.ptr<f16>, i32 loc(#loc55)
-        %60 = arith.extsi %arg13 : i32 to i64 loc(#loc56)
-        %61 = arith.extsi %arg20 : i32 to i64 loc(#loc56)
-        %62 = tt.make_tensor_ptr %59, [%26, %60], [%61, %c1_i64], [%20, %c0_i32] {order = array<i32: 1, 0>} : <tensor<32x64xf16>> loc(#loc56)
-        %63 = tt.splat %arg13 : i32 -> tensor<1x64xi32> loc(#loc57)
-        %64 = arith.cmpi slt, %35, %63 : tensor<1x64xi32> loc(#loc57)
-        %65 = tt.broadcast %64 : tensor<1x64xi1> -> tensor<32x64xi1> loc(#loc58)
-        %66 = arith.andi %40, %65 : tensor<32x64xi1> loc(#loc58)
-        %67 = arith.muli %16, %arg30 : i32 loc(#loc59)
-        %68 = tt.addptr %arg7, %67 : !tt.ptr<f32>, i32 loc(#loc60)
-        %69 = arith.muli %8#0, %arg31 : i32 loc(#loc61)
-        %70 = tt.addptr %68, %69 : !tt.ptr<f32>, i32 loc(#loc62)
-        %71 = arith.muli %8#1, %arg29 : i32 loc(#loc63)
-        %72 = tt.addptr %70, %71 : !tt.ptr<f32>, i32 loc(#loc64)
-        %73 = tt.splat %arg30 : i32 -> tensor<32x1xi32> loc(#loc65)
-        %74 = arith.muli %33, %73 : tensor<32x1xi32> loc(#loc65)
-        %75 = tt.splat %72 : !tt.ptr<f32> -> tensor<32x1x!tt.ptr<f32>> loc(#loc66)
-        %76 = tt.addptr %75, %74 : tensor<32x1x!tt.ptr<f32>>, tensor<32x1xi32> loc(#loc66)
-        %77 = tt.broadcast %76 : tensor<32x1x!tt.ptr<f32>> -> tensor<32x64x!tt.ptr<f32>> loc(#loc67)
-        %78 = tt.addptr %77, %54 : tensor<32x64x!tt.ptr<f32>>, tensor<32x64xi32> loc(#loc67)
-        %79 = tt.splat %20 : i32 -> tensor<32xi32> loc(#loc68)
-        %80 = arith.addi %30, %79 : tensor<32xi32> loc(#loc68)
-        %81 = tt.load %29 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<32x64xf16>> loc(#loc69)
-        %82 = tt.load %62 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<32x64xf16>> loc(#loc70)
-        %83 = arith.muli %11, %arg16 : i32 loc(#loc71)
-        %84 = tt.addptr %arg0, %83 : !tt.ptr<f16>, i32 loc(#loc72)
-        %85 = arith.muli %7, %arg17 : i32 loc(#loc73)
-        %86 = tt.addptr %84, %85 : !tt.ptr<f16>, i32 loc(#loc74)
-        %87 = arith.extsi %14 : i32 to i64 loc(#loc75)
-        %88 = arith.extsi %arg16 : i32 to i64 loc(#loc75)
-        %89 = tt.make_tensor_ptr %86, [%87, %27], [%88, %c1_i64], [%20, %c0_i32] {order = array<i32: 1, 0>} : <tensor<32x64xf16>> loc(#loc75)
-        %90 = arith.muli %11, %arg24 : i32 loc(#loc76)
-        %91 = tt.addptr %arg5, %90 : !tt.ptr<f16>, i32 loc(#loc77)
-        %92 = arith.muli %7, %arg25 : i32 loc(#loc78)
-        %93 = tt.addptr %91, %92 : !tt.ptr<f16>, i32 loc(#loc79)
-        %94 = arith.extsi %arg24 : i32 to i64 loc(#loc80)
-        %95 = tt.make_tensor_ptr %93, [%87, %60], [%94, %c1_i64], [%20, %c0_i32] {order = array<i32: 1, 0>} : <tensor<32x64xf16>> loc(#loc80)
-        %96 = tt.addptr %arg4, %11 : !tt.ptr<f32>, i32 loc(#loc81)
-        %97 = arith.muli %7, %arg23 : i32 loc(#loc82)
-        %98 = tt.addptr %96, %97 : !tt.ptr<f32>, i32 loc(#loc83)
-        %99 = tt.make_tensor_ptr %98, [%87], [%c1_i64], [%20] {order = array<i32: 0>} : <tensor<32xf32>> loc(#loc84)
-        %100 = tt.addptr %arg3, %11 : !tt.ptr<f32>, i32 loc(#loc85)
-        %101 = arith.muli %7, %arg22 : i32 loc(#loc86)
-        %102 = tt.addptr %100, %101 : !tt.ptr<f32>, i32 loc(#loc87)
-        %103 = tt.make_tensor_ptr %102, [%87], [%c1_i64], [%20] {order = array<i32: 0>} : <tensor<32xf32>> loc(#loc88)
-        %104 = tt.expand_dims %80 {axis = 0 : i32} : tensor<32xi32> -> tensor<1x32xi32> loc(#loc89)
-        %105 = tt.broadcast %104 : tensor<1x32xi32> -> tensor<32x32xi32> loc(#loc90)
-        %106 = tt.trans %81 {order = array<i32: 1, 0>} : tensor<32x64xf16> -> tensor<64x32xf16> loc(#loc91)
-        %107 = tt.splat %4 : f32 -> tensor<32x32xf32> loc(#loc92)
-        %108 = tt.trans %82 {order = array<i32: 1, 0>} : tensor<32x64xf16> -> tensor<64x32xf16> loc(#loc93)
-        %109 = tt.splat %arg14 : f32 -> tensor<32x32xf32> loc(#loc94)
-        %110:6 = scf.for %arg36 = %20 to %14 step %c32_i32 iter_args(%arg37 = %cst, %arg38 = %cst, %arg39 = %89, %arg40 = %95, %arg41 = %103, %arg42 = %99) -> (tensor<32x64xf32>, tensor<32x64xf32>, !tt.ptr<tensor<32x64xf16>>, !tt.ptr<tensor<32x64xf16>>, !tt.ptr<tensor<32xf32>>, !tt.ptr<tensor<32xf32>>)  : i32 {
-          %111 = tt.load %arg39 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<32x64xf16>> loc(#loc96)
-          %112 = tt.load %arg40 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<32x64xf16>> loc(#loc97)
-          %113 = tt.load %arg41 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32xf32>> loc(#loc98)
-          %114 = tt.expand_dims %113 {axis = 1 : i32} : tensor<32xf32> -> tensor<32x1xf32> loc(#loc99)
-          %115 = tt.load %arg42 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32xf32>> loc(#loc100)
-          %116 = tt.expand_dims %115 {axis = 1 : i32} : tensor<32xf32> -> tensor<32x1xf32> loc(#loc101)
-          %117 = tt.splat %arg36 : i32 -> tensor<32xi32> loc(#loc102)
-          %118 = arith.addi %30, %117 : tensor<32xi32> loc(#loc102)
-          %119 = tt.expand_dims %118 {axis = 1 : i32} : tensor<32xi32> -> tensor<32x1xi32> loc(#loc103)
-          %120 = tt.broadcast %119 : tensor<32x1xi32> -> tensor<32x32xi32> loc(#loc90)
-          %121 = arith.cmpi sge, %120, %105 : tensor<32x32xi32> loc(#loc90)
-          %122 = arith.select %121, %cst_1, %cst_0 : tensor<32x32xi1>, tensor<32x32xf32> loc(#loc104)
-          %123 = tt.dot %111, %106, %cst_1 : tensor<32x64xf16> * tensor<64x32xf16> -> tensor<32x32xf32> loc(#loc105)
-          %124 = arith.mulf %123, %107 : tensor<32x32xf32> loc(#loc92)
-          %125 = arith.addf %122, %124 : tensor<32x32xf32> loc(#loc106)
-          %126 = tt.broadcast %114 : tensor<32x1xf32> -> tensor<32x32xf32> loc(#loc107)
-          %127 = arith.subf %125, %126 : tensor<32x32xf32> loc(#loc107)
-          %128 = math.exp2 %127 : tensor<32x32xf32> loc(#loc108)
-          %129 = tt.dot %112, %108, %cst_1 : tensor<32x64xf16> * tensor<64x32xf16> -> tensor<32x32xf32> loc(#loc109)
-          %130 = arith.mulf %109, %128 : tensor<32x32xf32> loc(#loc94)
-          %131 = tt.broadcast %116 : tensor<32x1xf32> -> tensor<32x32xf32> loc(#loc110)
-          %132 = arith.subf %129, %131 : tensor<32x32xf32> loc(#loc110)
-          %133 = arith.mulf %130, %132 : tensor<32x32xf32> loc(#loc111)
-          %134 = arith.truncf %128 : tensor<32x32xf32> to tensor<32x32xf16> loc(#loc112)
-          %135 = arith.truncf %133 : tensor<32x32xf32> to tensor<32x32xf16> loc(#loc113)
-          %136 = tt.trans %135 {order = array<i32: 1, 0>} : tensor<32x32xf16> -> tensor<32x32xf16> loc(#loc114)
-          %137 = tt.dot %136, %111, %arg37 : tensor<32x32xf16> * tensor<32x64xf16> -> tensor<32x64xf32> loc(#loc115)
-          %138 = tt.trans %134 {order = array<i32: 1, 0>} : tensor<32x32xf16> -> tensor<32x32xf16> loc(#loc116)
-          %139 = tt.dot %138, %112, %arg38 : tensor<32x32xf16> * tensor<32x64xf16> -> tensor<32x64xf32> loc(#loc117)
-          %140 = tt.advance %arg39, [%c32_i32, %c0_i32] : <tensor<32x64xf16>> loc(#loc118)
-          %141 = tt.advance %arg40, [%c32_i32, %c0_i32] : <tensor<32x64xf16>> loc(#loc119)
-          %142 = tt.advance %arg41, [%c32_i32] : <tensor<32xf32>> loc(#loc120)
-          %143 = tt.advance %arg42, [%c32_i32] : <tensor<32xf32>> loc(#loc121)
-          scf.yield %137, %139, %140, %141, %142, %143 : tensor<32x64xf32>, tensor<32x64xf32>, !tt.ptr<tensor<32x64xf16>>, !tt.ptr<tensor<32x64xf16>>, !tt.ptr<tensor<32xf32>>, !tt.ptr<tensor<32xf32>> loc(#loc122)
-        } loc(#loc95)
-        tt.store %55, %110#0, %42 : tensor<32x64x!tt.ptr<f32>> loc(#loc123)
-        tt.store %78, %110#1, %66 : tensor<32x64x!tt.ptr<f32>> loc(#loc124)
-      } loc(#loc29)
-    } loc(#loc7)
-    tt.return loc(#loc125)
-  } loc(#loc)
-} loc(#loc)
-#loc1 = loc(unknown)
-#loc2 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":260:29)
-#loc3 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":261:32)
-#loc4 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":262:39)
-#loc5 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":264:38)
-#loc6 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":265:26)
-#loc7 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":266:43)
-#loc8 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":270:24)
-#loc9 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":270:43)
-#loc10 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":271:42)
-#loc11 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":272:11)
-#loc12 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":273:29)
-#loc13 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":274:30)
-#loc14 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":276:30)
-#loc15 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":277:29)
-#loc16 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":279:23)
-#loc17 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":281:41)
-#loc18 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":281:26)
-#loc19 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":282:47)
-#loc20 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":282:24)
-#loc21 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":282:52)
-#loc22 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":283:41)
-#loc23 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":283:26)
-#loc24 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":284:47)
-#loc25 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":284:24)
-#loc26 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":284:52)
-#loc27 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":287:26)
-#loc28 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":287:34)
-#loc29 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":287:11)
-#loc30 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":290:39)
-#loc31 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":290:29)
-#loc32 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":290:60)
-#loc33 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":290:51)
-#loc34 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":295:16)
-#loc35 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":297:52)
-#loc36 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":297:66)
-#loc37 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":297:39)
-#loc38 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":298:29)
-#loc39 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":298:44)
-#loc40 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":299:24)
-#loc41 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":299:38)
-#loc42 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":299:34)
-#loc43 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":300:37)
-#loc44 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":300:27)
-#loc45 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":300:59)
-#loc46 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":300:50)
-#loc47 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":300:81)
-#loc48 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":300:72)
-#loc49 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":300:98)
-#loc50 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":300:94)
-#loc51 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":300:111)
-#loc52 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":302:39)
-#loc53 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":302:29)
-#loc54 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":302:60)
-#loc55 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":302:51)
-#loc56 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":307:16)
-#loc57 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":311:41)
-#loc58 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":311:36)
-#loc59 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":312:38)
-#loc60 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":312:28)
-#loc61 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":312:60)
-#loc62 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":312:51)
-#loc63 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":312:82)
-#loc64 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":312:73)
-#loc65 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":312:100)
-#loc66 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":312:95)
-#loc67 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":312:113)
-#loc68 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":315:49)
-#loc69 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":317:24)
-#loc70 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":318:24)
-#loc71 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":328:39)
-#loc72 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":328:29)
-#loc73 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":328:59)
-#loc74 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":328:51)
-#loc75 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":333:16)
-#loc76 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":336:40)
-#loc77 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":336:30)
-#loc78 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":336:61)
-#loc79 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":336:53)
-#loc80 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":341:16)
-#loc81 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":344:29)
-#loc82 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":344:59)
-#loc83 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":344:51)
-#loc84 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":349:16)
-#loc85 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":352:31)
-#loc86 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":352:61)
-#loc87 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":352:53)
-#loc88 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":357:16)
-#loc89 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":369:54)
-#loc90 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":369:48)
-#loc91 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":373:31)
-#loc92 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":374:39)
-#loc93 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":377:31)
-#loc94 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":379:32)
-#loc95 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":360:40)
-#loc96 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":362:28)
-#loc97 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":363:29)
-#loc98 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":364:30)
-#loc99 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":364:84)
-#loc100 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":365:28)
-#loc101 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":365:80)
-#loc102 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":369:33)
-#loc103 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":369:36)
-#loc104 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":369:76)
-#loc105 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":374:32)
-#loc106 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":374:22)
-#loc107 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":376:38)
-#loc108 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":376:33)
-#loc109 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":378:32)
-#loc110 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":379:42)
-#loc111 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":379:37)
-#loc112 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":381:25)
-#loc113 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":382:27)
-#loc114 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":384:32)
-#loc115 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":385:35)
-#loc116 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":386:31)
-#loc117 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":387:34)
-#loc118 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":389:44)
-#loc119 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":390:46)
-#loc120 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":391:48)
-#loc121 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":392:44)
-#loc122 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":392:16)
-#loc123 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":394:26)
-#loc124 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":395:27)
-#loc125 = loc("/home/z00959232/triton-ops/native/nsa/flash_attention.py":266:4)
 
-// -----
-// Source: gaoyou/sw/fbgemm/simplicial_kv1/input.mlir
-// CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
-// CHECK-NEXT:   tt.func public @simplicial_bwd_kv1_kernel(%arg0: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg2: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg3: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg4: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg5: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg6: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg7: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg8: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg9: !tt.ptr<bf16> {tt.divisibility = 16 : i32}, %arg10: i32, %arg11: i32 {tt.divisibility = 16 : i32}, %arg12: i32, %arg13: i32, %arg14: i32 {tt.divisibility = 16 : i32}, %arg15: i32 {tt.divisibility = 16 : i32}, %arg16: i32 {tt.divisibility = 16 : i32}, %arg17: i32 {tt.divisibility = 16 : i32}, %arg18: i32 {tt.divisibility = 16 : i32}, %arg19: i32 {tt.divisibility = 16 : i32}, %arg20: i32 {tt.divisibility = 16 : i32}, %arg21: i32 {tt.divisibility = 16 : i32}, %arg22: i32 {tt.divisibility = 16 : i32}, %arg23: i32 {tt.divisibility = 16 : i32}, %arg24: i32 {tt.divisibility = 16 : i32}, %arg25: i32 {tt.divisibility = 16 : i32}, %arg26: i32 {tt.divisibility = 16 : i32}, %arg27: i32 {tt.divisibility = 16 : i32}, %arg28: i32 {tt.divisibility = 16 : i32}, %arg29: i32 {tt.divisibility = 16 : i32}, %arg30: i32 {tt.divisibility = 16 : i32}, %arg31: i32 {tt.divisibility = 16 : i32}, %arg32: i32 {tt.divisibility = 16 : i32}, %arg33: i32 {tt.divisibility = 16 : i32}, %arg34: i32 {tt.divisibility = 16 : i32}, %arg35: i32 {tt.divisibility = 16 : i32}, %arg36: i32 {tt.divisibility = 16 : i32}, %arg37: i32 {tt.divisibility = 16 : i32}, %arg38: i32 {tt.divisibility = 16 : i32}, %arg39: i32 {tt.divisibility = 16 : i32}, %arg40: i32 {tt.divisibility = 16 : i32}, %arg41: i32 {tt.divisibility = 16 : i32}, %arg42: i32 {tt.divisibility = 16 : i32}, %arg43: i32 {tt.divisibility = 16 : i32}, %arg44: i32 {tt.divisibility = 16 : i32}, %arg45: i32 {tt.divisibility = 16 : i32}, %arg46: i32 {tt.divisibility = 16 : i32}) attributes {noinline = false} {
-// CHECK-NEXT:     %cst = arith.constant dense<0.000000e+00> : tensor<64x64xf32>
-// CHECK-NEXT:     %cst_0 = arith.constant dense<1.250000e-01> : tensor<64x32xbf16>
-// CHECK-NEXT:     %cst_1 = arith.constant dense<0.000000e+00> : tensor<32x64xbf16>
-// CHECK-NEXT:     %cst_2 = arith.constant dense<0.000000e+00> : tensor<64x32xbf16>
-// CHECK-NEXT:     %c32_i32 = arith.constant 32 : i32
-// CHECK-NEXT:     %cst_3 = arith.constant dense<1.250000e-01> : tensor<64x64xbf16>
-// CHECK-NEXT:     %c1_i32 = arith.constant 1 : i32
-// CHECK-NEXT:     %cst_4 = arith.constant dense<0.000000e+00> : tensor<64x64xbf16>
-// CHECK-NEXT:     %cst_5 = arith.constant dense<0.000000e+00> : tensor<32xf32>
-// CHECK-NEXT:     %cst_6 = arith.constant dense<0.000000e+00> : tensor<64x32xf32>
-// CHECK-NEXT:     %c0_i32 = arith.constant 0 : i32
-// CHECK-NEXT:     %c64_i32 = arith.constant 64 : i32
-// CHECK-NEXT:     %0 = tt.get_program_id x : i32
-// CHECK-NEXT:     %1 = arith.muli %0, %c64_i32 : i32
-// CHECK-NEXT:     %2 = arith.addi %1, %c64_i32 : i32
-// CHECK-NEXT:     %3 = tt.get_program_id y : i32
-// CHECK-NEXT:     %4 = arith.divsi %3, %arg12 : i32
-// CHECK-NEXT:     %5 = arith.remsi %3, %arg12 : i32
-// CHECK-NEXT:     %6 = arith.muli %4, %arg15 : i32
-// CHECK-NEXT:     %7 = arith.muli %5, %arg17 : i32
-// CHECK-NEXT:     %8 = arith.addi %6, %7 : i32
-// CHECK-NEXT:     %9 = tt.addptr %arg0, %8 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %10 = tt.addptr %arg1, %8 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %11 = tt.addptr %arg2, %8 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %12 = tt.addptr %arg3, %8 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %13 = tt.addptr %arg4, %8 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %14 = arith.muli %4, %arg30 : i32
-// CHECK-NEXT:     %15 = arith.muli %5, %arg32 : i32
-// CHECK-NEXT:     %16 = arith.addi %14, %15 : i32
-// CHECK-NEXT:     %17 = tt.addptr %arg5, %16 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %18 = arith.muli %4, %arg33 : i32
-// CHECK-NEXT:     %19 = arith.muli %5, %arg34 : i32
-// CHECK-NEXT:     %20 = arith.addi %18, %19 : i32
-// CHECK-NEXT:     %21 = tt.addptr %arg6, %20 : !tt.ptr<f32>, i32
-// CHECK-NEXT:     %22 = arith.muli %4, %arg35 : i32
-// CHECK-NEXT:     %23 = arith.muli %5, %arg36 : i32
-// CHECK-NEXT:     %24 = arith.addi %22, %23 : i32
-// CHECK-NEXT:     %25 = tt.addptr %arg7, %24 : !tt.ptr<f32>, i32
-// CHECK-NEXT:     %26 = arith.muli %4, %arg41 : i32
-// CHECK-NEXT:     %27 = arith.muli %5, %arg43 : i32
-// CHECK-NEXT:     %28 = arith.addi %26, %27 : i32
-// CHECK-NEXT:     %29 = tt.addptr %arg8, %28 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %30 = arith.muli %4, %arg44 : i32
-// CHECK-NEXT:     %31 = arith.muli %5, %arg46 : i32
-// CHECK-NEXT:     %32 = arith.addi %30, %31 : i32
-// CHECK-NEXT:     %33 = tt.addptr %arg9, %32 : !tt.ptr<bf16>, i32
-// CHECK-NEXT:     %34 = tt.make_range {end = 64 : i32, start = 0 : i32} : tensor<64xi32>
-// CHECK-NEXT:     %35 = tt.splat %1 : i32 -> tensor<64xi32>
-// CHECK-NEXT:     %36 = arith.addi %35, %34 : tensor<64xi32>
-// CHECK-NEXT:     %37 = tt.expand_dims %36 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32>
-// CHECK-NEXT:     %38 = tt.splat %arg19 : i32 -> tensor<64x1xi32>
-// CHECK-NEXT:     %39 = arith.muli %37, %38 : tensor<64x1xi32>
-// CHECK-NEXT:     %40 = tt.expand_dims %34 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32>
-// CHECK-NEXT:     %41 = tt.broadcast %39 : tensor<64x1xi32> -> tensor<64x64xi32>
-// CHECK-NEXT:     %42 = tt.broadcast %40 : tensor<1x64xi32> -> tensor<64x64xi32>
-// CHECK-NEXT:     %43 = arith.addi %41, %42 : tensor<64x64xi32>
-// CHECK-NEXT:     %44 = tt.splat %arg11 : i32 -> tensor<64x1xi32>
-// CHECK-NEXT:     %45 = arith.cmpi slt, %37, %44 : tensor<64x1xi32>
-// CHECK-NEXT:     %46 = tt.splat %10 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>>
-// CHECK-NEXT:     %47 = tt.addptr %46, %43 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32>
-// CHECK-NEXT:     %48 = tt.broadcast %45 : tensor<64x1xi1> -> tensor<64x64xi1>
-// CHECK-NEXT:     %49 = tt.load %47, %48, %cst_4 : tensor<64x64x!tt.ptr<bf16>>
-// CHECK-NEXT:     %50 = tt.splat %arg25 : i32 -> tensor<64x1xi32>
-// CHECK-NEXT:     %51 = arith.muli %37, %50 : tensor<64x1xi32>
-// CHECK-NEXT:     %52 = tt.broadcast %51 : tensor<64x1xi32> -> tensor<64x64xi32>
-// CHECK-NEXT:     %53 = arith.addi %52, %42 : tensor<64x64xi32>
-// CHECK-NEXT:     %54 = tt.splat %12 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>>
-// CHECK-NEXT:     %55 = tt.addptr %54, %53 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32>
-// CHECK-NEXT:     %56 = tt.load %55, %48, %cst_4 : tensor<64x64x!tt.ptr<bf16>>
-// CHECK-NEXT:     %57 = arith.subi %1, %arg14 : i32
-// CHECK-NEXT:     %58 = arith.maxsi %57, %c0_i32 : i32
-// CHECK-NEXT:     %59 = arith.addi %2, %arg13 : i32
-// CHECK-NEXT:     %60 = arith.minsi %arg11, %59 : i32
-// CHECK-NEXT:     %61 = tt.splat %11 : !tt.ptr<bf16> -> tensor<64x!tt.ptr<bf16>>
-// CHECK-NEXT:     %62 = tt.splat %13 : !tt.ptr<bf16> -> tensor<64x!tt.ptr<bf16>>
-// CHECK-NEXT:     %63 = tt.make_range {end = 32 : i32, start = 0 : i32} : tensor<32xi32>
-// CHECK-NEXT:     %64 = tt.splat %arg16 : i32 -> tensor<1x32xi32>
-// CHECK-NEXT:     %65 = tt.expand_dims %34 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32>
-// CHECK-NEXT:     %66 = tt.broadcast %65 : tensor<64x1xi32> -> tensor<64x32xi32>
-// CHECK-NEXT:     %67 = tt.splat %arg11 : i32 -> tensor<32xi32>
-// CHECK-NEXT:     %68 = tt.splat %9 : !tt.ptr<bf16> -> tensor<64x32x!tt.ptr<bf16>>
-// CHECK-NEXT:     %69 = tt.splat %21 : !tt.ptr<f32> -> tensor<32x!tt.ptr<f32>>
-// CHECK-NEXT:     %70 = tt.splat %25 : !tt.ptr<f32> -> tensor<32x!tt.ptr<f32>>
-// CHECK-NEXT:     %71 = tt.splat %arg31 : i32 -> tensor<32x1xi32>
-// CHECK-NEXT:     %72 = tt.broadcast %40 : tensor<1x64xi32> -> tensor<32x64xi32>
-// CHECK-NEXT:     %73 = tt.splat %17 : !tt.ptr<bf16> -> tensor<32x64x!tt.ptr<bf16>>
-// CHECK-NEXT:     %74 = tt.splat %arg13 : i32 -> tensor<1x32xi32>
-// CHECK-NEXT:     %75 = tt.broadcast %37 : tensor<64x1xi32> -> tensor<64x32xi32>
-// CHECK-NEXT:     %76 = tt.splat %arg14 : i32 -> tensor<32xi32>
-// CHECK-NEXT:     %alloca = memref.alloca() : memref<i32>
-// CHECK-NEXT:     memref.store %c0_i32, %alloca[] : memref<i32>
-// CHECK-NEXT:     %alloca_7 = memref.alloca() : memref<i32>
-// CHECK-NEXT:     memref.store %c0_i32, %alloca_7[] : memref<i32>
-// CHECK-NEXT:     %77:2 = scf.for %arg47 = %58 to %60 step %c1_i32 iter_args(%arg48 = %cst, %arg49 = %cst) -> (tensor<64x64xf32>, tensor<64x64xf32>)  : i32 {
-// CHECK-NEXT:       %98 = arith.muli %arg47, %arg22 : i32
-// CHECK-NEXT:       %99 = tt.splat %98 : i32 -> tensor<64xi32>
-// CHECK-NEXT:       %100 = arith.addi %99, %34 : tensor<64xi32>
-// CHECK-NEXT:       %101 = tt.addptr %61, %100 : tensor<64x!tt.ptr<bf16>>, tensor<64xi32>
-// CHECK-NEXT:       %102 = tt.load %101 : tensor<64x!tt.ptr<bf16>>
-// CHECK-NEXT:       %103 = tt.expand_dims %102 {axis = 0 : i32} : tensor<64xbf16> -> tensor<1x64xbf16>
-// CHECK-NEXT:       %104 = arith.muli %arg47, %arg28 : i32
-// CHECK-NEXT:       %105 = tt.splat %104 : i32 -> tensor<64xi32>
-// CHECK-NEXT:       %106 = arith.addi %105, %34 : tensor<64xi32>
-// CHECK-NEXT:       %107 = tt.addptr %62, %106 : tensor<64x!tt.ptr<bf16>>, tensor<64xi32>
-// CHECK-NEXT:       %108 = tt.load %107 : tensor<64x!tt.ptr<bf16>>
-// CHECK-NEXT:       %109 = tt.expand_dims %108 {axis = 0 : i32} : tensor<64xbf16> -> tensor<1x64xbf16>
-// CHECK-NEXT:       %110 = tt.broadcast %103 : tensor<1x64xbf16> -> tensor<64x64xbf16>
-// CHECK-NEXT:       %111 = arith.mulf %49, %110 : tensor<64x64xbf16>
-// CHECK-NEXT:       %112 = tt.broadcast %109 : tensor<1x64xbf16> -> tensor<64x64xbf16>
-// CHECK-NEXT:       %113 = arith.mulf %56, %112 : tensor<64x64xbf16>
-// CHECK-NEXT:       %114 = arith.mulf %111, %cst_3 : tensor<64x64xbf16>
-// CHECK-NEXT:       %115 = arith.maxsi %1, %arg47 : i32
-// CHECK-NEXT:       %116 = arith.addi %arg47, %arg14 : i32
-// CHECK-NEXT:       %117 = arith.minsi %59, %116 : i32
-// CHECK-NEXT:       %118 = arith.minsi %arg11, %117 : i32
-// CHECK-NEXT:       %119 = tt.splat %arg47 : i32 -> tensor<32xi32>
-// CHECK-NEXT:       %120:2 = scf.for %arg50 = %115 to %118 step %c32_i32 iter_args(%arg51 = %arg48, %arg52 = %arg49) -> (tensor<64x64xf32>, tensor<64x64xf32>)  : i32 {
-// CHECK-NEXT:         %121 = tt.splat %arg50 : i32 -> tensor<32xi32>
-// CHECK-NEXT:         %122 = arith.addi %121, %63 : tensor<32xi32>
-// CHECK-NEXT:         %123 = tt.expand_dims %122 {axis = 0 : i32} : tensor<32xi32> -> tensor<1x32xi32>
-// CHECK-NEXT:         %124 = arith.muli %123, %64 : tensor<1x32xi32>
-// CHECK-NEXT:         %125 = tt.broadcast %124 : tensor<1x32xi32> -> tensor<64x32xi32>
-// CHECK-NEXT:         %126 = arith.addi %125, %66 : tensor<64x32xi32>
-// CHECK-NEXT:         %127 = arith.cmpi slt, %122, %67 : tensor<32xi32>
-// CHECK-NEXT:         %128 = tt.expand_dims %127 {axis = 0 : i32} : tensor<32xi1> -> tensor<1x32xi1>
-// CHECK-NEXT:         %129 = tt.addptr %68, %126 : tensor<64x32x!tt.ptr<bf16>>, tensor<64x32xi32>
-// CHECK-NEXT:         %130 = tt.broadcast %128 : tensor<1x32xi1> -> tensor<64x32xi1>
-// CHECK-NEXT:         %131 = tt.load %129, %130, %cst_2 : tensor<64x32x!tt.ptr<bf16>>
-// CHECK-NEXT:         %132 = tt.addptr %69, %122 : tensor<32x!tt.ptr<f32>>, tensor<32xi32>
-// CHECK-NEXT:         %133 = tt.load %132, %127, %cst_5 : tensor<32x!tt.ptr<f32>>
-// CHECK-NEXT:         %134 = tt.expand_dims %133 {axis = 0 : i32} : tensor<32xf32> -> tensor<1x32xf32>
-// CHECK-NEXT:         %135 = tt.addptr %70, %122 : tensor<32x!tt.ptr<f32>>, tensor<32xi32>
-// CHECK-NEXT:         %136 = tt.load %135, %127, %cst_5 : tensor<32x!tt.ptr<f32>>
-// CHECK-NEXT:         %137 = tt.expand_dims %136 {axis = 0 : i32} : tensor<32xf32> -> tensor<1x32xf32>
-// CHECK-NEXT:         %138 = tt.expand_dims %122 {axis = 1 : i32} : tensor<32xi32> -> tensor<32x1xi32>
-// CHECK-NEXT:         %139 = arith.muli %138, %71 : tensor<32x1xi32>
-// CHECK-NEXT:         %140 = tt.broadcast %139 : tensor<32x1xi32> -> tensor<32x64xi32>
-// CHECK-NEXT:         %141 = arith.addi %140, %72 : tensor<32x64xi32>
-// CHECK-NEXT:         %142 = tt.expand_dims %127 {axis = 1 : i32} : tensor<32xi1> -> tensor<32x1xi1>
-// CHECK-NEXT:         %143 = tt.addptr %73, %141 : tensor<32x64x!tt.ptr<bf16>>, tensor<32x64xi32>
-// CHECK-NEXT:         %144 = tt.broadcast %142 : tensor<32x1xi1> -> tensor<32x64xi1>
-// CHECK-NEXT:         %145 = tt.load %143, %144, %cst_1 : tensor<32x64x!tt.ptr<bf16>>
-// CHECK-NEXT:         %146 = tt.dot %114, %131, %cst_6 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x32xbf16> -> tensor<64x32xf32>
-// CHECK-NEXT:         %147 = arith.subi %123, %74 : tensor<1x32xi32>
-// CHECK-NEXT:         %148 = tt.broadcast %147 : tensor<1x32xi32> -> tensor<64x32xi32>
-// CHECK-NEXT:         %149 = arith.cmpi slt, %148, %75 : tensor<64x32xi32>
-// CHECK-NEXT:         %150 = tt.broadcast %123 : tensor<1x32xi32> -> tensor<64x32xi32>
-// CHECK-NEXT:         %151 = arith.cmpi sle, %75, %150 : tensor<64x32xi32>
-// CHECK-NEXT:         %152 = arith.andi %149, %151 : tensor<64x32xi1>
-// CHECK-NEXT:         %153 = arith.subi %122, %76 : tensor<32xi32>
-// CHECK-NEXT:         %154 = arith.cmpi slt, %153, %119 : tensor<32xi32>
-// CHECK-NEXT:         %155 = arith.cmpi sle, %119, %122 : tensor<32xi32>
-// CHECK-NEXT:         %156 = arith.andi %154, %155 : tensor<32xi1>
-// CHECK-NEXT:         %157 = tt.expand_dims %156 {axis = 0 : i32} : tensor<32xi1> -> tensor<1x32xi1>
-// CHECK-NEXT:         %158 = tt.broadcast %157 : tensor<1x32xi1> -> tensor<64x32xi1>
-// CHECK-NEXT:         %159 = arith.andi %152, %158 : tensor<64x32xi1>
-// CHECK-NEXT:         %160 = tt.reshape %159 allow_reorder : tensor<64x32xi1> -> tensor<2048xi1>
-// CHECK-NEXT:         %161 = "tt.reduce"(%160) <{axis = 0 : i32}> ({
-// CHECK-NEXT:         ^bb0(%arg53: i1, %arg54: i1):
-// CHECK-NEXT:           %165 = arith.addi %arg53, %arg54 : i1
-// CHECK-NEXT:           tt.reduce.return %165 : i1
-// CHECK-NEXT:         }) : (tensor<2048xi1>) -> i1
-// CHECK-NEXT:         %162 = arith.extui %161 : i1 to i32
-// CHECK-NEXT:         %163 = arith.cmpi sgt, %162, %c0_i32 : i32
-// CHECK-NEXT:         %164:2 = scf.if %163 -> (tensor<64x64xf32>, tensor<64x64xf32>) {
-// CHECK-NEXT:           %165 = tt.broadcast %134 : tensor<1x32xf32> -> tensor<64x32xf32>
-// CHECK-NEXT:           %166 = arith.subf %146, %165 : tensor<64x32xf32>
-// CHECK-NEXT:           %167 = math.exp %166 : tensor<64x32xf32>
-// CHECK-NEXT:           %168 = arith.select %159, %167, %cst_6 : tensor<64x32xi1>, tensor<64x32xf32>
-// CHECK-NEXT:           %169 = tt.broadcast %109 : tensor<1x64xbf16> -> tensor<32x64xbf16>
-// CHECK-NEXT:           %170 = arith.mulf %145, %169 : tensor<32x64xbf16>
-// CHECK-NEXT:           %171 = arith.truncf %168 : tensor<64x32xf32> to tensor<64x32xbf16>
-// CHECK-NEXT:           %172 = tt.dot %171, %170, %arg51 {triton_cv12.normalized_dot} : tensor<64x32xbf16> * tensor<32x64xbf16> -> tensor<64x64xf32>
-// CHECK-NEXT:           %173 = memref.load %alloca[] : memref<i32>
-// CHECK-NEXT:           %174 = arith.addi %173, %c1_i32 : i32
-// CHECK-NEXT:           memref.store %174, %alloca[] : memref<i32>
-// CHECK-NEXT:           %175 = tt.trans %145 {order = array<i32: 1, 0>} : tensor<32x64xbf16> -> tensor<64x32xbf16>
-// CHECK-NEXT:           %176 = tt.dot %113, %175, %cst_6 {triton_cv12.normalized_dot} : tensor<64x64xbf16> * tensor<64x32xbf16> -> tensor<64x32xf32>
-// CHECK-NEXT:           %177 = arith.subf %cst_6, %168 : tensor<64x32xf32>
-// CHECK-NEXT:           %178 = tt.broadcast %137 : tensor<1x32xf32> -> tensor<64x32xf32>
-// CHECK-NEXT:           %179 = arith.mulf %177, %178 : tensor<64x32xf32>
-// CHECK-NEXT:           %180 = math.fma %168, %176, %179 : tensor<64x32xf32>
-// CHECK-NEXT:           %181 = arith.truncf %180 : tensor<64x32xf32> to tensor<64x32xbf16>
-// CHECK-NEXT:           %182 = arith.mulf %181, %cst_0 : tensor<64x32xbf16>
-// CHECK-NEXT:           %183 = tt.trans %131 {order = array<i32: 1, 0>} : tensor<64x32xbf16> -> tensor<32x64xbf16>
-// CHECK-NEXT:           %184 = tt.broadcast %103 : tensor<1x64xbf16> -> tensor<32x64xbf16>
-// CHECK-NEXT:           %185 = arith.mulf %183, %184 : tensor<32x64xbf16>
-// CHECK-NEXT:           %186 = tt.dot %182, %185, %arg52 {triton_cv12.normalized_dot} : tensor<64x32xbf16> * tensor<32x64xbf16> -> tensor<64x64xf32>
-// CHECK-NEXT:           %187 = memref.load %alloca_7[] : memref<i32>
-// CHECK-NEXT:           %188 = arith.addi %187, %c1_i32 : i32
-// CHECK-NEXT:           memref.store %188, %alloca_7[] : memref<i32>
-// CHECK-NEXT:           scf.yield %172, %186 : tensor<64x64xf32>, tensor<64x64xf32>
-// CHECK-NEXT:         } else {
-// CHECK-NEXT:           scf.yield %arg51, %arg52 : tensor<64x64xf32>, tensor<64x64xf32>
-// CHECK-NEXT:         } {hivm.matmul_limited_in_cube}
-// CHECK-NEXT:         scf.yield %164#0, %164#1 : tensor<64x64xf32>, tensor<64x64xf32>
-// CHECK-NEXT:       } {tt.num_stages = 1 : i32}
-// CHECK-NEXT:       scf.yield %120#0, %120#1 : tensor<64x64xf32>, tensor<64x64xf32>
-// CHECK-NEXT:     } {hivm.matmul_limited_in_cube}
-// CHECK-NEXT:     %78 = memref.load %alloca_7[] : memref<i32>
-// CHECK-NEXT:     %79 = arith.cmpi ne, %78, %c0_i32 : i32
-// CHECK-NEXT:     %80 = scf.if %79 -> (tensor<64x64xf32>) {
-// CHECK-NEXT:       scf.yield %77#1 : tensor<64x64xf32>
-// CHECK-NEXT:     } else {
-// CHECK-NEXT:       scf.yield %cst : tensor<64x64xf32>
-// CHECK-NEXT:     }
-// CHECK-NEXT:     %81 = memref.load %alloca[] : memref<i32>
-// CHECK-NEXT:     %82 = arith.cmpi ne, %81, %c0_i32 : i32
-// CHECK-NEXT:     %83 = scf.if %82 -> (tensor<64x64xf32>) {
-// CHECK-NEXT:       scf.yield %77#0 : tensor<64x64xf32>
-// CHECK-NEXT:     } else {
-// CHECK-NEXT:       scf.yield %cst : tensor<64x64xf32>
-// CHECK-NEXT:     }
-// CHECK-NEXT:     %84 = tt.splat %arg45 : i32 -> tensor<64x1xi32>
-// CHECK-NEXT:     %85 = arith.muli %37, %84 : tensor<64x1xi32>
-// CHECK-NEXT:     %86 = tt.broadcast %85 : tensor<64x1xi32> -> tensor<64x64xi32>
-// CHECK-NEXT:     %87 = arith.addi %86, %42 : tensor<64x64xi32>
-// CHECK-NEXT:     %88 = tt.splat %arg42 : i32 -> tensor<64x1xi32>
-// CHECK-NEXT:     %89 = arith.muli %37, %88 : tensor<64x1xi32>
-// CHECK-NEXT:     %90 = tt.broadcast %89 : tensor<64x1xi32> -> tensor<64x64xi32>
-// CHECK-NEXT:     %91 = arith.addi %90, %42 : tensor<64x64xi32>
-// CHECK-NEXT:     %92 = tt.splat %33 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>>
-// CHECK-NEXT:     %93 = tt.addptr %92, %87 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32>
-// CHECK-NEXT:     %94 = arith.truncf %83 : tensor<64x64xf32> to tensor<64x64xbf16>
-// CHECK-NEXT:     tt.store %93, %94, %48 : tensor<64x64x!tt.ptr<bf16>>
-// CHECK-NEXT:     %95 = tt.splat %29 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>>
-// CHECK-NEXT:     %96 = tt.addptr %95, %91 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32>
-// CHECK-NEXT:     %97 = arith.truncf %80 : tensor<64x64xf32> to tensor<64x64xbf16>
-// CHECK-NEXT:     tt.store %96, %97, %48 : tensor<64x64x!tt.ptr<bf16>>
-// CHECK-NEXT:     tt.return
-// CHECK-NEXT:   }
-// CHECK-NEXT: }
-#loc = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0)
-#loc1 = loc(unknown)
-#loc106 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":220:27)
-#loc141 = loc(callsite(#loc1 at #loc106))
-module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
-  tt.func public @simplicial_bwd_kv1_kernel(%arg0: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg1: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg2: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg3: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg4: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg5: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg6: !tt.ptr<f32> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg7: !tt.ptr<f32> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg8: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg9: !tt.ptr<bf16> {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg10: i32 loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg11: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg12: i32 loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg13: i32 loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg14: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg15: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg16: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg17: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg18: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg19: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg20: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg21: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg22: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg23: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg24: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg25: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg26: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg27: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg28: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg29: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg30: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg31: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg32: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg33: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg34: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg35: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg36: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg37: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg38: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg39: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg40: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg41: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg42: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg43: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg44: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg45: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0), %arg46: i32 {tt.divisibility = 16 : i32} loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":61:0)) attributes {noinline = false} {
-    %cst = arith.constant dense<1.250000e-01> : tensor<64x32xbf16> loc(#loc1)
-    %cst_0 = arith.constant dense<0.000000e+00> : tensor<32x64xbf16> loc(#loc1)
-    %cst_1 = arith.constant dense<0.000000e+00> : tensor<64x32xbf16> loc(#loc1)
-    %c32_i32 = arith.constant 32 : i32 loc(#loc1)
-    %cst_2 = arith.constant dense<1.250000e-01> : tensor<64x64xbf16> loc(#loc1)
-    %c1_i32 = arith.constant 1 : i32 loc(#loc1)
-    %cst_3 = arith.constant dense<0.000000e+00> : tensor<64x64xbf16> loc(#loc1)
-    %cst_4 = arith.constant dense<0.000000e+00> : tensor<32xf32> loc(#loc1)
-    %cst_5 = arith.constant dense<0.000000e+00> : tensor<64x32xf32> loc(#loc1)
-    %c0_i32 = arith.constant 0 : i32 loc(#loc1)
-    %cst_6 = arith.constant dense<0.000000e+00> : tensor<64x64xf32> loc(#loc1)
-    %c64_i32 = arith.constant 64 : i32 loc(#loc1)
-    %0 = tt.get_program_id x : i32 loc(#loc2)
-    %1 = arith.muli %0, %c64_i32 : i32 loc(#loc3)
-    %2 = arith.addi %1, %c64_i32 : i32 loc(#loc4)
-    %3 = tt.get_program_id y : i32 loc(#loc5)
-    %4 = arith.divsi %3, %arg12 : i32 loc(#loc6)
-    %5 = arith.remsi %3, %arg12 : i32 loc(#loc7)
-    %6 = arith.muli %4, %arg15 : i32 loc(#loc8)
-    %7 = arith.muli %5, %arg17 : i32 loc(#loc9)
-    %8 = arith.addi %6, %7 : i32 loc(#loc10)
-    %9 = tt.addptr %arg0, %8 : !tt.ptr<bf16>, i32 loc(#loc11)
-    %10 = tt.addptr %arg1, %8 : !tt.ptr<bf16>, i32 loc(#loc12)
-    %11 = tt.addptr %arg2, %8 : !tt.ptr<bf16>, i32 loc(#loc13)
-    %12 = tt.addptr %arg3, %8 : !tt.ptr<bf16>, i32 loc(#loc14)
-    %13 = tt.addptr %arg4, %8 : !tt.ptr<bf16>, i32 loc(#loc15)
-    %14 = arith.muli %4, %arg30 : i32 loc(#loc16)
-    %15 = arith.muli %5, %arg32 : i32 loc(#loc17)
-    %16 = arith.addi %14, %15 : i32 loc(#loc18)
-    %17 = tt.addptr %arg5, %16 : !tt.ptr<bf16>, i32 loc(#loc19)
-    %18 = arith.muli %4, %arg33 : i32 loc(#loc20)
-    %19 = arith.muli %5, %arg34 : i32 loc(#loc21)
-    %20 = arith.addi %18, %19 : i32 loc(#loc22)
-    %21 = tt.addptr %arg6, %20 : !tt.ptr<f32>, i32 loc(#loc23)
-    %22 = arith.muli %4, %arg35 : i32 loc(#loc24)
-    %23 = arith.muli %5, %arg36 : i32 loc(#loc25)
-    %24 = arith.addi %22, %23 : i32 loc(#loc26)
-    %25 = tt.addptr %arg7, %24 : !tt.ptr<f32>, i32 loc(#loc27)
-    %26 = arith.muli %4, %arg41 : i32 loc(#loc28)
-    %27 = arith.muli %5, %arg43 : i32 loc(#loc29)
-    %28 = arith.addi %26, %27 : i32 loc(#loc30)
-    %29 = tt.addptr %arg8, %28 : !tt.ptr<bf16>, i32 loc(#loc31)
-    %30 = arith.muli %4, %arg44 : i32 loc(#loc32)
-    %31 = arith.muli %5, %arg46 : i32 loc(#loc33)
-    %32 = arith.addi %30, %31 : i32 loc(#loc34)
-    %33 = tt.addptr %arg9, %32 : !tt.ptr<bf16>, i32 loc(#loc35)
-    %34 = tt.make_range {end = 64 : i32, start = 0 : i32} : tensor<64xi32> loc(#loc36)
-    %35 = tt.splat %1 : i32 -> tensor<64xi32> loc(#loc37)
-    %36 = arith.addi %35, %34 : tensor<64xi32> loc(#loc37)
-    %37 = tt.expand_dims %36 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32> loc(#loc38)
-    %38 = tt.splat %arg19 : i32 -> tensor<64x1xi32> loc(#loc39)
-    %39 = arith.muli %37, %38 : tensor<64x1xi32> loc(#loc39)
-    %40 = tt.expand_dims %34 {axis = 0 : i32} : tensor<64xi32> -> tensor<1x64xi32> loc(#loc40)
-    %41 = tt.broadcast %39 : tensor<64x1xi32> -> tensor<64x64xi32> loc(#loc41)
-    %42 = tt.broadcast %40 : tensor<1x64xi32> -> tensor<64x64xi32> loc(#loc41)
-    %43 = arith.addi %41, %42 : tensor<64x64xi32> loc(#loc41)
-    %44 = tt.splat %arg11 : i32 -> tensor<64x1xi32> loc(#loc42)
-    %45 = arith.cmpi slt, %37, %44 : tensor<64x1xi32> loc(#loc42)
-    %46 = tt.splat %10 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>> loc(#loc43)
-    %47 = tt.addptr %46, %43 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32> loc(#loc43)
-    %48 = tt.broadcast %45 : tensor<64x1xi1> -> tensor<64x64xi1> loc(#loc44)
-    %49 = tt.load %47, %48, %cst_3 : tensor<64x64x!tt.ptr<bf16>> loc(#loc44)
-    %50 = tt.splat %arg25 : i32 -> tensor<64x1xi32> loc(#loc45)
-    %51 = arith.muli %37, %50 : tensor<64x1xi32> loc(#loc45)
-    %52 = tt.broadcast %51 : tensor<64x1xi32> -> tensor<64x64xi32> loc(#loc46)
-    %53 = arith.addi %52, %42 : tensor<64x64xi32> loc(#loc46)
-    %54 = tt.splat %12 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>> loc(#loc47)
-    %55 = tt.addptr %54, %53 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32> loc(#loc47)
-    %56 = tt.load %55, %48, %cst_3 : tensor<64x64x!tt.ptr<bf16>> loc(#loc48)
-    %57 = arith.subi %1, %arg14 : i32 loc(#loc49)
-    %58 = arith.maxsi %57, %c0_i32 : i32 loc(#loc50)
-    %59 = arith.addi %2, %arg13 : i32 loc(#loc51)
-    %60 = arith.minsi %arg11, %59 : i32 loc(#loc52)
-    %61 = tt.splat %11 : !tt.ptr<bf16> -> tensor<64x!tt.ptr<bf16>> loc(#loc53)
-    %62 = tt.splat %13 : !tt.ptr<bf16> -> tensor<64x!tt.ptr<bf16>> loc(#loc54)
-    %63 = tt.make_range {end = 32 : i32, start = 0 : i32} : tensor<32xi32> loc(#loc55)
-    %64 = tt.splat %arg16 : i32 -> tensor<1x32xi32> loc(#loc56)
-    %65 = tt.expand_dims %34 {axis = 1 : i32} : tensor<64xi32> -> tensor<64x1xi32> loc(#loc57)
-    %66 = tt.broadcast %65 : tensor<64x1xi32> -> tensor<64x32xi32> loc(#loc58)
-    %67 = tt.splat %arg11 : i32 -> tensor<32xi32> loc(#loc59)
-    %68 = tt.splat %9 : !tt.ptr<bf16> -> tensor<64x32x!tt.ptr<bf16>> loc(#loc60)
-    %69 = tt.splat %21 : !tt.ptr<f32> -> tensor<32x!tt.ptr<f32>> loc(#loc61)
-    %70 = tt.splat %25 : !tt.ptr<f32> -> tensor<32x!tt.ptr<f32>> loc(#loc62)
-    %71 = tt.splat %arg31 : i32 -> tensor<32x1xi32> loc(#loc63)
-    %72 = tt.broadcast %40 : tensor<1x64xi32> -> tensor<32x64xi32> loc(#loc64)
-    %73 = tt.splat %17 : !tt.ptr<bf16> -> tensor<32x64x!tt.ptr<bf16>> loc(#loc65)
-    %74 = tt.splat %arg13 : i32 -> tensor<1x32xi32> loc(#loc66)
-    %75 = tt.broadcast %37 : tensor<64x1xi32> -> tensor<64x32xi32> loc(#loc67)
-    %76 = tt.splat %arg14 : i32 -> tensor<32xi32> loc(#loc68)
-    %77:2 = scf.for %arg47 = %58 to %60 step %c1_i32 iter_args(%arg48 = %cst_6, %arg49 = %cst_6) -> (tensor<64x64xf32>, tensor<64x64xf32>)  : i32 {
-      %92 = arith.muli %arg47, %arg22 : i32 loc(#loc70)
-      %93 = tt.splat %92 : i32 -> tensor<64xi32> loc(#loc71)
-      %94 = arith.addi %93, %34 : tensor<64xi32> loc(#loc71)
-      %95 = tt.addptr %61, %94 : tensor<64x!tt.ptr<bf16>>, tensor<64xi32> loc(#loc53)
-      %96 = tt.load %95 : tensor<64x!tt.ptr<bf16>> loc(#loc72)
-      %97 = tt.expand_dims %96 {axis = 0 : i32} : tensor<64xbf16> -> tensor<1x64xbf16> loc(#loc73)
-      %98 = arith.muli %arg47, %arg28 : i32 loc(#loc74)
-      %99 = tt.splat %98 : i32 -> tensor<64xi32> loc(#loc75)
-      %100 = arith.addi %99, %34 : tensor<64xi32> loc(#loc75)
-      %101 = tt.addptr %62, %100 : tensor<64x!tt.ptr<bf16>>, tensor<64xi32> loc(#loc54)
-      %102 = tt.load %101 : tensor<64x!tt.ptr<bf16>> loc(#loc76)
-      %103 = tt.expand_dims %102 {axis = 0 : i32} : tensor<64xbf16> -> tensor<1x64xbf16> loc(#loc77)
-      %104 = tt.broadcast %97 : tensor<1x64xbf16> -> tensor<64x64xbf16> loc(#loc78)
-      %105 = arith.mulf %49, %104 : tensor<64x64xbf16> loc(#loc78)
-      %106 = tt.broadcast %103 : tensor<1x64xbf16> -> tensor<64x64xbf16> loc(#loc79)
-      %107 = arith.mulf %56, %106 : tensor<64x64xbf16> loc(#loc79)
-      %108 = arith.mulf %105, %cst_2 : tensor<64x64xbf16> loc(#loc80)
-      %109 = arith.maxsi %1, %arg47 : i32 loc(#loc81)
-      %110 = arith.addi %arg47, %arg14 : i32 loc(#loc82)
-      %111 = arith.minsi %59, %110 : i32 loc(#loc83)
-      %112 = arith.minsi %arg11, %111 : i32 loc(#loc84)
-      %113 = tt.splat %arg47 : i32 -> tensor<32xi32> loc(#loc85)
-      %114:2 = scf.for %arg50 = %109 to %112 step %c32_i32 iter_args(%arg51 = %arg48, %arg52 = %arg49) -> (tensor<64x64xf32>, tensor<64x64xf32>)  : i32 {
-        %115 = tt.splat %arg50 : i32 -> tensor<32xi32> loc(#loc87)
-        %116 = arith.addi %115, %63 : tensor<32xi32> loc(#loc87)
-        %117 = tt.expand_dims %116 {axis = 0 : i32} : tensor<32xi32> -> tensor<1x32xi32> loc(#loc88)
-        %118 = arith.muli %117, %64 : tensor<1x32xi32> loc(#loc56)
-        %119 = tt.broadcast %118 : tensor<1x32xi32> -> tensor<64x32xi32> loc(#loc58)
-        %120 = arith.addi %119, %66 : tensor<64x32xi32> loc(#loc58)
-        %121 = arith.cmpi slt, %116, %67 : tensor<32xi32> loc(#loc59)
-        %122 = tt.expand_dims %121 {axis = 0 : i32} : tensor<32xi1> -> tensor<1x32xi1> loc(#loc89)
-        %123 = tt.addptr %68, %120 : tensor<64x32x!tt.ptr<bf16>>, tensor<64x32xi32> loc(#loc60)
-        %124 = tt.broadcast %122 : tensor<1x32xi1> -> tensor<64x32xi1> loc(#loc90)
-        %125 = tt.load %123, %124, %cst_1 : tensor<64x32x!tt.ptr<bf16>> loc(#loc90)
-        %126 = tt.addptr %69, %116 : tensor<32x!tt.ptr<f32>>, tensor<32xi32> loc(#loc61)
-        %127 = tt.load %126, %121, %cst_4 : tensor<32x!tt.ptr<f32>> loc(#loc91)
-        %128 = tt.expand_dims %127 {axis = 0 : i32} : tensor<32xf32> -> tensor<1x32xf32> loc(#loc92)
-        %129 = tt.addptr %70, %116 : tensor<32x!tt.ptr<f32>>, tensor<32xi32> loc(#loc62)
-        %130 = tt.load %129, %121, %cst_4 : tensor<32x!tt.ptr<f32>> loc(#loc93)
-        %131 = tt.expand_dims %130 {axis = 0 : i32} : tensor<32xf32> -> tensor<1x32xf32> loc(#loc94)
-        %132 = tt.expand_dims %116 {axis = 1 : i32} : tensor<32xi32> -> tensor<32x1xi32> loc(#loc95)
-        %133 = arith.muli %132, %71 : tensor<32x1xi32> loc(#loc63)
-        %134 = tt.broadcast %133 : tensor<32x1xi32> -> tensor<32x64xi32> loc(#loc64)
-        %135 = arith.addi %134, %72 : tensor<32x64xi32> loc(#loc64)
-        %136 = tt.expand_dims %121 {axis = 1 : i32} : tensor<32xi1> -> tensor<32x1xi1> loc(#loc96)
-        %137 = tt.addptr %73, %135 : tensor<32x64x!tt.ptr<bf16>>, tensor<32x64xi32> loc(#loc65)
-        %138 = tt.broadcast %136 : tensor<32x1xi1> -> tensor<32x64xi1> loc(#loc97)
-        %139 = tt.load %137, %138, %cst_0 : tensor<32x64x!tt.ptr<bf16>> loc(#loc97)
-        %140 = tt.dot %108, %125, %cst_5 : tensor<64x64xbf16> * tensor<64x32xbf16> -> tensor<64x32xf32> loc(#loc98)
-        %141 = arith.subi %117, %74 : tensor<1x32xi32> loc(#loc66)
-        %142 = tt.broadcast %141 : tensor<1x32xi32> -> tensor<64x32xi32> loc(#loc67)
-        %143 = arith.cmpi slt, %142, %75 : tensor<64x32xi32> loc(#loc67)
-        %144 = tt.broadcast %117 : tensor<1x32xi32> -> tensor<64x32xi32> loc(#loc99)
-        %145 = arith.cmpi sle, %75, %144 : tensor<64x32xi32> loc(#loc99)
-        %146 = arith.andi %143, %145 : tensor<64x32xi1> loc(#loc100)
-        %147 = arith.subi %116, %76 : tensor<32xi32> loc(#loc68)
-        %148 = arith.cmpi slt, %147, %113 : tensor<32xi32> loc(#loc85)
-        %149 = arith.cmpi sle, %113, %116 : tensor<32xi32> loc(#loc101)
-        %150 = arith.andi %148, %149 : tensor<32xi1> loc(#loc102)
-        %151 = tt.expand_dims %150 {axis = 0 : i32} : tensor<32xi1> -> tensor<1x32xi1> loc(#loc103)
-        %152 = tt.broadcast %151 : tensor<1x32xi1> -> tensor<64x32xi1> loc(#loc104)
-        %153 = arith.andi %146, %152 : tensor<64x32xi1> loc(#loc104)
-        %154 = tt.reshape %153 allow_reorder : tensor<64x32xi1> -> tensor<2048xi1> loc(#loc140)
-        %155 = "tt.reduce"(%154) <{axis = 0 : i32}> ({
-        ^bb0(%arg53: i1 loc(callsite(#loc1 at #loc106)), %arg54: i1 loc(callsite(#loc1 at #loc106))):
-          %159 = arith.addi %arg53, %arg54 : i1 loc(#loc143)
-          tt.reduce.return %159 : i1 loc(#loc140)
-        }) : (tensor<2048xi1>) -> i1 loc(#loc140)
-        %156 = arith.extui %155 : i1 to i32 loc(#loc108)
-        %157 = arith.cmpi sgt, %156, %c0_i32 : i32 loc(#loc108)
-        %158:2 = scf.if %157 -> (tensor<64x64xf32>, tensor<64x64xf32>) {
-          %159 = tt.broadcast %128 : tensor<1x32xf32> -> tensor<64x32xf32> loc(#loc110)
-          %160 = arith.subf %140, %159 : tensor<64x32xf32> loc(#loc110)
-          %161 = math.exp %160 : tensor<64x32xf32> loc(#loc111)
-          %162 = arith.select %153, %161, %cst_5 : tensor<64x32xi1>, tensor<64x32xf32> loc(#loc112)
-          %163 = tt.broadcast %103 : tensor<1x64xbf16> -> tensor<32x64xbf16> loc(#loc113)
-          %164 = arith.mulf %139, %163 : tensor<32x64xbf16> loc(#loc113)
-          %165 = arith.truncf %162 : tensor<64x32xf32> to tensor<64x32xbf16> loc(#loc114)
-          %166 = tt.dot %165, %164, %arg51 : tensor<64x32xbf16> * tensor<32x64xbf16> -> tensor<64x64xf32> loc(#loc115)
-          %167 = tt.trans %139 {order = array<i32: 1, 0>} : tensor<32x64xbf16> -> tensor<64x32xbf16> loc(#loc116)
-          %168 = tt.dot %107, %167, %cst_5 : tensor<64x64xbf16> * tensor<64x32xbf16> -> tensor<64x32xf32> loc(#loc117)
-          %169 = arith.subf %cst_5, %162 : tensor<64x32xf32> loc(#loc118)
-          %170 = tt.broadcast %131 : tensor<1x32xf32> -> tensor<64x32xf32> loc(#loc119)
-          %171 = arith.mulf %169, %170 : tensor<64x32xf32> loc(#loc119)
-          %172 = math.fma %162, %168, %171 : tensor<64x32xf32> loc(#loc120)
-          %173 = arith.truncf %172 : tensor<64x32xf32> to tensor<64x32xbf16> loc(#loc121)
-          %174 = arith.mulf %173, %cst : tensor<64x32xbf16> loc(#loc122)
-          %175 = tt.trans %125 {order = array<i32: 1, 0>} : tensor<64x32xbf16> -> tensor<32x64xbf16> loc(#loc123)
-          %176 = tt.broadcast %97 : tensor<1x64xbf16> -> tensor<32x64xbf16> loc(#loc124)
-          %177 = arith.mulf %175, %176 : tensor<32x64xbf16> loc(#loc124)
-          %178 = tt.dot %174, %177, %arg52 : tensor<64x32xbf16> * tensor<32x64xbf16> -> tensor<64x64xf32> loc(#loc125)
-          scf.yield %166, %178 : tensor<64x64xf32>, tensor<64x64xf32> loc(#loc126)
-        } else {
-          scf.yield %arg51, %arg52 : tensor<64x64xf32>, tensor<64x64xf32> loc(#loc1)
-        } loc(#loc109)
-        scf.yield %158#0, %158#1 : tensor<64x64xf32>, tensor<64x64xf32> loc(#loc127)
-      } {tt.num_stages = 1 : i32} loc(#loc86)
-      scf.yield %114#0, %114#1 : tensor<64x64xf32>, tensor<64x64xf32> loc(#loc128)
-    } loc(#loc69)
-    %78 = tt.splat %arg45 : i32 -> tensor<64x1xi32> loc(#loc129)
-    %79 = arith.muli %37, %78 : tensor<64x1xi32> loc(#loc129)
-    %80 = tt.broadcast %79 : tensor<64x1xi32> -> tensor<64x64xi32> loc(#loc130)
-    %81 = arith.addi %80, %42 : tensor<64x64xi32> loc(#loc130)
-    %82 = tt.splat %arg42 : i32 -> tensor<64x1xi32> loc(#loc131)
-    %83 = arith.muli %37, %82 : tensor<64x1xi32> loc(#loc131)
-    %84 = tt.broadcast %83 : tensor<64x1xi32> -> tensor<64x64xi32> loc(#loc132)
-    %85 = arith.addi %84, %42 : tensor<64x64xi32> loc(#loc132)
-    %86 = tt.splat %33 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>> loc(#loc133)
-    %87 = tt.addptr %86, %81 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32> loc(#loc133)
-    %88 = arith.truncf %77#0 : tensor<64x64xf32> to tensor<64x64xbf16> loc(#loc134)
-    tt.store %87, %88, %48 : tensor<64x64x!tt.ptr<bf16>> loc(#loc135)
-    %89 = tt.splat %29 : !tt.ptr<bf16> -> tensor<64x64x!tt.ptr<bf16>> loc(#loc136)
-    %90 = tt.addptr %89, %85 : tensor<64x64x!tt.ptr<bf16>>, tensor<64x64xi32> loc(#loc136)
-    %91 = arith.truncf %77#1 : tensor<64x64xf32> to tensor<64x64xbf16> loc(#loc137)
-    tt.store %90, %91, %48 : tensor<64x64x!tt.ptr<bf16>> loc(#loc138)
-    tt.return loc(#loc139)
-  } loc(#loc)
-} loc(#loc)
-#loc2 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":129:30)
-#loc3 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":129:35)
-#loc4 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":130:26)
-#loc5 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":131:23)
-#loc6 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":132:19)
-#loc7 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":133:18)
-#loc8 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":135:27)
-#loc9 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":135:49)
-#loc10 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":135:40)
-#loc11 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":136:13)
-#loc12 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":137:14)
-#loc13 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":138:14)
-#loc14 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":139:14)
-#loc15 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":140:14)
-#loc16 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":142:23)
-#loc17 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":142:46)
-#loc18 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":142:37)
-#loc19 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":142:14)
-#loc20 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":143:22)
-#loc21 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":143:44)
-#loc22 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":143:35)
-#loc23 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":143:13)
-#loc24 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":144:22)
-#loc25 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":144:44)
-#loc26 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":144:35)
-#loc27 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":144:13)
-#loc28 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":145:24)
-#loc29 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":145:48)
-#loc30 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":145:39)
-#loc31 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":145:15)
-#loc32 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":146:24)
-#loc33 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":146:48)
-#loc34 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":146:39)
-#loc35 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":146:15)
-#loc36 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":149:30)
-#loc37 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":151:29)
-#loc38 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":153:25)
-#loc39 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":153:36)
-#loc40 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":153:61)
-#loc41 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":153:50)
-#loc42 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":154:37)
-#loc43 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":155:31)
-#loc44 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":155:22)
-#loc45 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":158:36)
-#loc46 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":158:50)
-#loc47 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":159:31)
-#loc48 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":159:22)
-#loc49 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":167:34)
-#loc50 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":167:22)
-#loc51 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":167:69)
-#loc52 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":167:59)
-#loc53 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":170:36)
-#loc54 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":172:36)
-#loc55 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":184:44)
-#loc56 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":185:41)
-#loc57 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":185:65)
-#loc58 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":185:54)
-#loc59 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":186:34)
-#loc60 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":188:24)
-#loc61 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":191:37)
-#loc62 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":195:37)
-#loc63 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":199:36)
-#loc64 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":199:50)
-#loc65 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":202:25)
-#loc66 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":212:51)
-#loc67 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":212:57)
-#loc68 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":215:42)
-#loc69 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":167:39)
-#loc70 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":169:28)
-#loc71 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":169:42)
-#loc72 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":170:27)
-#loc73 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":170:61)
-#loc74 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":171:28)
-#loc75 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":171:42)
-#loc76 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":172:27)
-#loc77 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":172:61)
-#loc78 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":173:25)
-#loc79 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":174:25)
-#loc80 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":175:29)
-#loc81 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":178:40)
-#loc82 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":179:71)
-#loc83 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":179:61)
-#loc84 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":179:36)
-#loc85 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":215:48)
-#loc86 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":182:60)
-#loc87 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":184:31)
-#loc88 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":185:30)
-#loc89 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":188:46)
-#loc90 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":188:16)
-#loc91 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":191:29)
-#loc92 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":192:16)
-#loc93 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":195:29)
-#loc94 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":196:16)
-#loc95 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":199:25)
-#loc96 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":202:48)
-#loc97 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":202:16)
-#loc98 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":208:29)
-#loc99 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":213:39)
-#loc100 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":213:16)
-#loc101 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":215:71)
-#loc102 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":215:60)
-#loc103 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":217:48)
-#loc104 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":217:33)
-#loc105 = loc("/usr/local/python3.11.0/lib/python3.11/site-packages/triton/language/standard.py":282:36)
-#loc107 = loc("/usr/local/python3.11.0/lib/python3.11/site-packages/triton/language/standard.py":271:15)
-#loc108 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":220:41)
-#loc109 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":221:15)
-#loc110 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":222:35)
-#loc111 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":222:28)
-#loc112 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":223:46)
-#loc113 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":225:33)
-#loc114 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":227:26)
-#loc115 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":227:39)
-#loc116 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":232:35)
-#loc117 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":232:26)
-#loc118 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":234:39)
-#loc119 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":234:44)
-#loc120 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":234:38)
-#loc121 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":236:36)
-#loc122 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":236:50)
-#loc123 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":239:37)
-#loc124 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":239:48)
-#loc125 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":241:42)
-#loc126 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":241:23)
-#loc127 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":221:12)
-#loc128 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":182:8)
-#loc129 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":242:37)
-#loc130 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":242:52)
-#loc131 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":243:37)
-#loc132 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":243:52)
-#loc133 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":244:23)
-#loc134 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":244:40)
-#loc135 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":244:33)
-#loc136 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":245:23)
-#loc137 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":245:40)
-#loc138 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":245:33)
-#loc139 = loc("/data/l00589591/ssbuf/triton_ascend/test/fbgemm_operator_cases/newtest_cases/test_simplicial_bwd_kv1_kernel_npu.py":245:4)
-#loc140 = loc(callsite(#loc105 at #loc106))
-#loc142 = loc(callsite(#loc107 at #loc105))
-#loc143 = loc(callsite(#loc142 at #loc106))
+#map = affine_map<()[s0] -> (s0 * 8)>
+module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">, hivm.disable_auto_tile_and_bind_subblock} {
+  tt.func public @merge_16x16_to_64x64_inverse_kernel(%arg0: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg2: i32) attributes {noinline = false} {
+    %cst = arith.constant dense<0.000000e+00> : tensor<8x16xf32>
+    %cst_0 = arith.constant dense<0.000000e+00> : tensor<16x8xf32>
+    %c32_i32 = arith.constant 32 : i32
+    %c64_i32 = arith.constant 64 : i32
+    %c64_i64 = arith.constant 64 : i64
+    %c2048_i64 = arith.constant 2048 : i64
+    %c1_i64 = arith.constant 1 : i64
+    %c0_i32 = arith.constant 0 : i32
+    %c16_i32 = arith.constant 16 : i32
+    %c48_i32 = arith.constant 48 : i32
+    %cst_1 = arith.constant dense<0.000000e+00> : tensor<16x16xf32>
+    %cst_2 = arith.constant dense<0.000000e+00> : tensor<16xf32>
+    %cst_3 = arith.constant dense<16> : tensor<16xi32>
+    %cst_4 = arith.constant dense<32> : tensor<16xi32>
+    %cst_5 = arith.constant dense<48> : tensor<16xi32>
+    %c2_i32 = arith.constant 2 : i32
+    %c1_i32 = arith.constant 1 : i32
+    %c2048_i32 = arith.constant 2048 : i32
+    %c18_i32 = arith.constant 18 : i32
+    %c34_i32 = arith.constant 34 : i32
+    %c50_i32 = arith.constant 50 : i32
+    %0 = hivm.hir.get_sub_block_idx -> i64
+    %1 = arith.index_cast %0 : i64 to index
+    %2 = affine.apply #map()[%1]
+    %3 = arith.index_cast %2 : index to i32
+    %4 = tt.get_program_id x : i32
+    %5 = tt.get_program_id y : i32
+    %6 = arith.divsi %5, %c32_i32 : i32
+    %7 = arith.remsi %5, %c32_i32 : i32
+    %8 = arith.muli %6, %arg2 : i32
+    %9 = tt.make_range {end = 16 : i32, start = 0 : i32} : tensor<16xi32>
+    %10 = tt.expand_dims %9 {axis = 1 : i32} : tensor<16xi32> -> tensor<16x1xi32>
+    %extracted_slice = tensor.extract_slice %9[%2] [8] [1] {should_kept_slice} : tensor<16xi32> to tensor<8xi32>
+    %11 = tt.expand_dims %extracted_slice {axis = 0 : i32} : tensor<8xi32> -> tensor<1x8xi32>
+    %12 = tt.broadcast %10 : tensor<16x1xi32> -> tensor<16x8xi32>
+    %13 = tt.broadcast %11 : tensor<1x8xi32> -> tensor<16x8xi32>
+    %14 = arith.cmpi sgt, %12, %13 : tensor<16x8xi32>
+    %15 = arith.cmpi eq, %12, %13 : tensor<16x8xi32>
+    %16 = arith.muli %8, %c32_i32 : i32
+    %17 = arith.addi %16, %7 : i32
+    %18 = arith.muli %17, %c64_i32 : i32
+    %19 = tt.addptr %arg0, %18 : !tt.ptr<f32>, i32
+    %20 = tt.addptr %arg1, %18 : !tt.ptr<f32>, i32
+    %21 = arith.muli %4, %c64_i32 : i32
+    %22 = arith.extsi %arg2 : i32 to i64
+    %23 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%21, %3] {order = array<i32: 1, 0>} : <tensor<16x8xf32>>
+    %24 = arith.addi %21, %c16_i32 : i32
+    %25 = arith.addi %3, %c16_i32 : i32
+    %26 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%24, %25] {order = array<i32: 1, 0>} : <tensor<16x8xf32>>
+    %27 = arith.addi %21, %c32_i32 : i32
+    %28 = arith.addi %3, %c32_i32 : i32
+    %29 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%27, %28] {order = array<i32: 1, 0>} : <tensor<16x8xf32>>
+    %30 = arith.addi %21, %c48_i32 : i32
+    %31 = arith.addi %3, %c48_i32 : i32
+    %32 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%30, %31] {order = array<i32: 1, 0>} : <tensor<16x8xf32>>
+    %33 = tt.load %23 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x8xf32>>
+    %34 = tt.load %26 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x8xf32>>
+    %35 = tt.load %29 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x8xf32>>
+    %36 = tt.load %32 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x8xf32>>
+    %37 = arith.select %14, %33, %cst_0 : tensor<16x8xi1>, tensor<16x8xf32>
+    %38 = arith.subf %cst_0, %37 : tensor<16x8xf32>
+    %39 = arith.select %14, %34, %cst_0 : tensor<16x8xi1>, tensor<16x8xf32>
+    %40 = arith.subf %cst_0, %39 : tensor<16x8xf32>
+    %41 = arith.select %14, %35, %cst_0 : tensor<16x8xi1>, tensor<16x8xf32>
+    %42 = arith.subf %cst_0, %41 : tensor<16x8xf32>
+    %43 = arith.select %14, %36, %cst_0 : tensor<16x8xi1>, tensor<16x8xf32>
+    %44 = arith.subf %cst_0, %43 : tensor<16x8xf32>
+    %45 = arith.subi %arg2, %21 : i32
+    %46 = arith.minsi %45, %c16_i32 : i32
+    %47 = scf.for %arg3 = %c2_i32 to %46 step %c1_i32 iter_args(%arg4 = %38) -> (tensor<16x8xf32>)  : i32 {
+      %157 = arith.addi %21, %arg3 : i32
+      %158 = arith.muli %157, %c2048_i32 : i32
+      %159 = tt.addptr %19, %158 : !tt.ptr<f32>, i32
+      %160 = tt.splat %159 : !tt.ptr<f32> -> tensor<16x!tt.ptr<f32>>
+      %161 = tt.addptr %160, %9 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+      %162 = tt.load %161 : tensor<16x!tt.ptr<f32>>
+      %163 = arith.subf %cst_2, %162 : tensor<16xf32>
+      %164 = tt.splat %arg3 : i32 -> tensor<16xi32>
+      %165 = arith.cmpi slt, %9, %164 : tensor<16xi32>
+      %166 = arith.select %165, %163, %cst_2 : tensor<16xi1>, tensor<16xf32>
+      %167 = tt.expand_dims %166 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
+      %168 = tt.broadcast %167 : tensor<16x1xf32> -> tensor<16x8xf32>
+      %169 = arith.mulf %168, %arg4 : tensor<16x8xf32>
+      %170 = "tt.reduce"(%169) <{axis = 0 : i32}> ({
+      ^bb0(%arg5: f32, %arg6: f32):
+        %178 = arith.addf %arg5, %arg6 : f32
+        tt.reduce.return %178 : f32
+      }) : (tensor<16x8xf32>) -> tensor<8xf32>
+      %extracted_slice_54 = tensor.extract_slice %166[%2] [8] [1] {should_kept_slice} : tensor<16xf32> to tensor<8xf32>
+      %171 = arith.addf %extracted_slice_54, %170 : tensor<8xf32>
+      %172 = arith.cmpi eq, %9, %164 : tensor<16xi32>
+      %173 = tt.expand_dims %172 {axis = 1 : i32} : tensor<16xi1> -> tensor<16x1xi1>
+      %174 = tt.expand_dims %171 {axis = 0 : i32} : tensor<8xf32> -> tensor<1x8xf32>
+      %175 = tt.broadcast %174 : tensor<1x8xf32> -> tensor<16x8xf32>
+      %176 = tt.broadcast %173 : tensor<16x1xi1> -> tensor<16x8xi1>
+      %177 = arith.select %176, %175, %arg4 : tensor<16x8xi1>, tensor<16x8xf32>
+      scf.yield %177 : tensor<16x8xf32>
+    }
+    %48 = arith.minsi %45, %c32_i32 : i32
+    %49 = scf.for %arg3 = %c18_i32 to %48 step %c1_i32 iter_args(%arg4 = %40) -> (tensor<16x8xf32>)  : i32 {
+      %157 = arith.addi %21, %arg3 : i32
+      %158 = arith.muli %157, %c2048_i32 : i32
+      %159 = tt.addptr %19, %158 : !tt.ptr<f32>, i32
+      %160 = tt.splat %159 : !tt.ptr<f32> -> tensor<16x!tt.ptr<f32>>
+      %161 = tt.addptr %160, %9 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+      %162 = tt.addptr %161, %cst_3 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+      %163 = tt.load %162 : tensor<16x!tt.ptr<f32>>
+      %164 = arith.subf %cst_2, %163 : tensor<16xf32>
+      %165 = arith.subi %arg3, %c16_i32 : i32
+      %166 = tt.splat %165 : i32 -> tensor<16xi32>
+      %167 = arith.cmpi slt, %9, %166 : tensor<16xi32>
+      %168 = arith.select %167, %164, %cst_2 : tensor<16xi1>, tensor<16xf32>
+      %169 = tt.expand_dims %168 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
+      %170 = tt.broadcast %169 : tensor<16x1xf32> -> tensor<16x8xf32>
+      %171 = arith.mulf %170, %arg4 : tensor<16x8xf32>
+      %172 = "tt.reduce"(%171) <{axis = 0 : i32}> ({
+      ^bb0(%arg5: f32, %arg6: f32):
+        %180 = arith.addf %arg5, %arg6 : f32
+        tt.reduce.return %180 : f32
+      }) : (tensor<16x8xf32>) -> tensor<8xf32>
+      %extracted_slice_54 = tensor.extract_slice %168[%2] [8] [1] {should_kept_slice} : tensor<16xf32> to tensor<8xf32>
+      %173 = arith.addf %extracted_slice_54, %172 : tensor<8xf32>
+      %174 = arith.cmpi eq, %9, %166 : tensor<16xi32>
+      %175 = tt.expand_dims %174 {axis = 1 : i32} : tensor<16xi1> -> tensor<16x1xi1>
+      %176 = tt.expand_dims %173 {axis = 0 : i32} : tensor<8xf32> -> tensor<1x8xf32>
+      %177 = tt.broadcast %176 : tensor<1x8xf32> -> tensor<16x8xf32>
+      %178 = tt.broadcast %175 : tensor<16x1xi1> -> tensor<16x8xi1>
+      %179 = arith.select %178, %177, %arg4 : tensor<16x8xi1>, tensor<16x8xf32>
+      scf.yield %179 : tensor<16x8xf32>
+    }
+    %50 = arith.minsi %45, %c48_i32 : i32
+    %51 = scf.for %arg3 = %c34_i32 to %50 step %c1_i32 iter_args(%arg4 = %42) -> (tensor<16x8xf32>)  : i32 {
+      %157 = arith.addi %21, %arg3 : i32
+      %158 = arith.muli %157, %c2048_i32 : i32
+      %159 = tt.addptr %19, %158 : !tt.ptr<f32>, i32
+      %160 = tt.splat %159 : !tt.ptr<f32> -> tensor<16x!tt.ptr<f32>>
+      %161 = tt.addptr %160, %9 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+      %162 = tt.addptr %161, %cst_4 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+      %163 = tt.load %162 : tensor<16x!tt.ptr<f32>>
+      %164 = arith.subf %cst_2, %163 : tensor<16xf32>
+      %165 = arith.subi %arg3, %c32_i32 : i32
+      %166 = tt.splat %165 : i32 -> tensor<16xi32>
+      %167 = arith.cmpi slt, %9, %166 : tensor<16xi32>
+      %168 = arith.select %167, %164, %cst_2 : tensor<16xi1>, tensor<16xf32>
+      %169 = tt.expand_dims %168 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
+      %170 = tt.broadcast %169 : tensor<16x1xf32> -> tensor<16x8xf32>
+      %171 = arith.mulf %170, %arg4 : tensor<16x8xf32>
+      %172 = "tt.reduce"(%171) <{axis = 0 : i32}> ({
+      ^bb0(%arg5: f32, %arg6: f32):
+        %180 = arith.addf %arg5, %arg6 : f32
+        tt.reduce.return %180 : f32
+      }) : (tensor<16x8xf32>) -> tensor<8xf32>
+      %extracted_slice_54 = tensor.extract_slice %168[%2] [8] [1] {should_kept_slice} : tensor<16xf32> to tensor<8xf32>
+      %173 = arith.addf %extracted_slice_54, %172 : tensor<8xf32>
+      %174 = arith.cmpi eq, %9, %166 : tensor<16xi32>
+      %175 = tt.expand_dims %174 {axis = 1 : i32} : tensor<16xi1> -> tensor<16x1xi1>
+      %176 = tt.expand_dims %173 {axis = 0 : i32} : tensor<8xf32> -> tensor<1x8xf32>
+      %177 = tt.broadcast %176 : tensor<1x8xf32> -> tensor<16x8xf32>
+      %178 = tt.broadcast %175 : tensor<16x1xi1> -> tensor<16x8xi1>
+      %179 = arith.select %178, %177, %arg4 : tensor<16x8xi1>, tensor<16x8xf32>
+      scf.yield %179 : tensor<16x8xf32>
+    }
+    %52 = arith.minsi %45, %c64_i32 : i32
+    %53 = scf.for %arg3 = %c50_i32 to %52 step %c1_i32 iter_args(%arg4 = %44) -> (tensor<16x8xf32>)  : i32 {
+      %157 = arith.addi %21, %arg3 : i32
+      %158 = arith.muli %157, %c2048_i32 : i32
+      %159 = tt.addptr %19, %158 : !tt.ptr<f32>, i32
+      %160 = tt.splat %159 : !tt.ptr<f32> -> tensor<16x!tt.ptr<f32>>
+      %161 = tt.addptr %160, %9 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+      %162 = tt.addptr %161, %cst_5 : tensor<16x!tt.ptr<f32>>, tensor<16xi32>
+      %163 = tt.load %162 : tensor<16x!tt.ptr<f32>>
+      %164 = arith.subf %cst_2, %163 : tensor<16xf32>
+      %165 = arith.subi %arg3, %c48_i32 : i32
+      %166 = tt.splat %165 : i32 -> tensor<16xi32>
+      %167 = arith.cmpi slt, %9, %166 : tensor<16xi32>
+      %168 = arith.select %167, %164, %cst_2 : tensor<16xi1>, tensor<16xf32>
+      %169 = tt.expand_dims %168 {axis = 1 : i32} : tensor<16xf32> -> tensor<16x1xf32>
+      %170 = tt.broadcast %169 : tensor<16x1xf32> -> tensor<16x8xf32>
+      %171 = arith.mulf %170, %arg4 : tensor<16x8xf32>
+      %172 = "tt.reduce"(%171) <{axis = 0 : i32}> ({
+      ^bb0(%arg5: f32, %arg6: f32):
+        %180 = arith.addf %arg5, %arg6 : f32
+        tt.reduce.return %180 : f32
+      }) : (tensor<16x8xf32>) -> tensor<8xf32>
+      %extracted_slice_54 = tensor.extract_slice %168[%2] [8] [1] {should_kept_slice} : tensor<16xf32> to tensor<8xf32>
+      %173 = arith.addf %extracted_slice_54, %172 : tensor<8xf32>
+      %174 = arith.cmpi eq, %9, %166 : tensor<16xi32>
+      %175 = tt.expand_dims %174 {axis = 1 : i32} : tensor<16xi1> -> tensor<16x1xi1>
+      %176 = tt.expand_dims %173 {axis = 0 : i32} : tensor<8xf32> -> tensor<1x8xf32>
+      %177 = tt.broadcast %176 : tensor<1x8xf32> -> tensor<16x8xf32>
+      %178 = tt.broadcast %175 : tensor<16x1xi1> -> tensor<16x8xi1>
+      %179 = arith.select %178, %177, %arg4 : tensor<16x8xi1>, tensor<16x8xf32>
+      scf.yield %179 : tensor<16x8xf32>
+    }
+    %54 = arith.uitofp %15 : tensor<16x8xi1> to tensor<16x8xf32>
+    %55 = arith.addf %47, %54 : tensor<16x8xf32>
+    %56 = arith.addf %49, %54 : tensor<16x8xf32>
+    %57 = arith.addf %51, %54 : tensor<16x8xf32>
+    %58 = arith.addf %53, %54 : tensor<16x8xf32>
+    %59 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%24, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+    %60 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%27, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+    %61 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%27, %c16_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+    %62 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%30, %c0_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+    %63 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%30, %c16_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+    %64 = tt.make_tensor_ptr %19, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%30, %c32_i32] {order = array<i32: 1, 0>} : <tensor<16x16xf32>>
+    %65 = tt.load %59 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+    %66 = tt.load %60 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+    %67 = tt.load %61 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+    %68 = tt.load %62 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+    %69 = tt.load %63 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+    %70 = tt.load %64 {boundaryCheck = array<i32: 0, 1>, padding = 1 : i32} : !tt.ptr<tensor<16x16xf32>>
+    %71 = tensor.empty() : tensor<16x16xf32>
+    %72 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    %subview = memref.subview %72[0, %2] [16, 8] [1, 1] : memref<16x16xf32> to memref<16x8xf32, strided<[16, 1], offset: ?>>
+    bufferization.materialize_in_destination %56 in writable %subview : (tensor<16x8xf32>, memref<16x8xf32, strided<[16, 1], offset: ?>>) -> ()
+    %alloc = memref.alloc() : memref<16x16xf32>
+    memref.copy %72, %alloc : memref<16x16xf32> to memref<16x16xf32>
+    %73 = bufferization.to_tensor %alloc restrict writable : memref<16x16xf32>
+    %74 = tt.dot %73, %65, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+    %75 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    bufferization.materialize_in_destination %74 in writable %75 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+    %subview_6 = memref.subview %75[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    %alloc_7 = memref.alloc() : memref<8x16xf32>
+    memref.copy %subview_6, %alloc_7 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+    %76 = bufferization.to_tensor %alloc_7 restrict writable : memref<8x16xf32>
+    %77 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    %subview_8 = memref.subview %77[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    bufferization.materialize_in_destination %76 in writable %subview_8 : (tensor<8x16xf32>, memref<8x16xf32, strided<[16, 1], offset: ?>>) -> ()
+    %alloc_9 = memref.alloc() : memref<16x16xf32>
+    memref.copy %77, %alloc_9 : memref<16x16xf32> to memref<16x16xf32>
+    %78 = bufferization.to_tensor %alloc_9 restrict writable : memref<16x16xf32>
+    %79 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    %subview_10 = memref.subview %79[0, %2] [16, 8] [1, 1] : memref<16x16xf32> to memref<16x8xf32, strided<[16, 1], offset: ?>>
+    bufferization.materialize_in_destination %55 in writable %subview_10 : (tensor<16x8xf32>, memref<16x8xf32, strided<[16, 1], offset: ?>>) -> ()
+    %alloc_11 = memref.alloc() : memref<16x16xf32>
+    memref.copy %79, %alloc_11 : memref<16x16xf32> to memref<16x16xf32>
+    %80 = bufferization.to_tensor %alloc_11 restrict writable : memref<16x16xf32>
+    %81 = tt.dot %78, %80, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+    %82 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    bufferization.materialize_in_destination %81 in writable %82 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+    %subview_12 = memref.subview %82[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    %alloc_13 = memref.alloc() : memref<8x16xf32>
+    memref.copy %subview_12, %alloc_13 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+    %83 = bufferization.to_tensor %alloc_13 restrict writable : memref<8x16xf32>
+    %84 = arith.subf %cst, %83 : tensor<8x16xf32>
+    %85 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    %subview_14 = memref.subview %85[0, %2] [16, 8] [1, 1] : memref<16x16xf32> to memref<16x8xf32, strided<[16, 1], offset: ?>>
+    bufferization.materialize_in_destination %57 in writable %subview_14 : (tensor<16x8xf32>, memref<16x8xf32, strided<[16, 1], offset: ?>>) -> ()
+    %alloc_15 = memref.alloc() : memref<16x16xf32>
+    memref.copy %85, %alloc_15 : memref<16x16xf32> to memref<16x16xf32>
+    %86 = bufferization.to_tensor %alloc_15 restrict writable : memref<16x16xf32>
+    %87 = tt.dot %86, %67, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+    %88 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    bufferization.materialize_in_destination %87 in writable %88 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+    %subview_16 = memref.subview %88[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    %alloc_17 = memref.alloc() : memref<8x16xf32>
+    memref.copy %subview_16, %alloc_17 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+    %89 = bufferization.to_tensor %alloc_17 restrict writable : memref<8x16xf32>
+    %90 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    %subview_18 = memref.subview %90[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    bufferization.materialize_in_destination %89 in writable %subview_18 : (tensor<8x16xf32>, memref<8x16xf32, strided<[16, 1], offset: ?>>) -> ()
+    %alloc_19 = memref.alloc() : memref<16x16xf32>
+    memref.copy %90, %alloc_19 : memref<16x16xf32> to memref<16x16xf32>
+    %91 = bufferization.to_tensor %alloc_19 restrict writable : memref<16x16xf32>
+    %92 = tt.dot %91, %73, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+    %93 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    bufferization.materialize_in_destination %92 in writable %93 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+    %subview_20 = memref.subview %93[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    %alloc_21 = memref.alloc() : memref<8x16xf32>
+    memref.copy %subview_20, %alloc_21 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+    %94 = bufferization.to_tensor %alloc_21 restrict writable : memref<8x16xf32>
+    %95 = arith.subf %cst, %94 : tensor<8x16xf32>
+    %96 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    %subview_22 = memref.subview %96[0, %2] [16, 8] [1, 1] : memref<16x16xf32> to memref<16x8xf32, strided<[16, 1], offset: ?>>
+    bufferization.materialize_in_destination %58 in writable %subview_22 : (tensor<16x8xf32>, memref<16x8xf32, strided<[16, 1], offset: ?>>) -> ()
+    %alloc_23 = memref.alloc() : memref<16x16xf32>
+    memref.copy %96, %alloc_23 : memref<16x16xf32> to memref<16x16xf32>
+    %97 = bufferization.to_tensor %alloc_23 restrict writable : memref<16x16xf32>
+    %98 = tt.dot %97, %70, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+    %99 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    bufferization.materialize_in_destination %98 in writable %99 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+    %subview_24 = memref.subview %99[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    %alloc_25 = memref.alloc() : memref<8x16xf32>
+    memref.copy %subview_24, %alloc_25 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+    %100 = bufferization.to_tensor %alloc_25 restrict writable : memref<8x16xf32>
+    %101 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    %subview_26 = memref.subview %101[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    bufferization.materialize_in_destination %100 in writable %subview_26 : (tensor<8x16xf32>, memref<8x16xf32, strided<[16, 1], offset: ?>>) -> ()
+    %alloc_27 = memref.alloc() : memref<16x16xf32>
+    memref.copy %101, %alloc_27 : memref<16x16xf32> to memref<16x16xf32>
+    %102 = bufferization.to_tensor %alloc_27 restrict writable : memref<16x16xf32>
+    %103 = tt.dot %102, %86, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+    %104 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    bufferization.materialize_in_destination %103 in writable %104 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+    %subview_28 = memref.subview %104[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    %alloc_29 = memref.alloc() : memref<8x16xf32>
+    memref.copy %subview_28, %alloc_29 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+    %105 = bufferization.to_tensor %alloc_29 restrict writable : memref<8x16xf32>
+    %106 = arith.subf %cst, %105 : tensor<8x16xf32>
+    %107 = tt.dot %66, %80, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+    %108 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    %subview_30 = memref.subview %108[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    bufferization.materialize_in_destination %84 in writable %subview_30 : (tensor<8x16xf32>, memref<8x16xf32, strided<[16, 1], offset: ?>>) -> ()
+    %alloc_31 = memref.alloc() : memref<16x16xf32>
+    memref.copy %108, %alloc_31 : memref<16x16xf32> to memref<16x16xf32>
+    %109 = bufferization.to_tensor %alloc_31 restrict writable : memref<16x16xf32>
+    %110 = tt.dot %67, %109, %107 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+    %111 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    bufferization.materialize_in_destination %110 in writable %111 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+    %subview_32 = memref.subview %111[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    %alloc_33 = memref.alloc() : memref<8x16xf32>
+    memref.copy %subview_32, %alloc_33 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+    %112 = bufferization.to_tensor %alloc_33 restrict writable : memref<8x16xf32>
+    %113 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    %subview_34 = memref.subview %113[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    bufferization.materialize_in_destination %112 in writable %subview_34 : (tensor<8x16xf32>, memref<8x16xf32, strided<[16, 1], offset: ?>>) -> ()
+    %alloc_35 = memref.alloc() : memref<16x16xf32>
+    memref.copy %113, %alloc_35 : memref<16x16xf32> to memref<16x16xf32>
+    %114 = bufferization.to_tensor %alloc_35 restrict writable : memref<16x16xf32>
+    %115 = tt.dot %86, %114, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+    %116 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    bufferization.materialize_in_destination %115 in writable %116 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+    %subview_36 = memref.subview %116[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    %alloc_37 = memref.alloc() : memref<8x16xf32>
+    memref.copy %subview_36, %alloc_37 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+    %117 = bufferization.to_tensor %alloc_37 restrict writable : memref<8x16xf32>
+    %118 = arith.subf %cst, %117 : tensor<8x16xf32>
+    %119 = tt.dot %69, %73, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+    %120 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    %subview_38 = memref.subview %120[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    bufferization.materialize_in_destination %95 in writable %subview_38 : (tensor<8x16xf32>, memref<8x16xf32, strided<[16, 1], offset: ?>>) -> ()
+    %alloc_39 = memref.alloc() : memref<16x16xf32>
+    memref.copy %120, %alloc_39 : memref<16x16xf32> to memref<16x16xf32>
+    %121 = bufferization.to_tensor %alloc_39 restrict writable : memref<16x16xf32>
+    %122 = tt.dot %70, %121, %119 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+    %123 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    bufferization.materialize_in_destination %122 in writable %123 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+    %subview_40 = memref.subview %123[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    %alloc_41 = memref.alloc() : memref<8x16xf32>
+    memref.copy %subview_40, %alloc_41 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+    %124 = bufferization.to_tensor %alloc_41 restrict writable : memref<8x16xf32>
+    %125 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    %subview_42 = memref.subview %125[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    bufferization.materialize_in_destination %124 in writable %subview_42 : (tensor<8x16xf32>, memref<8x16xf32, strided<[16, 1], offset: ?>>) -> ()
+    %alloc_43 = memref.alloc() : memref<16x16xf32>
+    memref.copy %125, %alloc_43 : memref<16x16xf32> to memref<16x16xf32>
+    %126 = bufferization.to_tensor %alloc_43 restrict writable : memref<16x16xf32>
+    %127 = tt.dot %97, %126, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+    %128 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    bufferization.materialize_in_destination %127 in writable %128 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+    %subview_44 = memref.subview %128[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    %alloc_45 = memref.alloc() : memref<8x16xf32>
+    memref.copy %subview_44, %alloc_45 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+    %129 = bufferization.to_tensor %alloc_45 restrict writable : memref<8x16xf32>
+    %130 = arith.subf %cst, %129 : tensor<8x16xf32>
+    %131 = tt.dot %68, %80, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+    %132 = tt.dot %69, %109, %131 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+    %133 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    %subview_46 = memref.subview %133[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    bufferization.materialize_in_destination %118 in writable %subview_46 : (tensor<8x16xf32>, memref<8x16xf32, strided<[16, 1], offset: ?>>) -> ()
+    %alloc_47 = memref.alloc() : memref<16x16xf32>
+    memref.copy %133, %alloc_47 : memref<16x16xf32> to memref<16x16xf32>
+    %134 = bufferization.to_tensor %alloc_47 restrict writable : memref<16x16xf32>
+    %135 = tt.dot %70, %134, %132 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+    %136 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    bufferization.materialize_in_destination %135 in writable %136 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+    %subview_48 = memref.subview %136[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    %alloc_49 = memref.alloc() : memref<8x16xf32>
+    memref.copy %subview_48, %alloc_49 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+    %137 = bufferization.to_tensor %alloc_49 restrict writable : memref<8x16xf32>
+    %138 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    %subview_50 = memref.subview %138[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    bufferization.materialize_in_destination %137 in writable %subview_50 : (tensor<8x16xf32>, memref<8x16xf32, strided<[16, 1], offset: ?>>) -> ()
+    %alloc_51 = memref.alloc() : memref<16x16xf32>
+    memref.copy %138, %alloc_51 : memref<16x16xf32> to memref<16x16xf32>
+    %139 = bufferization.to_tensor %alloc_51 restrict writable : memref<16x16xf32>
+    %140 = tt.dot %97, %139, %cst_1 {tiled_op, triton_cv12.normalized_dot} : tensor<16x16xf32> * tensor<16x16xf32> -> tensor<16x16xf32>
+    %141 = memref_ext.alloc_workspace() : memref<16x16xf32>
+    bufferization.materialize_in_destination %140 in writable %141 : (tensor<16x16xf32>, memref<16x16xf32>) -> ()
+    %subview_52 = memref.subview %141[%2, 0] [8, 16] [1, 1] : memref<16x16xf32> to memref<8x16xf32, strided<[16, 1], offset: ?>>
+    %alloc_53 = memref.alloc() : memref<8x16xf32>
+    memref.copy %subview_52, %alloc_53 : memref<8x16xf32, strided<[16, 1], offset: ?>> to memref<8x16xf32>
+    %142 = bufferization.to_tensor %alloc_53 restrict writable : memref<8x16xf32>
+    %143 = arith.subf %cst, %142 : tensor<8x16xf32>
+    %144 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%21, %3] {order = array<i32: 1, 0>, tiled_op} : <tensor<16x8xf32>>
+    %145 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%24, %25] {order = array<i32: 1, 0>, tiled_op} : <tensor<16x8xf32>>
+    %146 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%27, %28] {order = array<i32: 1, 0>, tiled_op} : <tensor<16x8xf32>>
+    %147 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%30, %31] {order = array<i32: 1, 0>, tiled_op} : <tensor<16x8xf32>>
+    %148 = arith.addi %24, %3 : i32
+    %149 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%148, %c0_i32] {order = array<i32: 1, 0>, tiled_op} : <tensor<8x16xf32>>
+    %150 = arith.addi %27, %3 : i32
+    %151 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%150, %c0_i32] {order = array<i32: 1, 0>, tiled_op} : <tensor<8x16xf32>>
+    %152 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%150, %c16_i32] {order = array<i32: 1, 0>, tiled_op} : <tensor<8x16xf32>>
+    %153 = arith.addi %30, %3 : i32
+    %154 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%153, %c0_i32] {order = array<i32: 1, 0>, tiled_op} : <tensor<8x16xf32>>
+    %155 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%153, %c16_i32] {order = array<i32: 1, 0>, tiled_op} : <tensor<8x16xf32>>
+    %156 = tt.make_tensor_ptr %20, [%22, %c64_i64], [%c2048_i64, %c1_i64], [%153, %c32_i32] {order = array<i32: 1, 0>, tiled_op} : <tensor<8x16xf32>>
+    tt.store %144, %55 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<16x8xf32>>
+    tt.store %145, %56 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<16x8xf32>>
+    tt.store %146, %57 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<16x8xf32>>
+    tt.store %147, %58 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<16x8xf32>>
+    tt.store %149, %84 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<8x16xf32>>
+    tt.store %151, %118 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<8x16xf32>>
+    tt.store %152, %95 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<8x16xf32>>
+    tt.store %154, %143 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<8x16xf32>>
+    tt.store %155, %130 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<8x16xf32>>
+    tt.store %156, %106 {boundaryCheck = array<i32: 0, 1>, tiled_op} : !tt.ptr<tensor<8x16xf32>>
+    tt.return
+  }
+}
