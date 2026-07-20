@@ -47,30 +47,9 @@ using DimensionAnalyzerOptions = triton::DimensionGraphAnalyzerOptions;
 
 namespace {
 
-static bool comesFromDot(Value value)
+static StringRef getCubeStoreAttrName()
 {
-    Operation *defOp = value.getDefiningOp();
-    if (!defOp)
-        return false;
-
-    if (isa<triton::DotOp>(defOp))
-        return true;
-
-    if (isa<arith::TruncFOp>(defOp)) {
-        auto truncOp = cast<arith::TruncFOp>(defOp);
-        return comesFromDot(truncOp.getIn());
-    }
-
-    if (auto forOp = dyn_cast<scf::ForOp>(defOp)) {
-        auto resultIdx = cast<OpResult>(value).getResultNumber();
-        Operation *yieldOp = forOp.getRegion().getBlocks().rbegin()->getTerminator();
-        if (isa<scf::YieldOp>(yieldOp)) {
-            Value yieldValue = yieldOp->getOperand(resultIdx);
-            return comesFromDot(yieldValue);
-        }
-    }
-
-    return false;
+    return "cube_store";
 }
 
 static bool isDotUse(OpOperand &use);
@@ -108,39 +87,87 @@ static bool isDotUse(OpOperand &use)
     return false;
 }
 
-static bool isCubeStoreUse(OpOperand &use);
+template <typename SinkFn>
+static bool walkCubeStoreUse(OpOperand &use, SinkFn &markSink);
 
-static bool isUsedForCubeStore(Value value)
+template <typename SinkFn>
+static bool walkUniqueCubeStoreChain(Value value, SinkFn &markSink)
 {
-    if (value.use_empty())
+    if (!value.hasOneUse())
         return false;
-    for (OpOperand &use : value.getUses()) {
-        if (!isCubeStoreUse(use))
-            return false;
-    }
+
+    return walkCubeStoreUse(*value.getUses().begin(), markSink);
+}
+
+template <typename SinkFn>
+static bool walkDirectCubeStoreUse(OpOperand &use, SinkFn &markSink)
+{
+    Operation *user = use.getOwner();
+    if (!isa<triton::StoreOp, triton::AtomicRMWOp>(user))
+        return false;
+
+    markSink(user);
     return true;
 }
 
-static bool isCubeStoreUse(OpOperand &use)
+template <typename SinkFn>
+static bool walkTruncToCubeStoreUse(arith::TruncFOp truncOp,
+                                    SinkFn &markSink)
+{
+    if (!truncOp.getResult().hasOneUse())
+        return false;
+
+    return walkDirectCubeStoreUse(*truncOp.getResult().getUses().begin(),
+                                  markSink);
+}
+
+template <typename SinkFn>
+static bool walkCubeStoreUse(OpOperand &use, SinkFn &markSink)
 {
     Operation *user = use.getOwner();
-    if (isa<triton::StoreOp>(user) || isa<triton::AtomicRMWOp>(user))
+    if (walkDirectCubeStoreUse(use, markSink))
         return true;
     if (auto truncOp = dyn_cast<arith::TruncFOp>(user))
-        return isUsedForCubeStore(truncOp.getResult());
-    if (auto forOp = dyn_cast<scf::ForOp>(user)) {
-        BlockArgument regionIterArg = forOp.getTiedLoopRegionIterArg(&use);
-        if (regionIterArg)
-            return isUsedForCubeStore(regionIterArg);
-    }
+        return walkTruncToCubeStoreUse(truncOp, markSink);
     if (auto yieldOp = dyn_cast<scf::YieldOp>(user)) {
         auto *parentOp = yieldOp->getParentOp();
         if (auto forOp = dyn_cast<scf::ForOp>(parentOp)) {
             auto operandIdx = use.getOperandNumber();
-            return isUsedForCubeStore(forOp->getResult(operandIdx));
+            return walkUniqueCubeStoreChain(forOp->getResult(operandIdx),
+                                            markSink);
+        }
+        if (auto whileOp = dyn_cast<scf::WhileOp>(parentOp)) {
+            auto operandIdx = use.getOperandNumber();
+            return walkUniqueCubeStoreChain(whileOp->getResult(operandIdx),
+                                            markSink);
         }
     }
     return false;
+}
+
+static bool isUniqueCubeStoreChain(Value value)
+{
+    auto ignoreSink = [](Operation *) {};
+    return walkUniqueCubeStoreChain(value, ignoreSink);
+}
+
+static void markCubeStoresFromDots(FunctionOpInterface funcOp,
+                                   OpBuilder &builder)
+{
+    auto markSink = [&](Operation *op) {
+        op->setAttr(getCubeStoreAttrName(),
+                    UnitAttr::get(builder.getContext()));
+    };
+    funcOp.walk([&](triton::DotOp dotOp) {
+        walkUniqueCubeStoreChain(dotOp.getResult(), markSink);
+    });
+}
+
+static void removeCubeStoreAttrs(FunctionOpInterface funcOp)
+{
+    funcOp.walk([&](Operation *op) {
+        op->removeAttr(getCubeStoreAttrName());
+    });
 }
 
 static void markTiledOp(Operation *op, PatternRewriter &rewriter)
@@ -248,8 +275,8 @@ struct StoreSlicePattern : public OpRewritePattern<triton::StoreOp> {
         Value ptrVal = storeOp.getPtr();
         Value valueVal = storeOp.getValue();
 
-        if (comesFromDot(valueVal))
-            return rewriter.notifyMatchFailure(storeOp, "value comes from dot");
+        if (storeOp->hasAttr(getCubeStoreAttrName()))
+            return rewriter.notifyMatchFailure(storeOp, "cube store");
 
         auto valueType = dyn_cast<RankedTensorType>(valueVal.getType());
         if (!valueType)
@@ -409,8 +436,8 @@ struct AtomicRmwSlicePattern : public OpRewritePattern<triton::AtomicRMWOp> {
         Value ptrVal = atomicRmwOp.getPtr();
         Value valVal = atomicRmwOp.getVal();
 
-        if (comesFromDot(valVal))
-            return rewriter.notifyMatchFailure(atomicRmwOp, "value comes from dot");
+        if (atomicRmwOp->hasAttr(getCubeStoreAttrName()))
+            return rewriter.notifyMatchFailure(atomicRmwOp, "cube atomic_rmw");
 
         Value maskVal = atomicRmwOp.getMask();
 
@@ -1272,6 +1299,8 @@ static LogicalResult tileAndSliceFunc(FunctionOpInterface funcOp)
         builder.create<arith::IndexCastOp>(builder.getUnknownLoc(), builder.getIndexType(), subBlockId);
     }
 
+    markCubeStoresFromDots(funcOp, builder);
+
     DimensionAnalyzerOptions options;
     options.isHeadOp = [](Operation *op) {
         if (isa<triton::LoadOp, triton::DotOp>(op))
@@ -1284,7 +1313,7 @@ static LogicalResult tileAndSliceFunc(FunctionOpInterface funcOp)
         if (isDotUse(use))
             return true;
         Operation *defOp = value.getDefiningOp();
-        if (defOp && isa<triton::DotOp>(defOp) && isCubeStoreUse(use))
+        if (defOp && isa<triton::DotOp>(defOp) && isUniqueCubeStoreChain(value))
             return true;
         Operation *user = use.getOwner();
         if (isa<triton::StoreOp>(user) || isa<triton::AtomicRMWOp>(user))
@@ -1353,6 +1382,8 @@ static LogicalResult tileAndSliceFunc(FunctionOpInterface funcOp)
     config.maxIterations = 10;
     if (failed(applyPatternsAndFoldGreedily(funcOp, std::move(patterns), config)))
         return failure();
+
+    removeCubeStoreAttrs(funcOp);
 
     bool failedToGetTilingDim = false;
     bool failedDotAlignment = false;
