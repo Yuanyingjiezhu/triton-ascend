@@ -784,13 +784,17 @@ LoopOutBubbleUpStrategy::execute(tensor::ExtractSliceOp sliceOp,
   if (yieldInsertOp && isMarkedEliminatedSlice(yieldInsertOp) &&
       sliceParamsMatch(sliceOp, yieldInsertOp)) {
     Value forResult = forOp.getResult(yieldIndex);
-    tensor::ExtractSliceOp outerExtractOp = nullptr;
+    SmallVector<tensor::ExtractSliceOp> outerExtractOps;
     for (Operation *user : forResult.getUsers()) {
       auto extractOp = dyn_cast<tensor::ExtractSliceOp>(user);
-      if (extractOp && isMarkedEliminatedSlice(extractOp)) {
-        outerExtractOp = extractOp;
-        break;
+      if (!extractOp || !isMarkedEliminatedSlice(extractOp)) {
+        forOp.emitError()
+            << "cannot bubble loop-carried extract_slice out of scf.for: "
+               "for result has a user that is not a to_be_eliminated_slice "
+               "tensor.extract_slice";
+        return failure();
       }
+      outerExtractOps.push_back(extractOp);
     }
 
     OpOperand &forOpInit = forOp.getInitsMutable()[yieldIndex];
@@ -817,7 +821,7 @@ LoopOutBubbleUpStrategy::execute(tensor::ExtractSliceOp sliceOp,
 
     rewriter.eraseOp(sliceOp);
     rewriter.eraseOp(yieldInsertOp);
-    if (outerExtractOp)
+    for (auto outerExtractOp : outerExtractOps)
       rewriter.replaceOp(outerExtractOp, forOp->getResult(yieldIndex));
 
     return success();
@@ -1445,6 +1449,77 @@ InsertSliceBubbleUpStrategy::execute(tensor::ExtractSliceOp sliceOp,
   return failure();
 }
 
+static LogicalResult
+prepareForLoopOutTensorPtrIterArg(tensor::ExtractSliceOp sliceOp,
+                                  PatternRewriter &rewriter) {
+  auto iterArg = dyn_cast<BlockArgument>(sliceOp.getSource());
+  if (!iterArg)
+    return failure();
+
+  auto forOp =
+      dyn_cast<scf::ForOp>(iterArg.getOwner()->getParent()->getParentOp());
+  if (!forOp)
+    return failure();
+
+  int yieldIndex = iterArg.getArgNumber() - forOp.getNumInductionVars();
+  if (yieldIndex < 0 || yieldIndex >= static_cast<int>(forOp.getNumResults()))
+    return failure();
+
+  auto iterArgType = dyn_cast<RankedTensorType>(iterArg.getType());
+  if (!iterArgType || !isa<mlir::triton::PointerType>(iterArgType.getElementType()))
+    return failure();
+
+  int64_t markedBubbledExtractUseCount = 0;
+  for (Operation *user : iterArg.getUsers()) {
+    auto extractOp = dyn_cast<tensor::ExtractSliceOp>(user);
+    if (extractOp && isMarkedBubbledSlice(extractOp))
+      ++markedBubbledExtractUseCount;
+  }
+  if (markedBubbledExtractUseCount != 1)
+    return failure();
+
+  auto yieldOp = dyn_cast<scf::YieldOp>(
+      forOp.getRegion().getBlocks().rbegin()->getTerminator());
+  if (!yieldOp || yieldIndex >= static_cast<int>(yieldOp.getNumOperands()))
+    return failure();
+
+  Value yieldValue = yieldOp.getOperand(yieldIndex);
+  if (yieldValue.getType() != iterArg.getType())
+    return failure();
+
+  auto yieldInsertOp = yieldValue.getDefiningOp<tensor::InsertSliceOp>();
+  if (yieldInsertOp && isMarkedEliminatedSlice(yieldInsertOp) &&
+      sliceParamsMatch(sliceOp, yieldInsertOp))
+    return failure();
+  if (yieldInsertOp)
+    return failure();
+
+  auto fullType = dyn_cast<RankedTensorType>(yieldValue.getType());
+  auto slicedType = dyn_cast<RankedTensorType>(sliceOp.getType());
+  if (!fullType || !slicedType)
+    return failure();
+
+  rewriter.setInsertionPoint(yieldOp);
+  auto yieldExtract = rewriter.create<tensor::ExtractSliceOp>(
+      sliceOp.getLoc(), slicedType, yieldValue, sliceOp.getMixedOffsets(),
+      sliceOp.getMixedSizes(), sliceOp.getMixedStrides());
+  markBubbledSlice(rewriter, yieldExtract);
+
+  auto empty = rewriter.create<tensor::EmptyOp>(
+      sliceOp.getLoc(), fullType.getShape(), fullType.getElementType());
+  auto yieldInsert = rewriter.create<tensor::InsertSliceOp>(
+      sliceOp.getLoc(), yieldExtract.getResult(), empty,
+      sliceOp.getMixedOffsets(), sliceOp.getMixedSizes(),
+      sliceOp.getMixedStrides());
+  markEliminatedSlice(rewriter, yieldInsert);
+
+  rewriter.modifyOpInPlace(yieldOp, [&]() {
+    yieldOp->getOpOperand(yieldIndex).assign(yieldInsert.getResult());
+  });
+
+  return success();
+}
+
 LogicalResult
 BubbleUpPattern::matchAndRewrite(tensor::ExtractSliceOp sliceOp,
                                   PatternRewriter &rewriter) const {
@@ -1456,6 +1531,10 @@ BubbleUpPattern::matchAndRewrite(tensor::ExtractSliceOp sliceOp,
   if (!isMarkedBubbledSlice(sliceOp))
     return rewriter.notifyMatchFailure(
         sliceOp, "sliceOp needs to_be_bubbled_slice attr");
+
+  if (!aggressive &&
+      succeeded(prepareForLoopOutTensorPtrIterArg(sliceOp, rewriter)))
+    return success();
 
   int extractSliceCount =
       llvm::count_if(source.getUsers(), [](Operation *user) {

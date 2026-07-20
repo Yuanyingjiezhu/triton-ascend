@@ -903,33 +903,33 @@ struct DotSlicePattern : public OpRewritePattern<triton::DotOp> {
                 continue;
             }
 
-            auto blockArg = dyn_cast<BlockArgument>(operand);
-            if (blockArg) {
-                auto *parentOp = blockArg.getOwner()->getParentOp();
-                if (auto forOp = dyn_cast<scf::ForOp>(parentOp)) {
-                    auto argIdx = blockArg.getArgNumber();
-                    auto numInductionVars = forOp.getNumInductionVars();
-                    if (argIdx >= numInductionVars) {
-                        auto initArgIdx = argIdx - numInductionVars;
-                        Value initValue = forOp.getInits()[initArgIdx];
-                        Operation *initDefOp = initValue.getDefiningOp();
-                        if (initDefOp && (isa<mlir::triton::LoadOp>(initDefOp) || isa<arith::ConstantOp>(initDefOp)))
-                        {
-                            newOperands.push_back(operand);
-                            continue;
-                        }
-                    }
-                } else if (auto whileOp = dyn_cast<scf::WhileOp>(parentOp)) {
-                    auto argIdx = blockArg.getArgNumber();
-                    Value initValue = whileOp.getBeforeArguments()[argIdx];
-                    Operation *initDefOp = initValue.getDefiningOp();
-                    if (initDefOp && (isa<mlir::triton::LoadOp>(initDefOp) || isa<arith::ConstantOp>(initDefOp)))
-                    {
-                        newOperands.push_back(operand);
-                        continue;
-                    }
-                }
-            }
+            // auto blockArg = dyn_cast<BlockArgument>(operand);
+            // if (blockArg) {
+            //     auto *parentOp = blockArg.getOwner()->getParentOp();
+            //     if (auto forOp = dyn_cast<scf::ForOp>(parentOp)) {
+            //         auto argIdx = blockArg.getArgNumber();
+            //         auto numInductionVars = forOp.getNumInductionVars();
+            //         if (argIdx >= numInductionVars) {
+            //             auto initArgIdx = argIdx - numInductionVars;
+            //             Value initValue = forOp.getInits()[initArgIdx];
+            //             Operation *initDefOp = initValue.getDefiningOp();
+            //             if (initDefOp && (isa<mlir::triton::LoadOp>(initDefOp) || isa<arith::ConstantOp>(initDefOp)))
+            //             {
+            //                 newOperands.push_back(operand);
+            //                 continue;
+            //             }
+            //         }
+            //     } else if (auto whileOp = dyn_cast<scf::WhileOp>(parentOp)) {
+            //         auto argIdx = blockArg.getArgNumber();
+            //         Value initValue = whileOp.getBeforeArguments()[argIdx];
+            //         Operation *initDefOp = initValue.getDefiningOp();
+            //         if (initDefOp && (isa<mlir::triton::LoadOp>(initDefOp) || isa<arith::ConstantOp>(initDefOp)))
+            //         {
+            //             newOperands.push_back(operand);
+            //             continue;
+            //         }
+            //     }
+            // }
 
             if (defOp && isa<mlir::triton::TransOp>(defOp)) {
                 auto transOp = cast<mlir::triton::TransOp>(defOp);
