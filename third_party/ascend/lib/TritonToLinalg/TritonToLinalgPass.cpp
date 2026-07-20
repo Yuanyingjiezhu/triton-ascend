@@ -87,6 +87,7 @@
 #include <cassert>
 #include <cstdint>
 #include <optional>
+#include <string>
 
 #define DEBUG_TYPE "triton-to-linalg"
 
@@ -1179,8 +1180,8 @@ void TritonToLinalgPass::runOnOperation() {
     // `memref::SubViewOp`
     if (auto subviewOp =
             materializeOp.getDest().getDefiningOp<memref::SubViewOp>()) {
-      if (!llvm::isa<tensor::ExtractSliceOp>(
-              materializeOp.getSource().getDefiningOp()))
+      if (!materializeOp.getSource()
+               .getDefiningOp<tensor::ExtractSliceOp>())
         return WalkResult::advance();
 
       if (auto reinterpretCastOp =
