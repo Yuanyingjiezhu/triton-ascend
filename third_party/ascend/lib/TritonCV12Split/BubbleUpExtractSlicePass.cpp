@@ -119,11 +119,20 @@ static bool shouldAggressivelyBubbleUp(tensor::ExtractSliceOp extractSliceOp) {
   return false;
 }
 
-static bool filterRemainingMarkedSlicesForAggressiveBubbleUp(ModuleOp moduleOp) {
+static bool filterRemainingMarkedSlicesForAggressiveBubbleUp(
+    ModuleOp moduleOp, bool &hasUnexpectedLoopBlockArgSlice) {
   bool hasAggressiveCandidate = false;
   moduleOp.walk([&](tensor::ExtractSliceOp extractSliceOp) {
     if (!isMarkedBubbledSlice(extractSliceOp))
       return WalkResult::advance();
+
+    if (isa<BlockArgument>(extractSliceOp.getSource())) {
+      extractSliceOp.emitError()
+          << "loop was not tiled as expected: remaining "
+             "to_be_bubbled_slice has a block argument source";
+      hasUnexpectedLoopBlockArgSlice = true;
+      return WalkResult::interrupt();
+    }
 
     if (shouldAggressivelyBubbleUp(extractSliceOp)) {
       hasAggressiveCandidate = true;
@@ -228,7 +237,13 @@ void BubbleUpExtractSlicePass::runOnOperation() {
     return signalPassFailure();
   }
 
-  if (filterRemainingMarkedSlicesForAggressiveBubbleUp(moduleOp)) {
+  bool hasUnexpectedLoopBlockArgSlice = false;
+  bool hasAggressiveCandidate = filterRemainingMarkedSlicesForAggressiveBubbleUp(
+      moduleOp, hasUnexpectedLoopBlockArgSlice);
+  if (hasUnexpectedLoopBlockArgSlice)
+    return signalPassFailure();
+
+  if (hasAggressiveCandidate) {
     for (auto &strategy : strategies)
       strategy->setAggressive(true);
 
