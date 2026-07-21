@@ -52,39 +52,40 @@ static StringRef getCubeStoreAttrName()
     return "cube_store";
 }
 
-static bool isDotUse(OpOperand &use);
-
-static bool isUsedForDot(Value value)
-{
-    if (value.use_empty())
-        return false;
-    for (OpOperand &use : value.getUses()) {
-        if (!isDotUse(use))
-            return false;
-    }
-    return true;
-}
-
 static bool isDotUse(OpOperand &use)
 {
     Operation *user = use.getOwner();
     if (isa<triton::DotOp>(user))
         return true;
-    if (auto transOp = dyn_cast<triton::TransOp>(user))
-        return isUsedForDot(transOp.getResult());
-    if (auto forOp = dyn_cast<scf::ForOp>(user)) {
-        BlockArgument regionIterArg = forOp.getTiedLoopRegionIterArg(&use);
-        if (regionIterArg)
-            return isUsedForDot(regionIterArg);
-    }
-    if (auto yieldOp = dyn_cast<scf::YieldOp>(user)) {
-        auto *parentOp = yieldOp->getParentOp();
-        if (auto forOp = dyn_cast<scf::ForOp>(parentOp)) {
-            auto operandIdx = use.getOperandNumber();
-            return isUsedForDot(forOp->getResult(operandIdx));
+    if (auto transOp = dyn_cast<triton::TransOp>(user)) {
+        Value transResult = transOp.getResult();
+        if (transResult.use_empty())
+            return false;
+        for (OpOperand &transUse : transResult.getUses()) {
+            if (!isa<triton::DotOp>(transUse.getOwner()))
+                return false;
         }
+        return true;
     }
     return false;
+}
+
+static bool isUsedForDotC(Value value)
+{
+    if (value.use_empty())
+        return false;
+    for (OpOperand &use : value.getUses()) {
+        Operation *user = use.getOwner();
+        if (auto forOp = dyn_cast<scf::ForOp>(user)) {
+            BlockArgument regionIterArg = forOp.getTiedLoopRegionIterArg(&use);
+            if (!regionIterArg || !isUsedForDotC(regionIterArg))
+                return false;
+            continue;
+        }
+        if (!isa<triton::DotOp>(user) || use.getOperandNumber() != 2)
+            return false;
+    }
+    return true;
 }
 
 template <typename SinkFn>
@@ -1128,7 +1129,7 @@ struct UnusedYieldSlicePattern : public OpRewritePattern<scf::ForOp> {
                 continue;
 
             BlockArgument regionIterArg = forOp.getRegionIterArg(operandIdx);
-            if (isUsedForDot(regionIterArg))
+            if (isUsedForDotC(regionIterArg))
                 continue;
 
             int64_t tilingDim = analyzer.getTilingDim(yieldValue);

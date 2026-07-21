@@ -781,8 +781,12 @@ LoopOutBubbleUpStrategy::execute(tensor::ExtractSliceOp sliceOp,
 
   auto yieldInsertOp = yieldValue.getDefiningOp<tensor::InsertSliceOp>();
 
-  if (yieldInsertOp && isMarkedEliminatedSlice(yieldInsertOp) &&
-      sliceParamsMatch(sliceOp, yieldInsertOp)) {
+  if (yieldInsertOp && !sliceParamsMatch(sliceOp, yieldInsertOp))
+    return rewriter.notifyMatchFailure(
+        sliceOp, "loop-carried extract_slice and yield insert_slice params "
+                 "do not match");
+
+  if (yieldInsertOp && isMarkedEliminatedSlice(yieldInsertOp)) {
     Value forResult = forOp.getResult(yieldIndex);
     SmallVector<tensor::ExtractSliceOp> outerExtractOps;
     for (Operation *user : forResult.getUsers()) {
