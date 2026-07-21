@@ -17089,3 +17089,434 @@ module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">, hivm.disable_
     tt.return
   }
 }
+
+// -----
+// Source: gaoyou/sw/flash-linear-attention/parallel_deltaformer_bwd/input.mlir
+// CHECK: module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
+// CHECK-NEXT:   tt.func public @parallel_deltaformer_bwd_kernel_qk(%arg0: !tt.ptr<f16> {tt.divisibility = 16 : i32}, %arg1: !tt.ptr<f16> {tt.divisibility = 16 : i32}, %arg2: !tt.ptr<f16> {tt.divisibility = 16 : i32}, %arg3: !tt.ptr<f16> {tt.divisibility = 16 : i32}, %arg4: !tt.ptr<f16> {tt.divisibility = 16 : i32}, %arg5: !tt.ptr<f16> {tt.divisibility = 16 : i32}, %arg6: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg7: !tt.ptr<f16> {tt.divisibility = 16 : i32}, %arg8: !tt.ptr<f32> {tt.divisibility = 16 : i32}, %arg9: i32, %arg10: i32 {tt.divisibility = 16 : i32}) attributes {noinline = false} {
+// CHECK-NEXT:     %c1_i32 = arith.constant 1 : i32
+// CHECK-NEXT:     %cst = arith.constant dense<0.000000e+00> : tensor<32x128xf32>
+// CHECK-NEXT:     %cst_0 = arith.constant dense<0.0883883461> : tensor<32x128xf32>
+// CHECK-NEXT:     %cst_1 = arith.constant dense<0.127517432> : tensor<32x32xf32>
+// CHECK-NEXT:     %cst_2 = arith.constant dense<0.000000e+00> : tensor<32x32xf32>
+// CHECK-NEXT:     %cst_3 = arith.constant dense<0.000000e+00> : tensor<32x128xf16>
+// CHECK-NEXT:     %c0_i32 = arith.constant 0 : i32
+// CHECK-NEXT:     %c1_i64 = arith.constant 1 : i64
+// CHECK-NEXT:     %c128_i64 = arith.constant 128 : i64
+// CHECK-NEXT:     %c32_i32 = arith.constant 32 : i32
+// CHECK-NEXT:     %c128_i32 = arith.constant 128 : i32
+// CHECK-NEXT:     %0 = tt.get_program_id x : i32
+// CHECK-NEXT:     %1 = tt.get_program_id y : i32
+// CHECK-NEXT:     %2 = tt.make_range {end = 32 : i32, start = 0 : i32} : tensor<32xi32>
+// CHECK-NEXT:     %3 = arith.muli %1, %c128_i32 : i32
+// CHECK-NEXT:     %4 = tt.addptr %arg2, %3 : !tt.ptr<f16>, i32
+// CHECK-NEXT:     %5 = arith.muli %arg9, %c128_i32 : i32
+// CHECK-NEXT:     %6 = arith.muli %0, %c32_i32 : i32
+// CHECK-NEXT:     %7 = arith.extsi %arg10 : i32 to i64
+// CHECK-NEXT:     %8 = arith.extsi %5 : i32 to i64
+// CHECK-NEXT:     %9 = tt.make_tensor_ptr %4, [%7, %c128_i64], [%8, %c1_i64], [%6, %c0_i32] {order = array<i32: 1, 0>} : <tensor<32x128xf16>>
+// CHECK-NEXT:     %10 = tt.load %9 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32x128xf16>>
+// CHECK-NEXT:     %11 = tt.addptr %arg6, %1 : !tt.ptr<f32>, i32
+// CHECK-NEXT:     %12 = arith.extsi %arg9 : i32 to i64
+// CHECK-NEXT:     %13 = tt.make_tensor_ptr %11, [%7], [%12], [%6] {order = array<i32: 0>} : <tensor<32xf32>>
+// CHECK-NEXT:     %14 = tt.load %13 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32xf32>>
+// CHECK-NEXT:     %15 = tt.addptr %arg7, %1 : !tt.ptr<f16>, i32
+// CHECK-NEXT:     %16 = tt.make_tensor_ptr %15, [%7], [%12], [%6] {order = array<i32: 0>} : <tensor<32xf16>>
+// CHECK-NEXT:     %17 = tt.load %16 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32xf16>>
+// CHECK-NEXT:     %18 = tt.addptr %arg4, %3 : !tt.ptr<f16>, i32
+// CHECK-NEXT:     %19 = tt.make_tensor_ptr %18, [%7, %c128_i64], [%8, %c1_i64], [%6, %c0_i32] {order = array<i32: 1, 0>} : <tensor<32x128xf16>>
+// CHECK-NEXT:     %20 = tt.load %19 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32x128xf16>>
+// CHECK-NEXT:     %21 = arith.subf %cst_3, %20 : tensor<32x128xf16>
+// CHECK-NEXT:     %22 = tt.addptr %arg8, %1 : !tt.ptr<f32>, i32
+// CHECK-NEXT:     %23 = tt.make_tensor_ptr %22, [%7], [%12], [%6] {order = array<i32: 0>} : <tensor<32xf32>>
+// CHECK-NEXT:     %24 = tt.load %23 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32xf32>>
+// CHECK-NEXT:     %25 = arith.truncf %24 : tensor<32xf32> to tensor<32xf16>
+// CHECK-NEXT:     %26 = tt.addptr %arg3, %3 : !tt.ptr<f16>, i32
+// CHECK-NEXT:     %27 = tt.expand_dims %14 {axis = 1 : i32} : tensor<32xf32> -> tensor<32x1xf32>
+// CHECK-NEXT:     %28 = tt.broadcast %27 : tensor<32x1xf32> -> tensor<32x32xf32>
+// CHECK-NEXT:     %29 = tt.expand_dims %17 {axis = 1 : i32} : tensor<32xf16> -> tensor<32x1xf16>
+// CHECK-NEXT:     %30 = arith.extf %29 : tensor<32x1xf16> to tensor<32x1xf32>
+// CHECK-NEXT:     %31 = tt.broadcast %30 : tensor<32x1xf32> -> tensor<32x32xf32>
+// CHECK-NEXT:     %32 = tt.addptr %arg5, %3 : !tt.ptr<f16>, i32
+// CHECK-NEXT:     %33 = tt.expand_dims %25 {axis = 1 : i32} : tensor<32xf16> -> tensor<32x1xf16>
+// CHECK-NEXT:     %34 = arith.extf %33 : tensor<32x1xf16> to tensor<32x1xf32>
+// CHECK-NEXT:     %35 = tt.broadcast %34 : tensor<32x1xf32> -> tensor<32x32xf32>
+// CHECK-NEXT:     %36 = scf.for %arg11 = %c0_i32 to %6 step %c32_i32 iter_args(%arg12 = %cst) -> (tensor<32x128xf32>)  : i32 {
+// CHECK-NEXT:       %88 = tt.make_tensor_ptr %26, [%c128_i64, %7], [%c1_i64, %8], [%c0_i32, %arg11] {order = array<i32: 0, 1>} : <tensor<128x32xf16>>
+// CHECK-NEXT:       %89 = tt.load %88 {boundaryCheck = array<i32: 1>, padding = 1 : i32} : !tt.ptr<tensor<128x32xf16>>
+// CHECK-NEXT:       %90 = tt.dot %10, %89, %cst_2 {triton_cv12.normalized_dot} : tensor<32x128xf16> * tensor<128x32xf16> -> tensor<32x32xf32>
+// CHECK-NEXT:       %91 = arith.mulf %90, %cst_1 : tensor<32x32xf32>
+// CHECK-NEXT:       %92 = arith.subf %91, %28 : tensor<32x32xf32>
+// CHECK-NEXT:       %93 = math.exp2 %92 : tensor<32x32xf32>
+// CHECK-NEXT:       %94 = arith.mulf %93, %31 : tensor<32x32xf32>
+// CHECK-NEXT:       %95 = tt.make_tensor_ptr %32, [%c128_i64, %7], [%c1_i64, %8], [%c0_i32, %arg11] {order = array<i32: 0, 1>} : <tensor<128x32xf16>>
+// CHECK-NEXT:       %96 = tt.load %95 : !tt.ptr<tensor<128x32xf16>>
+// CHECK-NEXT:       %97 = tt.dot %21, %96, %cst_2 {triton_cv12.normalized_dot} : tensor<32x128xf16> * tensor<128x32xf16> -> tensor<32x32xf32>
+// CHECK-NEXT:       %98 = arith.subf %97, %35 : tensor<32x32xf32>
+// CHECK-NEXT:       %99 = arith.mulf %94, %98 : tensor<32x32xf32>
+// CHECK-NEXT:       %100 = tt.trans %89 {order = array<i32: 1, 0>} : tensor<128x32xf16> -> tensor<32x128xf16>
+// CHECK-NEXT:       %101 = arith.truncf %99 : tensor<32x32xf32> to tensor<32x32xf16>
+// CHECK-NEXT:       %102 = tt.dot %101, %100, %arg12 {triton_cv12.normalized_dot} : tensor<32x32xf16> * tensor<32x128xf16> -> tensor<32x128xf32>
+// CHECK-NEXT:       scf.yield %102 : tensor<32x128xf32>
+// CHECK-NEXT:     } {hivm.matmul_limited_in_cube}
+// CHECK-NEXT:     %37 = arith.cmpi sgt, %6, %c0_i32 : i32
+// CHECK-NEXT:     %38 = scf.if %37 -> (tensor<32x128xf32>) {
+// CHECK-NEXT:       scf.yield %36 : tensor<32x128xf32>
+// CHECK-NEXT:     } else {
+// CHECK-NEXT:       scf.yield %cst : tensor<32x128xf32>
+// CHECK-NEXT:     }
+// CHECK-NEXT:     %39 = tt.addptr %arg3, %3 : !tt.ptr<f16>, i32
+// CHECK-NEXT:     %40 = tt.make_tensor_ptr %39, [%7, %c128_i64], [%8, %c1_i64], [%6, %c0_i32] {order = array<i32: 1, 0>} : <tensor<32x128xf16>>
+// CHECK-NEXT:     %41 = tt.load %40 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32x128xf16>>
+// CHECK-NEXT:     %42 = tt.trans %41 {order = array<i32: 1, 0>} : tensor<32x128xf16> -> tensor<128x32xf16>
+// CHECK-NEXT:     %43 = tt.dot %10, %42, %cst_2 {triton_cv12.normalized_dot} : tensor<32x128xf16> * tensor<128x32xf16> -> tensor<32x32xf32>
+// CHECK-NEXT:     %44 = arith.mulf %43, %cst_1 : tensor<32x32xf32>
+// CHECK-NEXT:     %45 = tt.expand_dims %14 {axis = 1 : i32} : tensor<32xf32> -> tensor<32x1xf32>
+// CHECK-NEXT:     %46 = tt.broadcast %45 : tensor<32x1xf32> -> tensor<32x32xf32>
+// CHECK-NEXT:     %47 = arith.subf %44, %46 : tensor<32x32xf32>
+// CHECK-NEXT:     %48 = math.exp2 %47 : tensor<32x32xf32>
+// CHECK-NEXT:     %49 = tt.expand_dims %17 {axis = 1 : i32} : tensor<32xf16> -> tensor<32x1xf16>
+// CHECK-NEXT:     %50 = arith.extf %49 : tensor<32x1xf16> to tensor<32x1xf32>
+// CHECK-NEXT:     %51 = tt.broadcast %50 : tensor<32x1xf32> -> tensor<32x32xf32>
+// CHECK-NEXT:     %52 = arith.mulf %48, %51 : tensor<32x32xf32>
+// CHECK-NEXT:     %53 = tt.addptr %arg5, %3 : !tt.ptr<f16>, i32
+// CHECK-NEXT:     %54 = tt.make_tensor_ptr %53, [%c128_i64, %7], [%c1_i64, %8], [%c0_i32, %6] {order = array<i32: 0, 1>} : <tensor<128x32xf16>>
+// CHECK-NEXT:     %55 = tt.load %54 : !tt.ptr<tensor<128x32xf16>>
+// CHECK-NEXT:     %56 = tt.dot %21, %55, %cst_2 {triton_cv12.normalized_dot} : tensor<32x128xf16> * tensor<128x32xf16> -> tensor<32x32xf32>
+// CHECK-NEXT:     %57 = tt.expand_dims %25 {axis = 1 : i32} : tensor<32xf16> -> tensor<32x1xf16>
+// CHECK-NEXT:     %58 = arith.extf %57 : tensor<32x1xf16> to tensor<32x1xf32>
+// CHECK-NEXT:     %59 = tt.broadcast %58 : tensor<32x1xf32> -> tensor<32x32xf32>
+// CHECK-NEXT:     %60 = arith.subf %56, %59 : tensor<32x32xf32>
+// CHECK-NEXT:     %61 = tt.expand_dims %2 {axis = 0 : i32} : tensor<32xi32> -> tensor<1x32xi32>
+// CHECK-NEXT:     %62 = tt.expand_dims %2 {axis = 1 : i32} : tensor<32xi32> -> tensor<32x1xi32>
+// CHECK-NEXT:     %63 = tt.broadcast %61 : tensor<1x32xi32> -> tensor<32x32xi32>
+// CHECK-NEXT:     %64 = tt.broadcast %62 : tensor<32x1xi32> -> tensor<32x32xi32>
+// CHECK-NEXT:     %65 = arith.cmpi slt, %63, %64 : tensor<32x32xi32>
+// CHECK-NEXT:     %66 = arith.select %65, %52, %cst_2 : tensor<32x32xi1>, tensor<32x32xf32>
+// CHECK-NEXT:     %67 = arith.select %65, %60, %cst_2 : tensor<32x32xi1>, tensor<32x32xf32>
+// CHECK-NEXT:     %68 = arith.mulf %66, %67 : tensor<32x32xf32>
+// CHECK-NEXT:     %69 = arith.truncf %68 : tensor<32x32xf32> to tensor<32x32xf16>
+// CHECK-NEXT:     %70 = tt.dot %69, %41, %cst {triton_cv12.normalized_dot} : tensor<32x32xf16> * tensor<32x128xf16> -> tensor<32x128xf32>
+// CHECK-NEXT:     %71 = arith.addf %70, %38 {triton_cv12.add_from_dot} : tensor<32x128xf32>
+// CHECK-NEXT:     %72 = tt.addptr %arg0, %3 : !tt.ptr<f16>, i32
+// CHECK-NEXT:     %73 = tt.make_tensor_ptr %72, [%7, %c128_i64], [%8, %c1_i64], [%6, %c0_i32] {order = array<i32: 1, 0>} : <tensor<32x128xf16>>
+// CHECK-NEXT:     %74 = arith.mulf %71, %cst_0 : tensor<32x128xf32>
+// CHECK-NEXT:     %75 = arith.truncf %74 : tensor<32x128xf32> to tensor<32x128xf16>
+// CHECK-NEXT:     tt.store %73, %75 {boundaryCheck = array<i32: 0>} : !tt.ptr<tensor<32x128xf16>>
+// CHECK-NEXT:     %76 = tt.trans %68 {order = array<i32: 1, 0>} : tensor<32x32xf32> -> tensor<32x32xf32>
+// CHECK-NEXT:     %77 = arith.truncf %76 : tensor<32x32xf32> to tensor<32x32xf16>
+// CHECK-NEXT:     %78 = tt.dot %77, %10, %cst {triton_cv12.normalized_dot} : tensor<32x32xf16> * tensor<32x128xf16> -> tensor<32x128xf32>
+// CHECK-NEXT:     %79 = tt.trans %55 {order = array<i32: 1, 0>} : tensor<128x32xf16> -> tensor<32x128xf16>
+// CHECK-NEXT:     %80 = arith.subf %cst_3, %79 : tensor<32x128xf16>
+// CHECK-NEXT:     %81 = arith.addi %0, %c1_i32 : i32
+// CHECK-NEXT:     %82 = arith.muli %81, %c32_i32 : i32
+// CHECK-NEXT:     %83 = scf.for %arg11 = %82 to %arg10 step %c32_i32 iter_args(%arg12 = %78) -> (tensor<32x128xf32>)  : i32 {
+// CHECK-NEXT:       %88 = tt.make_tensor_ptr %4, [%c128_i64, %7], [%c1_i64, %8], [%c0_i32, %arg11] {order = array<i32: 0, 1>} : <tensor<128x32xf16>>
+// CHECK-NEXT:       %89 = tt.load %88 {boundaryCheck = array<i32: 1>, padding = 1 : i32} : !tt.ptr<tensor<128x32xf16>>
+// CHECK-NEXT:       %90 = tt.make_tensor_ptr %11, [%7], [%12], [%arg11] {order = array<i32: 0>} : <tensor<32xf32>>
+// CHECK-NEXT:       %91 = tt.load %90 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32xf32>>
+// CHECK-NEXT:       %92 = tt.make_tensor_ptr %15, [%7], [%12], [%arg11] {order = array<i32: 0>} : <tensor<32xf16>>
+// CHECK-NEXT:       %93 = tt.load %92 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32xf16>>
+// CHECK-NEXT:       %94 = tt.dot %41, %89, %cst_2 {triton_cv12.normalized_dot} : tensor<32x128xf16> * tensor<128x32xf16> -> tensor<32x32xf32>
+// CHECK-NEXT:       %95 = arith.mulf %94, %cst_1 : tensor<32x32xf32>
+// CHECK-NEXT:       %96 = tt.expand_dims %91 {axis = 0 : i32} : tensor<32xf32> -> tensor<1x32xf32>
+// CHECK-NEXT:       %97 = tt.broadcast %96 : tensor<1x32xf32> -> tensor<32x32xf32>
+// CHECK-NEXT:       %98 = arith.subf %95, %97 : tensor<32x32xf32>
+// CHECK-NEXT:       %99 = math.exp2 %98 : tensor<32x32xf32>
+// CHECK-NEXT:       %100 = tt.expand_dims %93 {axis = 0 : i32} : tensor<32xf16> -> tensor<1x32xf16>
+// CHECK-NEXT:       %101 = arith.extf %100 : tensor<1x32xf16> to tensor<1x32xf32>
+// CHECK-NEXT:       %102 = tt.broadcast %101 : tensor<1x32xf32> -> tensor<32x32xf32>
+// CHECK-NEXT:       %103 = arith.mulf %99, %102 : tensor<32x32xf32>
+// CHECK-NEXT:       %104 = tt.make_tensor_ptr %18, [%c128_i64, %7], [%c1_i64, %8], [%c0_i32, %arg11] {order = array<i32: 0, 1>} : <tensor<128x32xf16>>
+// CHECK-NEXT:       %105 = tt.load %104 {boundaryCheck = array<i32: 1>, padding = 1 : i32} : !tt.ptr<tensor<128x32xf16>>
+// CHECK-NEXT:       %106 = tt.make_tensor_ptr %22, [%7], [%12], [%arg11] {order = array<i32: 0>} : <tensor<32xf32>>
+// CHECK-NEXT:       %107 = tt.load %106 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32xf32>>
+// CHECK-NEXT:       %108 = arith.truncf %107 : tensor<32xf32> to tensor<32xf16>
+// CHECK-NEXT:       %109 = tt.dot %80, %105, %cst_2 {triton_cv12.normalized_dot} : tensor<32x128xf16> * tensor<128x32xf16> -> tensor<32x32xf32>
+// CHECK-NEXT:       %110 = tt.expand_dims %108 {axis = 0 : i32} : tensor<32xf16> -> tensor<1x32xf16>
+// CHECK-NEXT:       %111 = arith.extf %110 : tensor<1x32xf16> to tensor<1x32xf32>
+// CHECK-NEXT:       %112 = tt.broadcast %111 : tensor<1x32xf32> -> tensor<32x32xf32>
+// CHECK-NEXT:       %113 = arith.subf %109, %112 : tensor<32x32xf32>
+// CHECK-NEXT:       %114 = arith.mulf %103, %113 : tensor<32x32xf32>
+// CHECK-NEXT:       %115 = tt.trans %89 {order = array<i32: 1, 0>} : tensor<128x32xf16> -> tensor<32x128xf16>
+// CHECK-NEXT:       %116 = arith.truncf %114 : tensor<32x32xf32> to tensor<32x32xf16>
+// CHECK-NEXT:       %117 = tt.dot %116, %115, %arg12 {triton_cv12.normalized_dot} : tensor<32x32xf16> * tensor<32x128xf16> -> tensor<32x128xf32>
+// CHECK-NEXT:       scf.yield %117 : tensor<32x128xf32>
+// CHECK-NEXT:     }
+// CHECK-NEXT:     %84 = tt.addptr %arg1, %3 : !tt.ptr<f16>, i32
+// CHECK-NEXT:     %85 = tt.make_tensor_ptr %84, [%7, %c128_i64], [%8, %c1_i64], [%6, %c0_i32] {order = array<i32: 1, 0>} : <tensor<32x128xf16>>
+// CHECK-NEXT:     %86 = arith.mulf %83, %cst_0 : tensor<32x128xf32>
+// CHECK-NEXT:     %87 = arith.truncf %86 : tensor<32x128xf32> to tensor<32x128xf16>
+// CHECK-NEXT:     tt.store %85, %87 {boundaryCheck = array<i32: 0>} : !tt.ptr<tensor<32x128xf16>>
+// CHECK-NEXT:     tt.return
+// CHECK-NEXT:   }
+// CHECK-NEXT: }
+#loc = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":459:0)
+module attributes {hacc.target = #hacc.target<"Ascend950PR_9579">} {
+  tt.func public @parallel_deltaformer_bwd_kernel_qk(%arg0: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":459:0), %arg1: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":459:0), %arg2: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":459:0), %arg3: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":459:0), %arg4: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":459:0), %arg5: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":459:0), %arg6: !tt.ptr<f32> {tt.divisibility = 16 : i32} loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":459:0), %arg7: !tt.ptr<f16> {tt.divisibility = 16 : i32} loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":459:0), %arg8: !tt.ptr<f32> {tt.divisibility = 16 : i32} loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":459:0), %arg9: i32 loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":459:0), %arg10: i32 {tt.divisibility = 16 : i32} loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":459:0)) attributes {noinline = false} {
+    %c1_i32 = arith.constant 1 : i32 loc(#loc1)
+    %cst = arith.constant dense<0.000000e+00> : tensor<32x128xf32> loc(#loc1)
+    %cst_0 = arith.constant dense<0.0883883461> : tensor<32x128xf32> loc(#loc1)
+    %cst_1 = arith.constant dense<0.127517432> : tensor<32x32xf32> loc(#loc1)
+    %cst_2 = arith.constant dense<0.000000e+00> : tensor<32x32xf32> loc(#loc1)
+    %cst_3 = arith.constant dense<0.000000e+00> : tensor<32x128xf16> loc(#loc1)
+    %c0_i32 = arith.constant 0 : i32 loc(#loc1)
+    %c1_i64 = arith.constant 1 : i64 loc(#loc1)
+    %c128_i64 = arith.constant 128 : i64 loc(#loc1)
+    %c32_i32 = arith.constant 32 : i32 loc(#loc1)
+    %c128_i32 = arith.constant 128 : i32 loc(#loc1)
+    %0 = tt.get_program_id x : i32 loc(#loc2)
+    %1 = tt.get_program_id y : i32 loc(#loc3)
+    %2 = tt.make_range {end = 32 : i32, start = 0 : i32} : tensor<32xi32> loc(#loc4)
+    %3 = arith.muli %1, %c128_i32 : i32 loc(#loc5)
+    %4 = tt.addptr %arg2, %3 : !tt.ptr<f16>, i32 loc(#loc6)
+    %5 = arith.muli %arg9, %c128_i32 : i32 loc(#loc7)
+    %6 = arith.muli %0, %c32_i32 : i32 loc(#loc8)
+    %7 = arith.extsi %arg10 : i32 to i64 loc(#loc9)
+    %8 = arith.extsi %5 : i32 to i64 loc(#loc9)
+    %9 = tt.make_tensor_ptr %4, [%7, %c128_i64], [%8, %c1_i64], [%6, %c0_i32] {order = array<i32: 1, 0>} : <tensor<32x128xf16>> loc(#loc9)
+    %10 = tt.load %9 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32x128xf16>> loc(#loc10)
+    %11 = tt.addptr %arg6, %1 : !tt.ptr<f32>, i32 loc(#loc11)
+    %12 = arith.extsi %arg9 : i32 to i64 loc(#loc12)
+    %13 = tt.make_tensor_ptr %11, [%7], [%12], [%6] {order = array<i32: 0>} : <tensor<32xf32>> loc(#loc12)
+    %14 = tt.load %13 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32xf32>> loc(#loc13)
+    %15 = tt.addptr %arg7, %1 : !tt.ptr<f16>, i32 loc(#loc14)
+    %16 = tt.make_tensor_ptr %15, [%7], [%12], [%6] {order = array<i32: 0>} : <tensor<32xf16>> loc(#loc15)
+    %17 = tt.load %16 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32xf16>> loc(#loc16)
+    %18 = tt.addptr %arg4, %3 : !tt.ptr<f16>, i32 loc(#loc17)
+    %19 = tt.make_tensor_ptr %18, [%7, %c128_i64], [%8, %c1_i64], [%6, %c0_i32] {order = array<i32: 1, 0>} : <tensor<32x128xf16>> loc(#loc18)
+    %20 = tt.load %19 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32x128xf16>> loc(#loc19)
+    %21 = arith.subf %cst_3, %20 : tensor<32x128xf16> loc(#loc20)
+    %22 = tt.addptr %arg8, %1 : !tt.ptr<f32>, i32 loc(#loc21)
+    %23 = tt.make_tensor_ptr %22, [%7], [%12], [%6] {order = array<i32: 0>} : <tensor<32xf32>> loc(#loc22)
+    %24 = tt.load %23 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32xf32>> loc(#loc23)
+    %25 = arith.truncf %24 : tensor<32xf32> to tensor<32xf16> loc(#loc24)
+    %26 = tt.addptr %arg3, %3 : !tt.ptr<f16>, i32 loc(#loc25)
+    %27 = tt.expand_dims %14 {axis = 1 : i32} : tensor<32xf32> -> tensor<32x1xf32> loc(#loc26)
+    %28 = tt.broadcast %27 : tensor<32x1xf32> -> tensor<32x32xf32> loc(#loc27)
+    %29 = tt.expand_dims %17 {axis = 1 : i32} : tensor<32xf16> -> tensor<32x1xf16> loc(#loc28)
+    %30 = arith.extf %29 : tensor<32x1xf16> to tensor<32x1xf32> loc(#loc29)
+    %31 = tt.broadcast %30 : tensor<32x1xf32> -> tensor<32x32xf32> loc(#loc29)
+    %32 = tt.addptr %arg5, %3 : !tt.ptr<f16>, i32 loc(#loc30)
+    %33 = tt.expand_dims %25 {axis = 1 : i32} : tensor<32xf16> -> tensor<32x1xf16> loc(#loc31)
+    %34 = arith.extf %33 : tensor<32x1xf16> to tensor<32x1xf32> loc(#loc32)
+    %35 = tt.broadcast %34 : tensor<32x1xf32> -> tensor<32x32xf32> loc(#loc32)
+    %36 = scf.for %arg11 = %c0_i32 to %6 step %c32_i32 iter_args(%arg12 = %cst) -> (tensor<32x128xf32>)  : i32 {
+      %85 = tt.make_tensor_ptr %26, [%c128_i64, %7], [%c1_i64, %8], [%c0_i32, %arg11] {order = array<i32: 0, 1>} : <tensor<128x32xf16>> loc(#loc34)
+      %86 = tt.load %85 {boundaryCheck = array<i32: 1>, padding = 1 : i32} : !tt.ptr<tensor<128x32xf16>> loc(#loc35)
+      %87 = tt.dot %10, %86, %cst_2 : tensor<32x128xf16> * tensor<128x32xf16> -> tensor<32x32xf32> loc(#loc36)
+      %88 = arith.mulf %87, %cst_1 : tensor<32x32xf32> loc(#loc37)
+      %89 = arith.subf %88, %28 : tensor<32x32xf32> loc(#loc27)
+      %90 = math.exp2 %89 : tensor<32x32xf32> loc(#loc38)
+      %91 = arith.mulf %90, %31 : tensor<32x32xf32> loc(#loc29)
+      %92 = tt.make_tensor_ptr %32, [%c128_i64, %7], [%c1_i64, %8], [%c0_i32, %arg11] {order = array<i32: 0, 1>} : <tensor<128x32xf16>> loc(#loc39)
+      %93 = tt.load %92 : !tt.ptr<tensor<128x32xf16>> loc(#loc40)
+      %94 = tt.dot %21, %93, %cst_2 : tensor<32x128xf16> * tensor<128x32xf16> -> tensor<32x32xf32> loc(#loc41)
+      %95 = arith.subf %94, %35 : tensor<32x32xf32> loc(#loc32)
+      %96 = arith.mulf %91, %95 : tensor<32x32xf32> loc(#loc42)
+      %97 = tt.trans %86 {order = array<i32: 1, 0>} : tensor<128x32xf16> -> tensor<32x128xf16> loc(#loc43)
+      %98 = arith.truncf %96 : tensor<32x32xf32> to tensor<32x32xf16> loc(#loc44)
+      %99 = tt.dot %98, %97, %arg12 : tensor<32x32xf16> * tensor<32x128xf16> -> tensor<32x128xf32> loc(#loc45)
+      scf.yield %99 : tensor<32x128xf32> loc(#loc46)
+    } loc(#loc33)
+    %37 = tt.addptr %arg3, %3 : !tt.ptr<f16>, i32 loc(#loc47)
+    %38 = tt.make_tensor_ptr %37, [%7, %c128_i64], [%8, %c1_i64], [%6, %c0_i32] {order = array<i32: 1, 0>} : <tensor<32x128xf16>> loc(#loc48)
+    %39 = tt.load %38 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32x128xf16>> loc(#loc49)
+    %40 = tt.trans %39 {order = array<i32: 1, 0>} : tensor<32x128xf16> -> tensor<128x32xf16> loc(#loc50)
+    %41 = tt.dot %10, %40, %cst_2 : tensor<32x128xf16> * tensor<128x32xf16> -> tensor<32x32xf32> loc(#loc51)
+    %42 = arith.mulf %41, %cst_1 : tensor<32x32xf32> loc(#loc52)
+    %43 = tt.expand_dims %14 {axis = 1 : i32} : tensor<32xf32> -> tensor<32x1xf32> loc(#loc53)
+    %44 = tt.broadcast %43 : tensor<32x1xf32> -> tensor<32x32xf32> loc(#loc54)
+    %45 = arith.subf %42, %44 : tensor<32x32xf32> loc(#loc54)
+    %46 = math.exp2 %45 : tensor<32x32xf32> loc(#loc55)
+    %47 = tt.expand_dims %17 {axis = 1 : i32} : tensor<32xf16> -> tensor<32x1xf16> loc(#loc56)
+    %48 = arith.extf %47 : tensor<32x1xf16> to tensor<32x1xf32> loc(#loc57)
+    %49 = tt.broadcast %48 : tensor<32x1xf32> -> tensor<32x32xf32> loc(#loc57)
+    %50 = arith.mulf %46, %49 : tensor<32x32xf32> loc(#loc57)
+    %51 = tt.addptr %arg5, %3 : !tt.ptr<f16>, i32 loc(#loc58)
+    %52 = tt.make_tensor_ptr %51, [%c128_i64, %7], [%c1_i64, %8], [%c0_i32, %6] {order = array<i32: 0, 1>} : <tensor<128x32xf16>> loc(#loc59)
+    %53 = tt.load %52 : !tt.ptr<tensor<128x32xf16>> loc(#loc60)
+    %54 = tt.dot %21, %53, %cst_2 : tensor<32x128xf16> * tensor<128x32xf16> -> tensor<32x32xf32> loc(#loc61)
+    %55 = tt.expand_dims %25 {axis = 1 : i32} : tensor<32xf16> -> tensor<32x1xf16> loc(#loc62)
+    %56 = arith.extf %55 : tensor<32x1xf16> to tensor<32x1xf32> loc(#loc63)
+    %57 = tt.broadcast %56 : tensor<32x1xf32> -> tensor<32x32xf32> loc(#loc63)
+    %58 = arith.subf %54, %57 : tensor<32x32xf32> loc(#loc63)
+    %59 = tt.expand_dims %2 {axis = 0 : i32} : tensor<32xi32> -> tensor<1x32xi32> loc(#loc64)
+    %60 = tt.expand_dims %2 {axis = 1 : i32} : tensor<32xi32> -> tensor<32x1xi32> loc(#loc65)
+    %61 = tt.broadcast %59 : tensor<1x32xi32> -> tensor<32x32xi32> loc(#loc66)
+    %62 = tt.broadcast %60 : tensor<32x1xi32> -> tensor<32x32xi32> loc(#loc66)
+    %63 = arith.cmpi slt, %61, %62 : tensor<32x32xi32> loc(#loc66)
+    %64 = arith.select %63, %50, %cst_2 : tensor<32x32xi1>, tensor<32x32xf32> loc(#loc67)
+    %65 = arith.select %63, %58, %cst_2 : tensor<32x32xi1>, tensor<32x32xf32> loc(#loc68)
+    %66 = arith.mulf %64, %65 : tensor<32x32xf32> loc(#loc69)
+    %67 = arith.truncf %66 : tensor<32x32xf32> to tensor<32x32xf16> loc(#loc70)
+    %68 = tt.dot %67, %39, %36 : tensor<32x32xf16> * tensor<32x128xf16> -> tensor<32x128xf32> loc(#loc71)
+    %69 = tt.addptr %arg0, %3 : !tt.ptr<f16>, i32 loc(#loc72)
+    %70 = tt.make_tensor_ptr %69, [%7, %c128_i64], [%8, %c1_i64], [%6, %c0_i32] {order = array<i32: 1, 0>} : <tensor<32x128xf16>> loc(#loc73)
+    %71 = arith.mulf %68, %cst_0 : tensor<32x128xf32> loc(#loc74)
+    %72 = arith.truncf %71 : tensor<32x128xf32> to tensor<32x128xf16> loc(#loc75)
+    tt.store %70, %72 {boundaryCheck = array<i32: 0>} : !tt.ptr<tensor<32x128xf16>> loc(#loc76)
+    %73 = tt.trans %66 {order = array<i32: 1, 0>} : tensor<32x32xf32> -> tensor<32x32xf32> loc(#loc77)
+    %74 = arith.truncf %73 : tensor<32x32xf32> to tensor<32x32xf16> loc(#loc78)
+    %75 = tt.dot %74, %10, %cst : tensor<32x32xf16> * tensor<32x128xf16> -> tensor<32x128xf32> loc(#loc79)
+    %76 = tt.trans %53 {order = array<i32: 1, 0>} : tensor<128x32xf16> -> tensor<32x128xf16> loc(#loc80)
+    %77 = arith.subf %cst_3, %76 : tensor<32x128xf16> loc(#loc81)
+    %78 = arith.addi %0, %c1_i32 : i32 loc(#loc82)
+    %79 = arith.muli %78, %c32_i32 : i32 loc(#loc83)
+    %80 = scf.for %arg11 = %79 to %arg10 step %c32_i32 iter_args(%arg12 = %75) -> (tensor<32x128xf32>)  : i32 {
+      %85 = tt.make_tensor_ptr %4, [%c128_i64, %7], [%c1_i64, %8], [%c0_i32, %arg11] {order = array<i32: 0, 1>} : <tensor<128x32xf16>> loc(#loc85)
+      %86 = tt.load %85 {boundaryCheck = array<i32: 1>, padding = 1 : i32} : !tt.ptr<tensor<128x32xf16>> loc(#loc86)
+      %87 = tt.make_tensor_ptr %11, [%7], [%12], [%arg11] {order = array<i32: 0>} : <tensor<32xf32>> loc(#loc87)
+      %88 = tt.load %87 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32xf32>> loc(#loc88)
+      %89 = tt.make_tensor_ptr %15, [%7], [%12], [%arg11] {order = array<i32: 0>} : <tensor<32xf16>> loc(#loc89)
+      %90 = tt.load %89 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32xf16>> loc(#loc90)
+      %91 = tt.dot %39, %86, %cst_2 : tensor<32x128xf16> * tensor<128x32xf16> -> tensor<32x32xf32> loc(#loc91)
+      %92 = arith.mulf %91, %cst_1 : tensor<32x32xf32> loc(#loc92)
+      %93 = tt.expand_dims %88 {axis = 0 : i32} : tensor<32xf32> -> tensor<1x32xf32> loc(#loc93)
+      %94 = tt.broadcast %93 : tensor<1x32xf32> -> tensor<32x32xf32> loc(#loc94)
+      %95 = arith.subf %92, %94 : tensor<32x32xf32> loc(#loc94)
+      %96 = math.exp2 %95 : tensor<32x32xf32> loc(#loc95)
+      %97 = tt.expand_dims %90 {axis = 0 : i32} : tensor<32xf16> -> tensor<1x32xf16> loc(#loc96)
+      %98 = arith.extf %97 : tensor<1x32xf16> to tensor<1x32xf32> loc(#loc97)
+      %99 = tt.broadcast %98 : tensor<1x32xf32> -> tensor<32x32xf32> loc(#loc97)
+      %100 = arith.mulf %96, %99 : tensor<32x32xf32> loc(#loc97)
+      %101 = tt.make_tensor_ptr %18, [%c128_i64, %7], [%c1_i64, %8], [%c0_i32, %arg11] {order = array<i32: 0, 1>} : <tensor<128x32xf16>> loc(#loc98)
+      %102 = tt.load %101 {boundaryCheck = array<i32: 1>, padding = 1 : i32} : !tt.ptr<tensor<128x32xf16>> loc(#loc99)
+      %103 = tt.make_tensor_ptr %22, [%7], [%12], [%arg11] {order = array<i32: 0>} : <tensor<32xf32>> loc(#loc100)
+      %104 = tt.load %103 {boundaryCheck = array<i32: 0>, padding = 1 : i32} : !tt.ptr<tensor<32xf32>> loc(#loc101)
+      %105 = arith.truncf %104 : tensor<32xf32> to tensor<32xf16> loc(#loc102)
+      %106 = tt.dot %77, %102, %cst_2 : tensor<32x128xf16> * tensor<128x32xf16> -> tensor<32x32xf32> loc(#loc103)
+      %107 = tt.expand_dims %105 {axis = 0 : i32} : tensor<32xf16> -> tensor<1x32xf16> loc(#loc104)
+      %108 = arith.extf %107 : tensor<1x32xf16> to tensor<1x32xf32> loc(#loc105)
+      %109 = tt.broadcast %108 : tensor<1x32xf32> -> tensor<32x32xf32> loc(#loc105)
+      %110 = arith.subf %106, %109 : tensor<32x32xf32> loc(#loc105)
+      %111 = arith.mulf %100, %110 : tensor<32x32xf32> loc(#loc106)
+      %112 = tt.trans %86 {order = array<i32: 1, 0>} : tensor<128x32xf16> -> tensor<32x128xf16> loc(#loc107)
+      %113 = arith.truncf %111 : tensor<32x32xf32> to tensor<32x32xf16> loc(#loc108)
+      %114 = tt.dot %113, %112, %arg12 : tensor<32x32xf16> * tensor<32x128xf16> -> tensor<32x128xf32> loc(#loc109)
+      scf.yield %114 : tensor<32x128xf32> loc(#loc110)
+    } loc(#loc84)
+    %81 = tt.addptr %arg1, %3 : !tt.ptr<f16>, i32 loc(#loc111)
+    %82 = tt.make_tensor_ptr %81, [%7, %c128_i64], [%8, %c1_i64], [%6, %c0_i32] {order = array<i32: 1, 0>} : <tensor<32x128xf16>> loc(#loc112)
+    %83 = arith.mulf %80, %cst_0 : tensor<32x128xf32> loc(#loc113)
+    %84 = arith.truncf %83 : tensor<32x128xf32> to tensor<32x128xf16> loc(#loc114)
+    tt.store %82, %84 {boundaryCheck = array<i32: 0>} : !tt.ptr<tensor<32x128xf16>> loc(#loc115)
+    tt.return loc(#loc116)
+  } loc(#loc)
+} loc(#loc)
+#loc1 = loc(unknown)
+#loc2 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":476:26)
+#loc3 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":477:26)
+#loc4 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":478:27)
+#loc5 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":483:29)
+#loc6 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":483:21)
+#loc7 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":485:21)
+#loc8 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":486:25)
+#loc9 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":488:8)
+#loc10 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":490:20)
+#loc11 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":492:23)
+#loc12 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":497:8)
+#loc13 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":499:18)
+#loc14 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":501:24)
+#loc15 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":506:8)
+#loc16 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":508:19)
+#loc17 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":510:26)
+#loc18 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":515:8)
+#loc19 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":517:26)
+#loc20 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":517:18)
+#loc21 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":519:27)
+#loc22 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":524:8)
+#loc23 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":526:26)
+#loc24 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":526:67)
+#loc25 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":530:25)
+#loc26 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":539:34)
+#loc27 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":539:30)
+#loc28 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":539:51)
+#loc29 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":539:46)
+#loc30 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":542:25)
+#loc31 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":551:35)
+#loc32 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":551:23)
+#loc33 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":528:42)
+#loc34 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":535:12)
+#loc35 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":537:21)
+#loc36 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":538:27)
+#loc37 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":538:33)
+#loc38 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":539:25)
+#loc39 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":547:12)
+#loc40 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":549:21)
+#loc41 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":550:32)
+#loc42 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":551:18)
+#loc43 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":552:28)
+#loc44 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":553:27)
+#loc45 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":553:40)
+#loc46 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":553:8)
+#loc47 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":556:21)
+#loc48 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":561:8)
+#loc49 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":563:25)
+#loc50 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":564:47)
+#loc51 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":564:23)
+#loc52 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":564:53)
+#loc53 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":565:30)
+#loc54 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":565:26)
+#loc55 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":565:21)
+#loc56 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":565:47)
+#loc57 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":565:42)
+#loc58 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":567:21)
+#loc59 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":572:8)
+#loc60 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":574:17)
+#loc61 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":575:28)
+#loc62 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":576:27)
+#loc63 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":576:15)
+#loc64 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":577:19)
+#loc65 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":577:38)
+#loc66 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":577:30)
+#loc67 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":578:26)
+#loc68 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":579:30)
+#loc69 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":580:13)
+#loc70 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":582:25)
+#loc71 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":582:51)
+#loc72 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":585:26)
+#loc73 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":590:8)
+#loc74 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":592:16)
+#loc75 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":593:36)
+#loc76 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":593:29)
+#loc77 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":595:27)
+#loc78 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":596:25)
+#loc79 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":596:39)
+#loc80 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":598:26)
+#loc81 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":598:10)
+#loc82 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":599:31)
+#loc83 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":599:36)
+#loc84 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":599:48)
+#loc85 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":606:12)
+#loc86 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":608:21)
+#loc87 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":615:12)
+#loc88 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":617:22)
+#loc89 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":624:12)
+#loc90 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":626:23)
+#loc91 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":627:27)
+#loc92 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":627:33)
+#loc93 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":628:34)
+#loc94 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":628:30)
+#loc95 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":628:25)
+#loc96 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":628:51)
+#loc97 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":628:46)
+#loc98 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":636:12)
+#loc99 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":638:26)
+#loc100 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":645:12)
+#loc101 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":647:26)
+#loc102 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":647:67)
+#loc103 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":648:24)
+#loc104 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":649:31)
+#loc105 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":649:23)
+#loc106 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":649:18)
+#loc107 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":650:28)
+#loc108 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":651:27)
+#loc109 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":651:40)
+#loc110 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":651:8)
+#loc111 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":654:26)
+#loc112 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":659:8)
+#loc113 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":661:16)
+#loc114 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":662:36)
+#loc115 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":662:29)
+#loc116 = loc("/home/z00959232/flash-linear-attention/fla/ops/deltaformer/parallel.py":662:4)

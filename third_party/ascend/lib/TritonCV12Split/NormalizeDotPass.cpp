@@ -241,13 +241,6 @@ static std::optional<Operation *> traceDefiningDot(Value value) {
       if (yieldOp && index < yieldOp->getNumOperands())
         return traceDefiningDot(yieldOp.getOperand(index));
     }
-    if (auto ifOp = dyn_cast<scf::IfOp>(defOp)) {
-      unsigned index = cast<OpResult>(value).getResultNumber();
-      auto yieldOp =
-          dyn_cast<scf::YieldOp>(ifOp.thenBlock()->getTerminator());
-      if (yieldOp && index < yieldOp->getNumOperands())
-        return traceDefiningDot(yieldOp.getOperand(index));
-    }
     return std::nullopt;
   }
 
