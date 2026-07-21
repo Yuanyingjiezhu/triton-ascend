@@ -108,6 +108,11 @@ static bool isUsedForDotC(Value value)
 template <typename SinkFn>
 static bool walkCubeStoreUse(OpOperand &use, SinkFn &markSink);
 
+static bool isDynamicStore(triton::StoreOp storeOp)
+{
+    return storeOp.getMask() || !storeOp.getBoundaryCheck().empty();
+}
+
 template <typename SinkFn>
 static bool walkUniqueCubeStoreChain(Value value, SinkFn &markSink)
 {
@@ -121,7 +126,12 @@ template <typename SinkFn>
 static bool walkDirectCubeStoreUse(OpOperand &use, SinkFn &markSink)
 {
     Operation *user = use.getOwner();
-    if (!isa<triton::StoreOp, triton::AtomicRMWOp>(user))
+    auto storeOp = dyn_cast<triton::StoreOp>(user);
+    if (!storeOp && !isa<triton::AtomicRMWOp>(user))
+        return false;
+
+    if (storeOp && isDynamicStore(storeOp) &&
+        storeOp->getParentOfType<scf::IfOp>())
         return false;
 
     markSink(user);
