@@ -97,6 +97,7 @@ private:
   void processExpandDimsOp(ExpandDimsOp op);
   void processTransOp(TransOp op);
   void processReduceOp(ReduceOp op);
+  void processScanOp(ScanOp op);
   void processReshapeOp(ReshapeOp op);
   void processForOp(scf::ForOp op);
   void processWhileOp(scf::WhileOp op);

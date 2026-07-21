@@ -937,6 +937,64 @@ TritonReduceBubbleUpStrategy::execute(tensor::ExtractSliceOp sliceOp,
   return success();
 }
 
+bool TritonScanBubbleUpStrategy::isSupportedOperation(
+    tensor::ExtractSliceOp sliceOp) const {
+  Operation *srcOp = sliceOp.getSource().getDefiningOp();
+  return isa_and_nonnull<mlir::triton::ScanOp>(srcOp);
+}
+
+LogicalResult
+TritonScanBubbleUpStrategy::execute(tensor::ExtractSliceOp sliceOp,
+                                    PatternRewriter &rewriter) const {
+  auto scanOp = cast<mlir::triton::ScanOp>(sliceOp.getSource().getDefiningOp());
+  auto srcs = scanOp.getSrcs();
+  if (srcs.size() != 1 || scanOp.getNumResults() != 1)
+    return failure();
+
+  auto inputType = dyn_cast<RankedTensorType>(srcs[0].getType());
+  auto outputType = dyn_cast<RankedTensorType>(sliceOp.getType());
+  if (!inputType || !outputType || inputType.getRank() != outputType.getRank())
+    return failure();
+
+  int32_t axis = scanOp.getAxis();
+  if (axis < 0 || axis >= inputType.getRank())
+    return failure();
+
+  auto sliceOffsets = sliceOp.getMixedOffsets();
+  auto sliceSizes = sliceOp.getMixedSizes();
+  auto sliceStrides = sliceOp.getMixedStrides();
+  if (sliceOffsets.size() != static_cast<size_t>(inputType.getRank()) ||
+      sliceSizes.size() != static_cast<size_t>(inputType.getRank()) ||
+      sliceStrides.size() != static_cast<size_t>(inputType.getRank()))
+    return failure();
+
+  // Splitting a scan axis is not valid: every element depends on its prefix.
+  // The scan axis must therefore be carried through as a full, unit-stride
+  // dimension, while slices on all other axes can be bubbled to the input.
+  auto axisOffset = getConstantIntValue(sliceOffsets[axis]);
+  auto axisSize = getConstantIntValue(sliceSizes[axis]);
+  auto axisStride = getConstantIntValue(sliceStrides[axis]);
+  if (!axisOffset || !axisSize || !axisStride || *axisOffset != 0 ||
+      *axisStride != 1 || ShapedType::isDynamic(inputType.getDimSize(axis)) ||
+      *axisSize != inputType.getDimSize(axis))
+    return failure();
+
+  Location loc = scanOp.getLoc();
+  rewriter.setInsertionPoint(scanOp);
+  auto newSlicedInput = rewriter.create<tensor::ExtractSliceOp>(
+      loc, srcs[0], sliceOffsets, sliceSizes, sliceStrides);
+  markBubbledSlice(rewriter, newSlicedInput);
+
+  auto newScanOp = rewriter.create<mlir::triton::ScanOp>(
+      loc, ValueRange{newSlicedInput.getResult()}, axis, scanOp.getReverse());
+  copyDiscardableAttrs(scanOp, newScanOp);
+  rewriter.cloneRegionBefore(scanOp.getCombineOp(), newScanOp.getCombineOp(),
+                             newScanOp.getCombineOp().begin());
+
+  rewriter.replaceOp(sliceOp, newScanOp.getResults());
+  return success();
+}
+
 bool TritonExpandDimsBubbleUpStrategy::isSupportedOperation(
     tensor::ExtractSliceOp sliceOp) const {
   Operation *srcOp = sliceOp.getSource().getDefiningOp();

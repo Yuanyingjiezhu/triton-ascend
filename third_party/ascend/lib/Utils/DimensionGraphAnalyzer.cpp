@@ -354,6 +354,10 @@ bool DimensionGraphAnalyzer::processOperation(Operation *operation) {
         processReduceOp(op);
         return true;
       })
+      .Case<triton::ScanOp>([&](auto op) {
+        processScanOp(op);
+        return true;
+      })
       .Case<triton::ReshapeOp>([&](auto op) {
         processReshapeOp(op);
         return true;
@@ -587,6 +591,37 @@ void DimensionGraphAnalyzer::processReduceOp(triton::ReduceOp op) {
       if (resultDim >= static_cast<int64_t>(outputArgs.size()))
         break;
       recordAxisDependency(inputArgs[inputDim], outputArgs[resultDim++]);
+    }
+  }
+}
+
+void DimensionGraphAnalyzer::processScanOp(triton::ScanOp op) {
+  SmallVector<Value> inputs(op.getOperands().begin(), op.getOperands().end());
+  SmallVector<Value> outputs(op.getResults().begin(), op.getResults().end());
+  if (inputs.empty())
+    return;
+
+  // A scan preserves rank.  Its non-scan axes are independent and can be
+  // tiled together with the corresponding output axes.  Do not connect the
+  // scan axis: values along that axis have prefix dependencies, so treating
+  // it as a regular pointwise dependency would permit an invalid split.
+  int64_t scanAxis = op.getAxis();
+  createDummyRefIfNotExist(inputs);
+  createDummyRefIfNotExist(outputs);
+
+  for (auto [outputIdx, output] : llvm::enumerate(outputs)) {
+    if (!isa<RankedTensorType>(output.getType()))
+      continue;
+    Value input = inputs[std::min<size_t>(outputIdx, inputs.size() - 1)];
+    auto inputArgs = getArgumentRef(input);
+    auto outputArgs = getArgumentRef(output);
+    if (scanAxis < 0 || scanAxis >= static_cast<int64_t>(inputArgs.size()) ||
+        inputArgs.size() != outputArgs.size())
+      continue;
+    for (int64_t dim = 0; dim < static_cast<int64_t>(inputArgs.size());
+         ++dim) {
+      if (dim != scanAxis)
+        recordAxisDependency(inputArgs[dim], outputArgs[dim]);
     }
   }
 }

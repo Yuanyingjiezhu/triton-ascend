@@ -59,6 +59,42 @@ module {
     return %slice : tensor<32xi32>
   }
 
+  // CHECK-LABEL: func.func @scan_non_axis_slice
+  // CHECK: %[[INPUT_SLICE:.*]] = tensor.extract_slice %[[INPUT:.*]][16, 0] [32, 64] [1, 1]
+  // CHECK: %[[SCAN:.*]] = "tt.scan"(%[[INPUT_SLICE]]) <{axis = 1 : i32, reverse = false}>
+  // CHECK: return %[[SCAN]] : tensor<32x64xf32>
+  func.func @scan_non_axis_slice(%input: tensor<64x64xf32>)
+      -> tensor<32x64xf32> {
+    %scan = "tt.scan"(%input) ({
+    ^bb0(%lhs: f32, %rhs: f32):
+      %sum = arith.addf %lhs, %rhs : f32
+      tt.scan.return %sum : f32
+    }) {axis = 1 : i32, reverse = false}
+        : (tensor<64x64xf32>) -> tensor<64x64xf32>
+    %slice = tensor.extract_slice %scan[16, 0] [32, 64] [1, 1]
+        {to_be_bubbled_slice}
+        : tensor<64x64xf32> to tensor<32x64xf32>
+    return %slice : tensor<32x64xf32>
+  }
+
+  // CHECK-LABEL: func.func @scan_axis_slice_is_not_bubbled
+  // CHECK: %[[SCAN:.*]] = "tt.scan"(%{{.*}}) <{axis = 1 : i32, reverse = false}>
+  // CHECK: %[[SLICE:.*]] = tensor.extract_slice %[[SCAN]][0, 16] [64, 32] [1, 1] {should_kept_slice}
+  // CHECK: return %[[SLICE]] : tensor<64x32xf32>
+  func.func @scan_axis_slice_is_not_bubbled(%input: tensor<64x64xf32>)
+      -> tensor<64x32xf32> {
+    %scan = "tt.scan"(%input) ({
+    ^bb0(%lhs: f32, %rhs: f32):
+      %sum = arith.addf %lhs, %rhs : f32
+      tt.scan.return %sum : f32
+    }) {axis = 1 : i32, reverse = false}
+        : (tensor<64x64xf32>) -> tensor<64x64xf32>
+    %slice = tensor.extract_slice %scan[0, 16] [64, 32] [1, 1]
+        {to_be_bubbled_slice}
+        : tensor<64x64xf32> to tensor<64x32xf32>
+    return %slice : tensor<64x32xf32>
+  }
+
   // CHECK-LABEL: func.func @eliminate_nested_if_yield_slices
   // CHECK: %[[INNER:.*]] = scf.if %{{.*}} -> (tensor<8x8xf32>) {
   // CHECK:   scf.yield %{{.*}} : tensor<8x8xf32>

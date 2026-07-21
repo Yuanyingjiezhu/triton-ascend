@@ -222,6 +222,7 @@ BubbleUpExtractSlicePass::createStrategies() const {
   strategies.push_back(std::make_shared<mlir::triton::detail::LoopOutBubbleUpStrategy>());
   strategies.push_back(std::make_shared<mlir::triton::detail::TritonDotBubbleUpStrategy>());
   strategies.push_back(std::make_shared<mlir::triton::detail::TritonReduceBubbleUpStrategy>());
+  strategies.push_back(std::make_shared<mlir::triton::detail::TritonScanBubbleUpStrategy>());
   strategies.push_back(std::make_shared<mlir::triton::detail::TritonExpandDimsBubbleUpStrategy>());
   strategies.push_back(std::make_shared<mlir::triton::detail::TritonSplatBubbleUpStrategy>());
   strategies.push_back(std::make_shared<mlir::triton::detail::TritonLoadBubbleUpStrategy>());
