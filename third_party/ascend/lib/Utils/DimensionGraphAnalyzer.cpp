@@ -914,8 +914,8 @@ bool DimensionGraphAnalyzer::useProducesScalar(OpOperand &use) const {
 
 bool DimensionGraphAnalyzer::shouldSkipDependencyValue(Value value) const {
   Operation *defOp = value.getDefiningOp();
-  return defOp &&
-         isa<arith::ConstantOp, triton::MakeRangeOp, triton::SplatOp>(defOp);
+  return defOp && isa<arith::ConstantOp, triton::LoadOp,
+                     triton::MakeRangeOp, triton::SplatOp>(defOp);
 }
 
 void DimensionGraphAnalyzer::selectTilingAxes() {
