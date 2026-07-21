@@ -157,6 +157,38 @@ static bool hasUnexpectedLoopBlockArgShouldKeptSlice(ModuleOp moduleOp) {
   return hasUnexpectedSlice;
 }
 
+static bool hasUnexpectedScanShouldKeptSlice(ModuleOp moduleOp) {
+  bool hasUnsupportedSlice = false;
+  moduleOp.walk([&](tensor::ExtractSliceOp extractSliceOp) {
+    if (!extractSliceOp->hasAttrOfType<UnitAttr>("should_kept_slice"))
+      return WalkResult::advance();
+
+    auto scanOp = dyn_cast_or_null<triton::ScanOp>(
+        extractSliceOp.getSource().getDefiningOp());
+    auto sourceType = dyn_cast<RankedTensorType>(
+        extractSliceOp.getSource().getType());
+    if (!scanOp || !sourceType)
+      return WalkResult::advance();
+
+    int64_t axis = scanOp.getAxis();
+    auto sizes = extractSliceOp.getMixedSizes();
+    if (axis < 0 || axis >= sourceType.getRank() ||
+        axis >= static_cast<int64_t>(sizes.size()))
+      return WalkResult::advance();
+
+    auto size = getConstantIntValue(sizes[axis]);
+    int64_t sourceSize = sourceType.getDimSize(axis);
+    if (!size || ShapedType::isDynamic(sourceSize) || *size == sourceSize)
+      return WalkResult::advance();
+
+    extractSliceOp.emitError()
+        << "cannot keep an extract_slice that tiles tt.scan axis";
+    hasUnsupportedSlice = true;
+    return WalkResult::interrupt();
+  });
+  return hasUnsupportedSlice;
+}
+
 static bool hasRemainingSliceMarkerAttrs(ModuleOp moduleOp) {
   bool hasRemainingMarker = false;
   moduleOp.walk([&](Operation *op) {
@@ -296,6 +328,9 @@ void BubbleUpExtractSlicePass::runOnOperation() {
     return signalPassFailure();
 
   if (hasUnexpectedLoopBlockArgShouldKeptSlice(moduleOp))
+    return signalPassFailure();
+
+  if (hasUnexpectedScanShouldKeptSlice(moduleOp))
     return signalPassFailure();
 
   // to be enhanced for should_kept_slice
