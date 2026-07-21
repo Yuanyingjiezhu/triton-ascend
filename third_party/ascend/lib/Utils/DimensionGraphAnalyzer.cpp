@@ -424,6 +424,20 @@ void DimensionGraphAnalyzer::processForOp(scf::ForOp op) {
     if (idx < regionArgs.size())
       recordSameRankDependency(initArg, regionArgs[idx]);
   }
+
+  auto yieldOp = dyn_cast<scf::YieldOp>(op.getBody()->getTerminator());
+  if (!yieldOp)
+    return;
+
+  // Model the loop-carried value's flow through the body.
+  for (auto [idx, regionArg] : llvm::enumerate(regionArgs)) {
+    if (idx >= yieldOp.getNumOperands())
+      break;
+    Value yieldValue = yieldOp.getOperand(idx);
+    if (isDefinedByMetaUse(yieldValue))
+      continue;
+    recordSameRankDependency(regionArg, yieldValue);
+  }
 }
 
 void DimensionGraphAnalyzer::processWhileOp(scf::WhileOp op) {
@@ -435,6 +449,18 @@ void DimensionGraphAnalyzer::processWhileOp(scf::WhileOp op) {
       continue;
     if (idx < beforeArgs.size())
       recordSameRankDependency(initArg, beforeArgs[idx]);
+  }
+
+  auto yieldOp = op.getYieldOp();
+  auto afterArgs = op.getAfterArguments();
+  // scf.condition transfers values into afterArgs; model their flow to yield.
+  for (auto [idx, afterArg] : llvm::enumerate(afterArgs)) {
+    if (idx >= yieldOp.getNumOperands())
+      break;
+    Value yieldValue = yieldOp.getOperand(idx);
+    if (isDefinedByMetaUse(yieldValue))
+      continue;
+    recordSameRankDependency(afterArg, yieldValue);
   }
 }
 

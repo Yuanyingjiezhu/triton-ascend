@@ -82,6 +82,23 @@ static bool isUsedForDotC(Value value)
                 return false;
             continue;
         }
+        if (auto whileOp = dyn_cast<scf::WhileOp>(user)) {
+            auto operandIdx = use.getOperandNumber();
+            if (operandIdx >= whileOp.getBeforeArguments().size() ||
+                !isUsedForDotC(whileOp.getBeforeArguments()[operandIdx]))
+                return false;
+            continue;
+        }
+        if (auto conditionOp = dyn_cast<scf::ConditionOp>(user)) {
+            auto operandIdx = use.getOperandNumber();
+            auto whileOp = dyn_cast<scf::WhileOp>(conditionOp->getParentOp());
+            if (!whileOp || operandIdx == 0 ||
+                operandIdx > whileOp.getAfterArguments().size() ||
+                !isUsedForDotC(
+                    whileOp.getAfterArguments()[operandIdx - 1]))
+                return false;
+            continue;
+        }
         if (!isa<triton::DotOp>(user) || use.getOperandNumber() != 2)
             return false;
     }
@@ -134,11 +151,17 @@ static bool walkCubeStoreUse(OpOperand &use, SinkFn &markSink)
         auto *parentOp = yieldOp->getParentOp();
         if (auto forOp = dyn_cast<scf::ForOp>(parentOp)) {
             auto operandIdx = use.getOperandNumber();
+            BlockArgument regionIterArg = forOp.getRegionIterArg(operandIdx);
+            if (!isUsedForDotC(regionIterArg))
+                return false;
             return walkUniqueCubeStoreChain(forOp->getResult(operandIdx),
                                             markSink);
         }
         if (auto whileOp = dyn_cast<scf::WhileOp>(parentOp)) {
             auto operandIdx = use.getOperandNumber();
+            if (operandIdx >= whileOp.getBeforeArguments().size() ||
+                !isUsedForDotC(whileOp.getBeforeArguments()[operandIdx]))
+                return false;
             return walkUniqueCubeStoreChain(whileOp->getResult(operandIdx),
                                             markSink);
         }
