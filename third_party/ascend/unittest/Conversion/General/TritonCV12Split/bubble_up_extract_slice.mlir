@@ -58,4 +58,57 @@ module {
         {to_be_bubbled_slice} : tensor<64xi32> to tensor<32xi32>
     return %slice : tensor<32xi32>
   }
+
+  // CHECK-LABEL: func.func @eliminate_nested_if_yield_slices
+  // CHECK: %[[INNER:.*]] = scf.if %{{.*}} -> (tensor<8x8xf32>) {
+  // CHECK:   scf.yield %{{.*}} : tensor<8x8xf32>
+  // CHECK: } else {
+  // CHECK:   scf.yield %{{.*}} : tensor<8x8xf32>
+  // CHECK: }
+  // CHECK: %[[OUTER:.*]] = scf.if %{{.*}} -> (tensor<8x8xf32>) {
+  // CHECK:   scf.yield %[[INNER]] : tensor<8x8xf32>
+  // CHECK: } else {
+  // CHECK:   scf.yield %{{.*}} : tensor<8x8xf32>
+  // CHECK: }
+  // CHECK-NOT: tensor.insert_slice
+  // CHECK: scf.yield %[[OUTER]] : tensor<8x8xf32>
+  // CHECK: %[[RESULT:.*]] = tensor.extract_slice %{{.*}}[0, 0] [4, 8] [1, 1]
+  // CHECK-SAME: {cv_communication_slice}
+  // CHECK: return %[[RESULT]] : tensor<4x8xf32>
+  func.func @eliminate_nested_if_yield_slices(
+      %cond0: i1, %cond1: i1, %lb: index, %ub: index, %step: index,
+      %arg0: tensor<8x8xf32>, %arg1: tensor<8x8xf32>,
+      %arg2: tensor<8x8xf32>) -> tensor<4x8xf32> {
+    %empty = tensor.empty() : tensor<8x8xf32>
+    %loop = scf.for %iv = %lb to %ub step %step
+        iter_args(%iter = %arg0) -> tensor<8x8xf32> {
+      %inner = scf.if %cond1 -> (tensor<4x8xf32>) {
+        %slice0 = tensor.extract_slice %iter[0, 0] [4, 8] [1, 1]
+            {should_kept_slice}
+            : tensor<8x8xf32> to tensor<4x8xf32>
+        scf.yield %slice0 : tensor<4x8xf32>
+      } else {
+        %slice1 = tensor.extract_slice %arg1[0, 0] [4, 8] [1, 1]
+            {cv_communication_slice}
+            : tensor<8x8xf32> to tensor<4x8xf32>
+        scf.yield %slice1 : tensor<4x8xf32>
+      }
+      %outer = scf.if %cond0 -> (tensor<4x8xf32>) {
+        scf.yield %inner : tensor<4x8xf32>
+      } else {
+        %slice2 = tensor.extract_slice %arg2[0, 0] [4, 8] [1, 1]
+            {cv_communication_slice}
+            : tensor<8x8xf32> to tensor<4x8xf32>
+        scf.yield %slice2 : tensor<4x8xf32>
+      }
+      %insert = tensor.insert_slice %outer into %empty[0, 0] [4, 8] [1, 1]
+          {to_be_eliminated_slice}
+          : tensor<4x8xf32> into tensor<8x8xf32>
+      scf.yield %insert : tensor<8x8xf32>
+    }
+    %result = tensor.extract_slice %loop[0, 0] [4, 8] [1, 1]
+        {to_be_eliminated_slice}
+        : tensor<8x8xf32> to tensor<4x8xf32>
+    return %result : tensor<4x8xf32>
+  }
 }

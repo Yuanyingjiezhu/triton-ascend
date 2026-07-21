@@ -12,6 +12,8 @@
 #include "mlir/IR/Operation.h"
 #include "mlir/IR/PatternMatch.h"
 
+#include "llvm/ADT/SmallPtrSet.h"
+
 namespace mlir::triton::detail {
 
 static bool isMarkedEliminatedSlice(Operation *op) {
@@ -59,6 +61,67 @@ static bool sliceParamsMatch(tensor::ExtractSliceOp extractOp,
     if (extractStrides[i] != insertStrides[i])
       return false;
   }
+  return true;
+}
+
+struct IfYieldExtractRewrite {
+  scf::YieldOp yieldOp;
+  unsigned resultIndex;
+  tensor::ExtractSliceOp extractOp;
+};
+
+struct IfResultRewrite {
+  scf::IfOp ifOp;
+  unsigned resultIndex;
+};
+
+struct IfSourceRewritePlan {
+  SmallVector<IfYieldExtractRewrite> yieldExtracts;
+  SmallVector<IfResultRewrite> ifResults;
+};
+
+static bool collectIfSourceRewrite(Value value,
+                                   tensor::InsertSliceOp insertSliceOp,
+                                   IfSourceRewritePlan &plan);
+
+static bool collectIfYieldRewrite(scf::YieldOp yieldOp, unsigned resultIndex,
+                                  tensor::InsertSliceOp insertSliceOp,
+                                  IfSourceRewritePlan &plan) {
+  Value value = yieldOp.getOperand(resultIndex);
+  if (auto extractOp = value.getDefiningOp<tensor::ExtractSliceOp>()) {
+    if (!isMarkedCVCommunicationOrShouldKept(extractOp) ||
+        !sliceParamsMatch(extractOp, insertSliceOp) ||
+        extractOp.getSource().getType() != insertSliceOp.getType())
+      return false;
+
+    plan.yieldExtracts.push_back({yieldOp, resultIndex, extractOp});
+    return true;
+  }
+
+  return collectIfSourceRewrite(value, insertSliceOp, plan);
+}
+
+static bool collectIfSourceRewrite(Value value,
+                                   tensor::InsertSliceOp insertSliceOp,
+                                   IfSourceRewritePlan &plan) {
+  auto result = dyn_cast<OpResult>(value);
+  auto ifOp = result ? dyn_cast<scf::IfOp>(result.getOwner()) : nullptr;
+  if (!ifOp || !value.hasOneUse())
+    return false;
+
+  unsigned resultIndex = result.getResultNumber();
+  scf::YieldOp thenYieldOp = ifOp.thenYield();
+  scf::YieldOp elseYieldOp = ifOp.elseYield();
+  if (!thenYieldOp || !elseYieldOp ||
+      resultIndex >= thenYieldOp.getNumOperands() ||
+      resultIndex >= elseYieldOp.getNumOperands())
+    return false;
+
+  if (!collectIfYieldRewrite(thenYieldOp, resultIndex, insertSliceOp, plan) ||
+      !collectIfYieldRewrite(elseYieldOp, resultIndex, insertSliceOp, plan))
+    return false;
+
+  plan.ifResults.push_back({ifOp, resultIndex});
   return true;
 }
 
@@ -141,70 +204,39 @@ struct EliminateSliceYieldValCVCommunicationPattern
       return success();
     }
 
-    if (auto sourceIfOp =
-            insertSliceOp.getSource().getDefiningOp<scf::IfOp>()) {
-      bool canRewriteIfSource = true;
-      auto sourceResult = dyn_cast<OpResult>(insertSliceOp.getSource());
-      canRewriteIfSource &=
-          sourceResult && sourceResult.getOwner() == sourceIfOp &&
-          insertSliceOp.getSource().hasOneUse();
-
-      unsigned ifResultIndex = 0;
-      scf::YieldOp thenYieldOp;
-      scf::YieldOp elseYieldOp;
-      tensor::ExtractSliceOp thenExtractOp;
-      tensor::ExtractSliceOp elseExtractOp;
-
-      if (canRewriteIfSource) {
-        ifResultIndex = sourceResult.getResultNumber();
-        thenYieldOp = sourceIfOp.thenYield();
-        elseYieldOp = sourceIfOp.elseYield();
-        canRewriteIfSource &=
-            thenYieldOp && elseYieldOp &&
-            ifResultIndex < thenYieldOp.getNumOperands() &&
-            ifResultIndex < elseYieldOp.getNumOperands();
+    IfSourceRewritePlan plan;
+    if (collectIfSourceRewrite(insertSliceOp.getSource(), insertSliceOp, plan)) {
+      for (IfYieldExtractRewrite &rewrite : plan.yieldExtracts) {
+        rewriter.modifyOpInPlace(rewrite.yieldOp, [&]() {
+          rewrite.yieldOp->setOperand(rewrite.resultIndex,
+                                      rewrite.extractOp.getSource());
+        });
       }
 
-      if (canRewriteIfSource) {
-        thenExtractOp = thenYieldOp.getOperand(ifResultIndex)
-                            .getDefiningOp<tensor::ExtractSliceOp>();
-        elseExtractOp = elseYieldOp.getOperand(ifResultIndex)
-                            .getDefiningOp<tensor::ExtractSliceOp>();
-        canRewriteIfSource &=
-            thenExtractOp && elseExtractOp &&
-            isMarkedCVCommunicationOrShouldKept(thenExtractOp) &&
-            isMarkedCVCommunicationOrShouldKept(elseExtractOp) &&
-            sliceParamsMatch(thenExtractOp, insertSliceOp) &&
-            sliceParamsMatch(elseExtractOp, insertSliceOp) &&
-            thenExtractOp.getResult().hasOneUse() &&
-            elseExtractOp.getResult().hasOneUse() &&
-            thenExtractOp.getSource().getType() == insertSliceOp.getType() &&
-            elseExtractOp.getSource().getType() == insertSliceOp.getType();
+      for (IfResultRewrite &rewrite : plan.ifResults) {
+        rewriter.modifyOpInPlace(rewrite.ifOp, [&]() {
+          rewrite.ifOp.getResult(rewrite.resultIndex)
+              .setType(insertSliceOp.getType());
+        });
       }
 
-      if (canRewriteIfSource) {
-        rewriter.modifyOpInPlace(thenYieldOp, [&]() {
-          thenYieldOp->setOperand(ifResultIndex, thenExtractOp.getSource());
-        });
-        rewriter.modifyOpInPlace(elseYieldOp, [&]() {
-          elseYieldOp->setOperand(ifResultIndex, elseExtractOp.getSource());
-        });
-        rewriter.modifyOpInPlace(sourceIfOp, [&]() {
-          sourceIfOp.getResult(ifResultIndex).setType(insertSliceOp.getType());
-        });
-        rewriter.modifyOpInPlace(yieldOp, [&]() {
-          yieldOp->setOperand(yieldIndex, sourceIfOp.getResult(ifResultIndex));
-        });
+      rewriter.modifyOpInPlace(yieldOp, [&]() {
+        yieldOp->setOperand(yieldIndex, insertSliceOp.getSource());
+      });
 
-        outerExtractOp->removeAttr("to_be_eliminated_slice");
-        markCVCommunication(rewriter, outerExtractOp);
+      outerExtractOp->removeAttr("to_be_eliminated_slice");
+      markCVCommunication(rewriter, outerExtractOp);
 
-        rewriter.eraseOp(insertSliceOp);
-        rewriter.eraseOp(thenExtractOp);
-        rewriter.eraseOp(elseExtractOp);
-
-        return success();
+      rewriter.eraseOp(insertSliceOp);
+      llvm::SmallPtrSet<Operation *, 8> visitedExtractOps;
+      for (IfYieldExtractRewrite &rewrite : plan.yieldExtracts) {
+        Operation *extractOp = rewrite.extractOp;
+        if (visitedExtractOps.insert(extractOp).second &&
+            extractOp->use_empty())
+          rewriter.eraseOp(extractOp);
       }
+
+      return success();
     }
 
     return rewriter.notifyMatchFailure(insertSliceOp,

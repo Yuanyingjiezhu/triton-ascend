@@ -119,20 +119,11 @@ static bool shouldAggressivelyBubbleUp(tensor::ExtractSliceOp extractSliceOp) {
   return false;
 }
 
-static bool filterRemainingMarkedSlicesForAggressiveBubbleUp(
-    ModuleOp moduleOp, bool &hasUnexpectedLoopBlockArgSlice) {
+static bool filterRemainingMarkedSlicesForAggressiveBubbleUp(ModuleOp moduleOp) {
   bool hasAggressiveCandidate = false;
   moduleOp.walk([&](tensor::ExtractSliceOp extractSliceOp) {
     if (!isMarkedBubbledSlice(extractSliceOp))
       return WalkResult::advance();
-
-    if (isa<BlockArgument>(extractSliceOp.getSource())) {
-      extractSliceOp.emitError()
-          << "loop was not tiled as expected: remaining "
-             "to_be_bubbled_slice has a block argument source";
-      hasUnexpectedLoopBlockArgSlice = true;
-      return WalkResult::interrupt();
-    }
 
     if (shouldAggressivelyBubbleUp(extractSliceOp)) {
       hasAggressiveCandidate = true;
@@ -144,6 +135,26 @@ static bool filterRemainingMarkedSlicesForAggressiveBubbleUp(
     return WalkResult::advance();
   });
   return hasAggressiveCandidate;
+}
+
+static bool hasUnexpectedLoopBlockArgShouldKeptSlice(ModuleOp moduleOp) {
+  bool hasUnexpectedSlice = false;
+  moduleOp.walk([&](tensor::ExtractSliceOp extractSliceOp) {
+    if (!extractSliceOp->hasAttrOfType<UnitAttr>("should_kept_slice"))
+      return WalkResult::advance();
+
+    auto blockArg = dyn_cast<BlockArgument>(extractSliceOp.getSource());
+    if (!blockArg ||
+        !isa<scf::ForOp, scf::WhileOp>(blockArg.getOwner()->getParentOp()))
+      return WalkResult::advance();
+
+    extractSliceOp.emitError()
+        << "loop was not tiled as expected: remaining "
+           "should_kept_slice has a block argument source";
+    hasUnexpectedSlice = true;
+    return WalkResult::interrupt();
+  });
+  return hasUnexpectedSlice;
 }
 
 static bool hasRemainingSliceMarkerAttrs(ModuleOp moduleOp) {
@@ -237,11 +248,8 @@ void BubbleUpExtractSlicePass::runOnOperation() {
     return signalPassFailure();
   }
 
-  bool hasUnexpectedLoopBlockArgSlice = false;
-  bool hasAggressiveCandidate = filterRemainingMarkedSlicesForAggressiveBubbleUp(
-      moduleOp, hasUnexpectedLoopBlockArgSlice);
-  if (hasUnexpectedLoopBlockArgSlice)
-    return signalPassFailure();
+  bool hasAggressiveCandidate =
+      filterRemainingMarkedSlicesForAggressiveBubbleUp(moduleOp);
 
   if (hasAggressiveCandidate) {
     for (auto &strategy : strategies)
@@ -284,6 +292,9 @@ void BubbleUpExtractSlicePass::runOnOperation() {
   }
 
   if (hasUnsupportedCVCommunicationColSplit(moduleOp))
+    return signalPassFailure();
+
+  if (hasUnexpectedLoopBlockArgShouldKeptSlice(moduleOp))
     return signalPassFailure();
 
   // to be enhanced for should_kept_slice
