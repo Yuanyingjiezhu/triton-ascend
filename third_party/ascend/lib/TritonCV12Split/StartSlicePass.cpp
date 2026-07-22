@@ -1340,7 +1340,7 @@ static LogicalResult tileAndSliceFunc(FunctionOpInterface funcOp)
         if (isa<triton::LoadOp, triton::DotOp>(op))
             return true;
         if (isa<arith::ConstantOp, triton::MakeRangeOp, triton::SplatOp>(op))
-            return op->hasAttr("DataUse");
+            return op->hasAttr("DataUse") || op->hasAttr("MixUse");
         return false;
     };
     options.shouldSkipUse = [](Value value, OpOperand &use) -> bool {
