@@ -2461,6 +2461,7 @@ LogicalResult IfYieldAddHoistConverter::matchAndRewrite(scf::IfOp ifOp, PatternR
     rewriter.setInsertionPoint(ifOp);
     auto rewrittenIfOp = rewriter.create<scf::IfOp>(
         loc, ifOp.getResultTypes(), ifOp.getCondition(), /* withElseRegion= */true);
+    rewrittenIfOp->setAttrs(ifOp->getAttrs());
 
     {
         IRMapping thenMapping;
