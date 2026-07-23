@@ -24,9 +24,9 @@ def NormalizeDot : Pass<"normalize-dot", "mlir::ModuleOp"> {
   ];
 }
 
-def NormalizeI1Reduce : Pass<"normalize-i1-reduce", "mlir::ModuleOp"> {
-  let summary = "Normalize i1 tt.reduce add into select, i16 max reduce, and compare";
-  let constructor = "triton::createNormalizeI1ReducePass()";
+def NormalizeReduce : Pass<"normalize-reduce", "mlir::ModuleOp"> {
+  let summary = "Normalize i1 add and f16 sum tt.reduce operations";
+  let constructor = "triton::createNormalizeReducePass()";
   let dependentDialects = [
     "mlir::arith::ArithDialect",
     "triton::TritonDialect"

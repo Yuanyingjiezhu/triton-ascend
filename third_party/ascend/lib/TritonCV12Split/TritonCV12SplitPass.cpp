@@ -8,7 +8,7 @@
 #include "TritonCV12Split/Passes.h"
 
 #include "TritonCV12Split/BubbleUpExtractSlicePass.h"
-#include "TritonCV12Split/NormalizeI1ReducePass.h"
+#include "TritonCV12Split/NormalizeReducePass.h"
 #include "TritonCV12Split/RewriteCommunicationSlicePass.h"
 #include "TritonCV12Split/NormalizeDotPass.h"
 #include "TritonCV12Split/StartSlicePass.h"
@@ -90,9 +90,9 @@ struct TritonCV12SplitPass
     OwningOpRef<ModuleOp> backupModuleOp(moduleOp.clone());
 
     if (failed(runSingleModulePass(
-            moduleOp, triton::createNormalizeI1ReducePass()))) {
-      LDBG("TritonNormalizeI1Reduce failed, rolling back");
-      reportCV12SplitFailure(moduleOp, "NormalizeI1Reduce");
+            moduleOp, triton::createNormalizeReducePass()))) {
+      LDBG("TritonNormalizeReduce failed, rolling back");
+      reportCV12SplitFailure(moduleOp, "NormalizeReduce");
       restoreModule(moduleOp, *backupModuleOp);
       return;
     }

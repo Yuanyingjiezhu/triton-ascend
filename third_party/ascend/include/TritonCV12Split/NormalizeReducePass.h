@@ -20,8 +20,8 @@
  * THE SOFTWARE.
  */
 
-#ifndef TRITON_NORMALIZE_I1_REDUCE_PASS_H
-#define TRITON_NORMALIZE_I1_REDUCE_PASS_H
+#ifndef TRITON_NORMALIZE_REDUCE_PASS_H
+#define TRITON_NORMALIZE_REDUCE_PASS_H
 
 #include "mlir/Pass/Pass.h"
 
@@ -30,11 +30,11 @@ class ModuleOp;
 
 namespace triton {
 
-/// Creates a standalone TTIR pass that normalizes i1 add reductions into
-/// select, i16 max reduction, and compare.
-std::unique_ptr<OperationPass<ModuleOp>> createNormalizeI1ReducePass();
+/// Creates a standalone TTIR pass that normalizes supported reductions:
+/// i1 add reductions and f16 sum accumulation.
+std::unique_ptr<OperationPass<ModuleOp>> createNormalizeReducePass();
 
 } // namespace triton
 } // namespace mlir
 
-#endif // TRITON_NORMALIZE_I1_REDUCE_PASS_H
+#endif // TRITON_NORMALIZE_REDUCE_PASS_H

@@ -126,7 +126,7 @@ inline void registerTritonDialects(mlir::DialectRegistry &registry) {
   mlir::triton::registerRemoveUseTagsPass();
   mlir::triton::registerRewriteCommunicationSlicePass();
   mlir::triton::registerSeparateMetaDataUsePass();
-  mlir::triton::registerNormalizeI1ReducePass();
+  mlir::triton::registerNormalizeReducePass();
   mlir::triton::registerNormalizeDotPass();
   mlir::triton::registerStartSlicePass();
   mlir::triton::registerTritonCV12SplitPasses();

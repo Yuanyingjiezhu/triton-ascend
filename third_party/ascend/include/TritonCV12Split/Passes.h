@@ -24,7 +24,7 @@
 #define TRITON_CV12_SPLIT_PASSES_H
 
 #include "ascend/include/TritonCV12Split/BubbleUpExtractSlicePass.h"
-#include "ascend/include/TritonCV12Split/NormalizeI1ReducePass.h"
+#include "ascend/include/TritonCV12Split/NormalizeReducePass.h"
 #include "ascend/include/TritonCV12Split/RewriteCommunicationSlicePass.h"
 #include "ascend/include/TritonCV12Split/NormalizeDotPass.h"
 #include "ascend/include/TritonCV12Split/StartSlicePass.h"

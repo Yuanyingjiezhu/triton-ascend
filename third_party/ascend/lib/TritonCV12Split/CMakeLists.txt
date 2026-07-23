@@ -6,7 +6,7 @@ add_triton_library(TritonCV12Split
   RemoveUseTagsPass.cpp
   RewriteCommunicationSlicePass.cpp
   SeparateMetaDataUsePass.cpp
-  NormalizeI1ReducePass.cpp
+  NormalizeReducePass.cpp
   NormalizeDotPass.cpp
   StartSlicePass.cpp
   TritonCV12SplitPass.cpp
