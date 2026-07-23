@@ -45,6 +45,7 @@
 #include "ascend/include/Utils/Utils.h"
 
 #include "bishengir/Dialect/HFusion/IR/HFusion.h"
+#include "bishengir/Dialect/MemRefExt/IR/MemRefExt.h"
 #include "mlir/Dialect/ControlFlow/IR/ControlFlowOps.h"
 #include "mlir/Dialect/Func/IR/FuncOps.h"
 #include "mlir/Dialect/SCF/IR/SCF.h"
@@ -516,7 +517,7 @@ void TritonToLinalgPass::addDynamicLegal(
       cf::ControlFlowDialect, tensor::TensorDialect, LLVM::LLVMDialect,
       bufferization::BufferizationDialect, memref::MemRefDialect,
       annotation::AnnotationDialect, hivm::HIVMDialect,
-      hfusion::HFusionDialect>();
+      hfusion::HFusionDialect, bishengir::memref_ext::MemRefExtDialect>();
 
   // add legal dialect on condition
   target.addLegalOp<ModuleOp>();
@@ -732,7 +733,8 @@ void TritonToLinalgPass::getDependentDialects(DialectRegistry &registry) const {
                   linalg::LinalgDialect, affine::AffineDialect, scf::SCFDialect,
                   tensor::TensorDialect, bufferization::BufferizationDialect,
                   memref::MemRefDialect, hfusion::HFusionDialect,
-                  hivm::HIVMDialect, annotation::AnnotationDialect>();
+                  hivm::HIVMDialect, annotation::AnnotationDialect,
+                  bishengir::memref_ext::MemRefExtDialect>();
 }
 
 LogicalResult TritonToLinalgPass::processDescriptorOperations(ModuleOp moduleOp)

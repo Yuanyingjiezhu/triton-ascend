@@ -29,6 +29,7 @@ add_triton_library(TritonToLinalg
   MLIRTransforms
   MLIRSupport
   BiShengIRHIVMDialect
+  BiShengIRMemRefExtDialect
   TritonIR
   TritonTransforms
   TritonAnalysis
