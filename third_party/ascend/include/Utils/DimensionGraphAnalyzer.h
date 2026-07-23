@@ -167,6 +167,7 @@ private:
   SmallVector<int64_t> valueComponentIdByValue_;
   SmallVector<AxisComponentInfo, 0> axisComponents_;
   SmallVector<int64_t> axisComponentIdByAxis_;
+  bool skipLoadDependencies_ = false;
 };
 
 } // namespace triton

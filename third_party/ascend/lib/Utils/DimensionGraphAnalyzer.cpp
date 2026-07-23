@@ -94,13 +94,32 @@ DimensionGraphAnalyzer::DimensionGraphAnalyzer(
     : op_(op), options_(std::move(options)) {}
 
 LogicalResult DimensionGraphAnalyzer::initialize() {
-  reset();
+  auto initializeOnce = [&]() -> LogicalResult {
+    reset();
+    if (failed(initializeStructures()))
+      return failure();
+    processBFS();
+    removeSkippedDependencyEdges();
+    rebuildComponents();
+    return success();
+  };
 
-  if (failed(initializeStructures()))
+  skipLoadDependencies_ = false;
+  if (failed(initializeOnce()))
     return failure();
-  processBFS();
-  removeSkippedDependencyEdges();
-  rebuildComponents();
+
+  bool hasUnselectedTailComponent =
+      llvm::any_of(valueComponents_, [](const auto &component) {
+        return !component.tailValueIds.empty() &&
+               component.selectedAxisComponentIds.empty();
+      });
+  if (hasUnselectedTailComponent) {
+    LDBG("retry dimension analysis with load dependencies skipped");
+    skipLoadDependencies_ = true;
+    if (failed(initializeOnce()))
+      return failure();
+  }
+
   dumpInitializeSummary();
   return success();
 }
@@ -975,8 +994,11 @@ bool DimensionGraphAnalyzer::useProducesScalar(OpOperand &use) const {
 
 bool DimensionGraphAnalyzer::shouldSkipDependencyValue(Value value) const {
   Operation *defOp = value.getDefiningOp();
-  return defOp && isa<arith::ConstantOp, triton::LoadOp,
-                     triton::MakeRangeOp, triton::SplatOp>(defOp);
+  if (!defOp)
+    return false;
+  if (skipLoadDependencies_ && isa<triton::LoadOp>(defOp))
+    return true;
+  return isa<arith::ConstantOp, triton::MakeRangeOp, triton::SplatOp>(defOp);
 }
 
 void DimensionGraphAnalyzer::selectTilingAxes() {
